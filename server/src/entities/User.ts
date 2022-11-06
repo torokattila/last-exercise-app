@@ -11,9 +11,6 @@ export default class User extends EntityBase {
   email: string;
 
   @Column()
-  username: string;
-
-  @Column()
   firstname: string;
 
   @Column()
