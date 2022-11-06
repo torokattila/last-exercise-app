@@ -19,7 +19,7 @@ class RegistrationController {
   }
 
   private async register(req: Request, res: Response) {
-    logger.info(`POST /register called, body: ${req.body}`);
+    logger.info(`POST /register called`);
 
     const data = req.body;
 
