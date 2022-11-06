@@ -63,6 +63,27 @@ const save = async (user: User): Promise<User> => {
   }
 };
 
+const updatePassword = async (
+  id: string,
+  newPassword: string
+): Promise<User> => {
+  try {
+    const foundUser = await getUserRepository().findOne({
+      where: { id },
+    });
+    foundUser.password = await generateHash(newPassword);
+    foundUser.modified = new Date();
+
+    const savedUser = await getUserRepository().save(foundUser);
+    delete savedUser.password;
+
+    return savedUser;
+  } catch (error: any) {
+    logger.error(`Update password failed in UserService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 const comparePassword = async (
   password1: string,
   password2: string
@@ -92,6 +113,7 @@ export default {
   findById,
   save,
   update,
+  updatePassword,
   comparePassword,
   generateHash,
   verifyPassword,
