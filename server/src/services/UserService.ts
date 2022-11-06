@@ -36,6 +36,22 @@ const findById = async (userId: string): Promise<User> => {
   }
 };
 
+const update = async (id: string, user: Partial<User>): Promise<User> => {
+  try {
+    const editedUser = user;
+    editedUser.modified = new Date();
+
+    await getUserRepository().update(id, editedUser);
+
+    const result = await findById(id);
+
+    return result;
+  } catch (error: any) {
+    logger.error(`Update failed in UserService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 const save = async (user: User): Promise<User> => {
   try {
     const savedUser = await getUserRepository().save(user);
@@ -75,6 +91,7 @@ export default {
   findByEmail,
   findById,
   save,
+  update,
   comparePassword,
   generateHash,
   verifyPassword,
