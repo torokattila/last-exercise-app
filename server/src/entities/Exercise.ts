@@ -24,6 +24,6 @@ export default class Exercise extends EntityBase {
   @OneToMany(() => ExerciseType, (exerciseType) => exerciseType.exercise)
   exerciseTypes: ExerciseType[];
 
-  @Column()
-  seriesCardsColor: string;
+  @Column({ default: '#005A92' })
+  cardColor: string;
 }

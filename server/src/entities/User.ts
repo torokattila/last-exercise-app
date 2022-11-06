@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import EntityBase from './EntityBase';
 import Exercise from './Exercise';
 
@@ -21,4 +21,8 @@ export default class User extends EntityBase {
 
   @OneToMany(() => Exercise, (exercise) => exercise.user)
   exercises: Exercise[];
+
+  @OneToOne(() => Exercise, { onDelete: 'SET NULL', nullable: true })
+  @JoinColumn({ name: 'last_exercise_id' })
+  lastExercise: Exercise;
 }
