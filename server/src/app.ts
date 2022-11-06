@@ -4,6 +4,8 @@ import config from './config';
 import cors from 'cors';
 import RegistrationController from './controllers/RegistrationController';
 import LoginController from './controllers/LoginController';
+import MeController from './controllers/MeController';
+import { authenticate } from 'middlewares/Authenticate';
 
 class App {
   public express: Application;
@@ -21,6 +23,7 @@ class App {
   private routes() {
     this.express.use('/register', RegistrationController);
     this.express.use('/login', LoginController);
+    this.express.use('/me', authenticate, MeController);
   }
 
   private middlewares() {

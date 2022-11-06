@@ -19,6 +19,23 @@ const findByEmail = async (email: string) => {
   }
 };
 
+const findById = async (userId: string): Promise<User> => {
+  try {
+    const queryBuilder = getUserRepository().createQueryBuilder('user');
+    queryBuilder.leftJoinAndSelect('user.exercises', 'exercises');
+    queryBuilder.leftJoinAndSelect('user.lastExercise', 'lastExercise');
+    queryBuilder.andWhere('user.id = :id', { id: userId });
+
+    const user = await queryBuilder.getOne();
+    delete user.password;
+
+    return Promise.resolve(user);
+  } catch (error: any) {
+    logger.error(`Find by id failed in UserService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 const save = async (user: User): Promise<User> => {
   try {
     const savedUser = await getUserRepository().save(user);
@@ -56,6 +73,7 @@ const validatePasswordMatch = (password: string, passwordConfirm: string) => {
 
 export default {
   findByEmail,
+  findById,
   save,
   comparePassword,
   generateHash,
