@@ -84,6 +84,15 @@ const updatePassword = async (
   }
 };
 
+const remove = async (id: string): Promise<void> => {
+  try {
+    await getUserRepository().delete(id);
+  } catch (error: any) {
+    logger.error(`Remove failed in UserService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 const comparePassword = async (
   password1: string,
   password2: string
@@ -114,6 +123,7 @@ export default {
   save,
   update,
   updatePassword,
+  remove,
   comparePassword,
   generateHash,
   verifyPassword,

@@ -28,6 +28,7 @@ class UserController {
       '/:id/password/update',
       PromiseRejectionHandler(this.updatePassword)
     );
+    this.router.delete('/:id', PromiseRejectionHandler(this.deleteUser));
   }
 
   private async getUser(req: Request, res: Response) {
@@ -102,7 +103,10 @@ class UserController {
 
     if (currentPassword) {
       const userByEmail = await UserService.findByEmail(req.user.email);
-      const isValidPassword = await UserService.comparePassword(currentPassword, userByEmail.password);
+      const isValidPassword = await UserService.comparePassword(
+        currentPassword,
+        userByEmail.password
+      );
 
       if (!isValidPassword) {
         return res.status(StatusCodes.BAD_REQUEST).send({
@@ -114,7 +118,7 @@ class UserController {
     if (!newPassword) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         errors: ['password_is_required'],
-      })
+      });
     }
 
     if (!newPasswordConfirm) {
@@ -131,8 +135,25 @@ class UserController {
 
     const result = await UserService.updatePassword(id, newPassword);
 
-    logger.info(`PUT /users/:id/password/update status code: ${StatusCodes.OK}`);
+    logger.info(
+      `PUT /users/${id}/password/update status code: ${StatusCodes.OK}`
+    );
     return res.status(StatusCodes.OK).send(result);
+  }
+
+  private async deleteUser(req: Request, res: Response) {
+    logger.info(
+      `DELETE /users/:id called, id param: ${JSON.stringify(req.params.id)}`
+    );
+
+    const id = req.params.id;
+
+    if (!id || !uuidValidate(id)) throw new Error('invalid_path_parameters');
+
+    await UserService.remove(id);
+
+    logger.info(`DELETE /users/${id} status code: ${StatusCodes.NO_CONTENT}`);
+    return res.sendStatus(StatusCodes.NO_CONTENT);
   }
 }
 
