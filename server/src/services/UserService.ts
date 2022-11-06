@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { Logger } from 'common';
-import User from 'entities/User';
+import User from '../entities/User';
 import { getConnection } from 'typeorm';
 
 const logger = Logger(__filename);

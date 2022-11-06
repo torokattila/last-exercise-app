@@ -7,6 +7,7 @@ import RegistrationController from './controllers/RegistrationController';
 import LoginController from './controllers/LoginController';
 import MeController from './controllers/MeController';
 import UserController from './controllers/UserController';
+import ExerciseController from './controllers/ExerciseController';
 
 class App {
   public express: Application;
@@ -26,6 +27,7 @@ class App {
     this.express.use('/login', LoginController);
     this.express.use('/me', authenticate, MeController);
     this.express.use('/users', authenticate, UserController);
+    this.express.use('/exercises', authenticate, ExerciseController);
   }
 
   private middlewares() {
