@@ -2,10 +2,11 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import config from './config';
 import cors from 'cors';
+import { authenticate } from 'middlewares/Authenticate';
 import RegistrationController from './controllers/RegistrationController';
 import LoginController from './controllers/LoginController';
 import MeController from './controllers/MeController';
-import { authenticate } from 'middlewares/Authenticate';
+import UserController from './controllers/UserController';
 
 class App {
   public express: Application;
@@ -24,6 +25,7 @@ class App {
     this.express.use('/register', RegistrationController);
     this.express.use('/login', LoginController);
     this.express.use('/me', authenticate, MeController);
+    this.express.use('/users', authenticate, UserController);
   }
 
   private middlewares() {
