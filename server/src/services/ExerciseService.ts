@@ -65,7 +65,7 @@ const update = async (exercise: Partial<Exercise>): Promise<Exercise> => {
         if (!type.id) {
           const newType = type;
           newType.id = uuidv4();
-          
+
           await ExerciseTypeService.create(type);
         } else {
           await ExerciseTypeService.update(type);

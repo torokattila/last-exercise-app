@@ -29,7 +29,17 @@ const update = async (exerciseType: ExerciseType): Promise<ExerciseType> => {
   }
 };
 
+const remove = async (id: string): Promise<void> => {
+  try {
+    await getExerciseTypeRepository().delete(id);
+  } catch (error: any) {
+    logger.error(`Delete failed in ExerciseTypeService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 export default {
   create,
   update,
+  remove,
 };

@@ -130,6 +130,7 @@ class ExerciseController {
     try {
       await ExerciseService.remove(id);
 
+      logger.info(`DELETE /exercises/${id} status code: ${StatusCodes.NO_CONTENT}`);
       return res.sendStatus(StatusCodes.NO_CONTENT);
     } catch (error: any) {
       return res.status(StatusCodes.BAD_REQUEST).send({
