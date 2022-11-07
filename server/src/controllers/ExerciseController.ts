@@ -23,6 +23,7 @@ class ExerciseController {
   init() {
     this.router.post('/', PromiseRejectionHandler(this.createExercise));
     this.router.get('/:id', PromiseRejectionHandler(this.getExercise));
+    this.router.get('/', PromiseRejectionHandler(this.listExercises))
   }
 
   private async createExercise(req: Request, res: Response) {
@@ -62,6 +63,23 @@ class ExerciseController {
           errors: ['exercise_not_found'],
         });
       }
+    } catch (error: any) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        errors: [error],
+      });
+    }
+  }
+
+  private async listExercises(req: Request, res: Response) {
+    logger.info('GET /exercises called');
+
+    const userId = req.user.id;
+
+    try {
+      const exerciseList = await ExerciseService.list(userId);
+
+      logger.info(`GET /exercises status code: ${StatusCodes.OK}`);
+      return res.status(StatusCodes.OK).send(exerciseList);
     } catch (error: any) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         errors: [error],

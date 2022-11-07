@@ -34,7 +34,7 @@ const findById = async (id: string): Promise<Exercise> => {
     queryBuilder.andWhere('exercise.id = :id', { id });
 
     const exercise = await queryBuilder.getOne();
-    
+
     return Promise.resolve(exercise);
   } catch (error: any) {
     logger.error(`Find by id failed in ExerciseService, error: ${error}`);
@@ -42,7 +42,21 @@ const findById = async (id: string): Promise<Exercise> => {
   }
 };
 
+const list = async (userId: string): Promise<Exercise[]> => {
+  try {
+    const queryBuilder = getExerciseRepository().createQueryBuilder('exercise');
+    queryBuilder.leftJoinAndSelect('exercise.exerciseTypes', 'exerciseTypes');
+    queryBuilder.andWhere('exercise.userId = :userId', { userId });
+
+    return await queryBuilder.getMany();
+  } catch (error: any) {
+    logger.error(`List failed in ExerciseService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 export default {
   create,
+  list,
   findById,
 };
