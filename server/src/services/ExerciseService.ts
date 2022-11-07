@@ -55,8 +55,28 @@ const list = async (userId: string): Promise<Exercise[]> => {
   }
 };
 
+const update = async (exercise: Partial<Exercise>): Promise<Exercise> => {
+  try {
+    const editableExercise = exercise;
+
+    if (exercise.exerciseTypes) {
+      for (const type of exercise.exerciseTypes) {
+        await ExerciseTypeService.update(type);
+      }
+    }
+
+    editableExercise.modified = new Date();
+
+    return await getExerciseRepository().save(editableExercise);
+  } catch (error: any) {
+    logger.error(`Update failed in ExerciseService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 export default {
   create,
   list,
   findById,
+  update,
 };

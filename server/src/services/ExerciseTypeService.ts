@@ -6,7 +6,9 @@ const logger = Logger(__filename);
 const getExerciseTypeRepository = () =>
   getConnection().getRepository(ExerciseType);
 
-const create = async (exerciseType: Partial<ExerciseType>): Promise<ExerciseType> => {
+const create = async (
+  exerciseType: Partial<ExerciseType>
+): Promise<ExerciseType> => {
   try {
     return await getExerciseTypeRepository().save(exerciseType);
   } catch (error: any) {
@@ -15,6 +17,19 @@ const create = async (exerciseType: Partial<ExerciseType>): Promise<ExerciseType
   }
 };
 
+const update = async (exerciseType: ExerciseType): Promise<ExerciseType> => {
+  try {
+    const editableExerciseType = exerciseType;
+    editableExerciseType.modified = new Date();
+
+    return await getExerciseTypeRepository().save(editableExerciseType);
+  } catch (error: any) {
+    logger.error(`Update failed in ExerciseTypeService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 export default {
   create,
+  update,
 };
