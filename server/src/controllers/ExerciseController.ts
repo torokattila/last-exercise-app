@@ -3,6 +3,7 @@ import { Router, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import ExerciseService from 'services/ExerciseService';
 import * as Yup from 'yup';
+import { validate as uuidValidate } from 'uuid';
 
 const logger = Logger(__filename);
 
@@ -21,6 +22,7 @@ class ExerciseController {
 
   init() {
     this.router.post('/', PromiseRejectionHandler(this.createExercise));
+    this.router.get('/:id', PromiseRejectionHandler(this.getExercise));
   }
 
   private async createExercise(req: Request, res: Response) {
@@ -40,6 +42,31 @@ class ExerciseController {
 
     logger.info(`POST /exercises status code: ${StatusCodes.CREATED}`);
     return res.status(StatusCodes.CREATED).send(result);
+  }
+
+  private async getExercise(req: Request, res: Response) {
+    logger.info(`GET /exercises/:id called, id param: ${JSON.stringify(req.params.id)}`);
+
+    const id = req.params.id;
+
+    if (!id || !uuidValidate(id)) throw new Error('invalid_path_parameters');
+
+    try {
+      const exercise = await ExerciseService.findById(id);
+
+      if (exercise) {
+        logger.info(`GET /exercises/${id} status code: ${StatusCodes.OK}`);
+        return res.status(StatusCodes.OK).send(exercise);
+      } else {
+        return res.status(StatusCodes.BAD_REQUEST).send({
+          errors: ['exercise_not_found'],
+        });
+      }
+    } catch (error: any) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        errors: [error],
+      });
+    }
   }
 }
 

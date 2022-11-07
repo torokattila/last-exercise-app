@@ -27,6 +27,22 @@ const create = async (exercise: Partial<Exercise>): Promise<Exercise> => {
   }
 };
 
+const findById = async (id: string): Promise<Exercise> => {
+  try {
+    const queryBuilder = getExerciseRepository().createQueryBuilder('exercise');
+    queryBuilder.leftJoinAndSelect('exercise.exerciseTypes', 'exerciseTypes');
+    queryBuilder.andWhere('exercise.id = :id', { id });
+
+    const exercise = await queryBuilder.getOne();
+    
+    return Promise.resolve(exercise);
+  } catch (error: any) {
+    logger.error(`Find by id failed in ExerciseService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 export default {
   create,
+  findById,
 };
