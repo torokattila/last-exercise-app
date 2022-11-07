@@ -23,6 +23,7 @@ const findById = async (userId: string): Promise<User> => {
   try {
     const queryBuilder = getUserRepository().createQueryBuilder('user');
     queryBuilder.leftJoinAndSelect('user.exercises', 'exercises');
+    queryBuilder.leftJoinAndSelect('exercises.exerciseTypes', 'exerciseTypes');
     queryBuilder.leftJoinAndSelect('user.lastExercise', 'lastExercise');
     queryBuilder.andWhere('user.id = :id', { id: userId });
 

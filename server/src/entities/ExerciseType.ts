@@ -17,9 +17,9 @@ export default class ExerciseType extends EntityBase {
   @Column({ name: 'exercise_id' })
   exerciseId: string;
 
-  @Column({ default: 0 })
+  @Column({ name: 'series_card_number', nullable: true })
   seriesCardNumber: number;
 
-  @Column({ default: '#005A92' })
+  @Column({ name: 'series_card_color', default: '#005A92' })
   seriesCardsColor: string;
 }
