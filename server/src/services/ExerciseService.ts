@@ -2,6 +2,7 @@ import { Logger } from 'common';
 import Exercise from '../entities/Exercise';
 import { getConnection } from 'typeorm';
 import ExerciseTypeService from './ExerciseTypeService';
+import { v4 as uuidv4 } from 'uuid';
 
 const logger = Logger(__filename);
 const getExerciseRepository = () => getConnection().getRepository(Exercise);
@@ -61,7 +62,14 @@ const update = async (exercise: Partial<Exercise>): Promise<Exercise> => {
 
     if (exercise.exerciseTypes) {
       for (const type of exercise.exerciseTypes) {
-        await ExerciseTypeService.update(type);
+        if (!type.id) {
+          const newType = type;
+          newType.id = uuidv4();
+          
+          await ExerciseTypeService.create(type);
+        } else {
+          await ExerciseTypeService.update(type);
+        }
       }
     }
 
