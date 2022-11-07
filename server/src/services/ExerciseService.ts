@@ -74,9 +74,19 @@ const update = async (exercise: Partial<Exercise>): Promise<Exercise> => {
   }
 };
 
+const remove = async (id: string): Promise<void> => {
+  try {
+    await getExerciseRepository().delete(id);
+  } catch (error: any) {
+    logger.error(`Delete failed in ExerciseService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 export default {
   create,
   list,
   findById,
   update,
+  remove,
 };

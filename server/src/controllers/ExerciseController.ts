@@ -25,6 +25,7 @@ class ExerciseController {
     this.router.get('/:id', PromiseRejectionHandler(this.getExercise));
     this.router.get('/', PromiseRejectionHandler(this.listExercises));
     this.router.put('/:id', PromiseRejectionHandler(this.editExercise));
+    this.router.delete('/:id', PromiseRejectionHandler(this.deleteExercise));
   }
 
   private async createExercise(req: Request, res: Response) {
@@ -115,6 +116,26 @@ class ExerciseController {
 
     logger.info(`PUT /exercises/${id} status code: ${StatusCodes.OK}`);
     return res.status(StatusCodes.OK).send(editedExercise);
+  }
+
+  private async deleteExercise(req: Request, res: Response) {
+    logger.info(
+      `DELETE /exercises/:id called, id param: ${JSON.stringify(req.params.id)}`
+    );
+
+    const id = req.params.id;
+
+    if (!id || !uuidValidate(id)) throw new Error('invalid_path_parameters');
+
+    try {
+      await ExerciseService.remove(id);
+
+      return res.sendStatus(StatusCodes.NO_CONTENT);
+    } catch (error: any) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        errors: [error],
+      });
+    }
   }
 }
 
