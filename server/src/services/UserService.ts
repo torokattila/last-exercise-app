@@ -25,6 +25,7 @@ const findById = async (userId: string): Promise<User> => {
     queryBuilder.leftJoinAndSelect('user.exercises', 'exercises');
     queryBuilder.leftJoinAndSelect('exercises.exerciseTypes', 'exerciseTypes');
     queryBuilder.leftJoinAndSelect('user.lastExercise', 'lastExercise');
+    queryBuilder.leftJoinAndSelect('lastExercise.exerciseTypes', 'lastExerciseTypes')
     queryBuilder.andWhere('user.id = :id', { id: userId });
 
     const user = await queryBuilder.getOne();
@@ -85,6 +86,26 @@ const updatePassword = async (
   }
 };
 
+const updateLastExercise = async (
+  userId: string,
+  exerciseId: string
+): Promise<User> => {
+  try {
+    const foundUser = await getUserRepository().findOne({
+      where: { id: userId },
+    });
+    foundUser.modified = new Date();
+    foundUser.lastExerciseId = exerciseId;
+
+    const savedUser = await save(foundUser);
+
+    return savedUser;
+  } catch (error: any) {
+    logger.error(`Update last exercise failed in UserService, error: ${error}`);
+    throw new Error(error);
+  }
+};
+
 const remove = async (id: string): Promise<void> => {
   try {
     await getUserRepository().delete(id);
@@ -124,6 +145,7 @@ export default {
   save,
   update,
   updatePassword,
+  updateLastExercise,
   remove,
   comparePassword,
   generateHash,

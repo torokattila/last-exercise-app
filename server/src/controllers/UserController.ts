@@ -13,6 +13,10 @@ const UpdateUserSchema = Yup.object().shape({
   lastname: Yup.string().required('lastname_required'),
 });
 
+const UpdateLastExerciseSchema = Yup.object().shape({
+  exerciseId: Yup.string().required('exercise_id_required'),
+});
+
 class UserController {
   router: Router;
 
@@ -27,6 +31,10 @@ class UserController {
     this.router.put(
       '/:id/password/update',
       PromiseRejectionHandler(this.updatePassword)
+    );
+    this.router.put(
+      '/:id/lastexercise',
+      PromiseRejectionHandler(this.updateLastExercise)
     );
     this.router.delete('/:id', PromiseRejectionHandler(this.deleteUser));
   }
@@ -154,6 +162,35 @@ class UserController {
 
     logger.info(`DELETE /users/${id} status code: ${StatusCodes.NO_CONTENT}`);
     return res.sendStatus(StatusCodes.NO_CONTENT);
+  }
+
+  private async updateLastExercise(req: Request, res: Response) {
+    logger.info(
+      `PUT /users/:id/lastexercise called, id param: ${JSON.stringify(
+        req.params.id
+      )}, body: ${JSON.stringify(req.body)}`
+    );
+
+    const id = req.params.id;
+    const exerciseId = req.body.exerciseId;
+
+    if (!id || !uuidValidate(id)) throw new Error('invalid_path_parameters');
+
+    try {
+      await UpdateLastExerciseSchema.validate(req.body, { abortEarly: false });
+    } catch (error: any) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        errors: error.errors,
+      });
+    }
+
+    const updatedUser = await UserService.updateLastExercise(
+      id,
+      exerciseId
+    );
+
+    logger.info(`PUT /users/${id}/lastexercise status code ${StatusCodes.OK}`);
+    return res.status(StatusCodes.OK).send(updatedUser);
   }
 }
 

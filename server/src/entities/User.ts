@@ -25,4 +25,7 @@ export default class User extends EntityBase {
   @OneToOne(() => Exercise, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'last_exercise_id' })
   lastExercise: Exercise;
+
+  @Column({ name: 'last_exercise_id', nullable: true })
+  lastExerciseId: string;
 }
