@@ -1,13 +1,18 @@
 import React from 'react';
-import DarkModeSwitch from './components/dark-mode-switch';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import LoadingScreen from './components/LoadingScreen';
+import useAuth from './hooks/useAuth';
+import Router from './routes';
 
-function App() {
+const App = (): JSX.Element => {
+  const { isInitialized } = useAuth();
+  const queryClient = new QueryClient();
+
   return (
-    <div className="dark:bg-black bg-white h-full w-full">
-      <DarkModeSwitch />
-      <h2 className="dark:text-white text-black">Hello</h2>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      {isInitialized ? <Router /> : <LoadingScreen />}
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;
