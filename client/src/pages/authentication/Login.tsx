@@ -19,7 +19,7 @@ const Login = (): JSX.Element => {
         })}
       >
         <div
-          className={classNames(`absolute rotate-90 w-8 top-7 right-10 m-0`, {
+          className={classNames(`absolute rotate-90 w-8 top-7 right-5 m-0`, {
             hidden: !isLoginPage,
           })}
         >
@@ -28,7 +28,7 @@ const Login = (): JSX.Element => {
           </h1>
         </div>
         <div
-          className={classNames(`absolute rotate-90 w-8 top-7 left-7 m-0`, {
+          className={classNames(`absolute rotate-90 w-8 top-7 left-3 m-0`, {
             hidden: isLoginPage,
           })}
         >
@@ -37,7 +37,7 @@ const Login = (): JSX.Element => {
           </h1>
         </div>
       </div>
-      <div className="credentials absolute h-[53%] bottom-0 w-full bg-black">
+      <div className="credentials absolute flex justify-center items-center h-[53%] bottom-0 w-full bg-black">
         {isLoginPage ? <LoginForm /> : <RegistrationForm />}
       </div>
     </div>
