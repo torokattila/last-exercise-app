@@ -37,7 +37,14 @@ const Login = (): JSX.Element => {
           </h1>
         </div>
       </div>
-      <div className="credentials absolute flex justify-center items-center h-[53%] bottom-0 w-full bg-black">
+      <div
+        className={classNames(
+          `credentials absolute flex justify-center items-center h-[53%] bottom-0 w-full bg-black`,
+          {
+            'h-[60%]': !isLoginPage,
+          }
+        )}
+      >
         {isLoginPage ? <LoginForm /> : <RegistrationForm />}
       </div>
     </div>

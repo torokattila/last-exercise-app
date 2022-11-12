@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
 import eyeOutline from '@iconify/icons-eva/eye-outline';
 import emailOutline from '@iconify/icons-eva/email-outline';
 import lockOutline from '@iconify/icons-eva/lock-outline';
