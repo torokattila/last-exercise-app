@@ -10,7 +10,7 @@ module.exports = {
       },
       boxShadow: {
         top: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
-        'top-dark': 'rgba(255, 255, 255, 0.35) 0px 5px 15px;'
+        'top-dark': 'rgba(255, 255, 255, 0.35) 0px 5px 15px 0px;',
       },
       spacing: {
         0: '0px',
