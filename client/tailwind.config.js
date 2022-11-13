@@ -8,6 +8,10 @@ module.exports = {
         blues: ['', '#4A9ECB'],
         greys: ['', '#6C6C6C'],
       },
+      boxShadow: {
+        top: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
+        'top-dark': 'rgba(255, 255, 255, 0.35) 0px 5px 15px;'
+      },
       spacing: {
         0: '0px',
         0.5: '4px',

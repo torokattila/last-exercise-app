@@ -1,13 +1,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import homeFill from '@iconify/icons-eva/home-fill';
 import { Icon } from '@iconify/react';
-import personFill from '@iconify/icons-eva/person-fill';
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { Tooltip } from '@mui/material';
 import DarkModeSwitch from '../DarkModeSwitch';
-import logOutFill from '@iconify/icons-eva/log-out-fill';
 import LocalStorageManager from '../../utils/LocalStorageManager';
+
+import personFill from '@iconify/icons-eva/person-fill';
+import homeFill from '@iconify/icons-eva/home-fill';
+import logOutFill from '@iconify/icons-eva/log-out-fill';
 
 const DesktopMenu = () => {
   const navigate = useNavigate();
