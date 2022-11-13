@@ -34,9 +34,52 @@ export default function Router(): React.ReactElement | null {
         </AuthGuard>
       ),
     },
+    {
+      path: '/exercises',
+      children: [
+        {
+          path: 'add',
+          element: (
+            <AuthGuard>
+              <Layout>
+                <AddExercise />
+              </Layout>
+            </AuthGuard>
+          ),
+        },
+        {
+          path: ':exerciseId',
+          children: [
+            {
+              path: 'edit',
+              element: (
+                <AuthGuard>
+                  <Layout>
+                    <EditExercise />
+                  </Layout>
+                </AuthGuard>
+              ),
+            },
+            {
+              path: '',
+              element: (
+                <AuthGuard>
+                  <Layout>
+                    <Exercise />
+                  </Layout>
+                </AuthGuard>
+              ),
+            },
+          ],
+        },
+      ],
+    },
   ]);
 }
 
 const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
 const Home = Loadable(lazy(() => import('../pages/Home')));
 const Profile = Loadable(lazy(() => import('../pages/Profile')));
+const AddExercise = Loadable(lazy(() => import('../pages/AddExercise')));
+const Exercise = Loadable(lazy(() => import('../pages/Exercise')));
+const EditExercise = Loadable(lazy(() => import('../pages/EditExercise')));

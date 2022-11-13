@@ -7,6 +7,7 @@ interface ExerciseType extends EntityBase {
   exerciseId: string;
   seriesCardNumber: number | null;
   seriesCardsColor: string;
+  cardTextColor: string;
 }
 
 export default ExerciseType;

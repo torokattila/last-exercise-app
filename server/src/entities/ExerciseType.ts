@@ -22,4 +22,7 @@ export default class ExerciseType extends EntityBase {
 
   @Column({ name: 'series_card_color', default: '#005A92' })
   seriesCardsColor: string;
+
+  @Column({ name: 'card_text_color', default: '#fff' })
+  cardTextColor: string;
 }
