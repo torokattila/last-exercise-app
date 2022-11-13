@@ -6,8 +6,6 @@ import Exercise from '../../models/Exercise';
 const Home = (): JSX.Element => {
   const { refetchUser, user } = useHome();
 
-  console.log(user);
-
   return (
     <div className="overflow-y-auto pb-16 lg:pb-7 px-5 bg-white flex flex-col w-full h-screen dark:bg-[#28282B]">
       <div className="mt-5 lg:mt-7">

@@ -3,6 +3,7 @@ import config from '../config';
 import User from '../models/User';
 import { StatusCodes } from 'http-status-codes';
 import * as Storage from '../lib/storage';
+import Exercise from '../models/Exercise';
 
 export const ApiURL =
   config.api.port !== 80 && config.api.port !== 443
@@ -31,7 +32,7 @@ class ApiClient {
       window.location.replace('/login');
       return config;
     }
-  }
+  };
 
   private handleUnauthorized = (error: any) => {
     if (error?.response?.status === StatusCodes.UNAUTHORIZED) {
@@ -42,15 +43,29 @@ class ApiClient {
     } else {
       return Promise.reject(error);
     }
-  }
+  };
 
   // User
   async getCurrentUser(): Promise<User> {
     const response: AxiosResponse<User> = await this.client.get<User>('/me', {
       headers: {
         access_token: Storage.getItem('access_token') || '',
-      }
+      },
     });
+
+    return response.data;
+  }
+
+  // Exercise
+  async getExercise(exerciseId: string): Promise<Exercise> {
+    const response: AxiosResponse<Exercise> = await this.client.get<Exercise>(
+      `/exercises/${exerciseId}`,
+      {
+        headers: {
+          access_token: Storage.getItem('access_token') || '',
+        },
+      }
+    );
 
     return response.data;
   }
