@@ -2,6 +2,7 @@ import { useRoutes } from 'react-router-dom';
 import { lazy } from 'react';
 import Loadable from '../components/Loadable';
 import AuthGuard from '../guards/AuthGuard';
+import Layout from '../components/shared/Layout';
 
 export default function Router(): React.ReactElement | null {
   return useRoutes([
@@ -17,7 +18,19 @@ export default function Router(): React.ReactElement | null {
       path: '',
       element: (
         <AuthGuard>
-          <Home />
+          <Layout>
+            <Home />
+          </Layout>
+        </AuthGuard>
+      ),
+    },
+    {
+      path: '/profile',
+      element: (
+        <AuthGuard>
+          <Layout>
+            <Profile />
+          </Layout>
         </AuthGuard>
       ),
     },
@@ -26,3 +39,4 @@ export default function Router(): React.ReactElement | null {
 
 const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
 const Home = Loadable(lazy(() => import('../pages/Home')));
+const Profile = Loadable(lazy(() => import('../pages/Profile')));

@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import * as Storage from '../lib/storage';
+import moonFill from '@iconify/icons-eva/moon-fill';
+import sunFill from '@iconify/icons-eva/sun-fill';
+import { Icon } from '@iconify/react';
 
 const DarkModeSwitch = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(
@@ -22,7 +25,13 @@ const DarkModeSwitch = () => {
 
   return (
     <button onClick={toggleDarkMode}>
-      DarkMode
+      <div className="text-[#4A9ECB] hover:text-[#0e6696]">
+        {isDarkMode ? (
+          <Icon icon={sunFill} fontSize={25} />
+        ) : (
+          <Icon icon={moonFill} fontSize={25} />
+        )}
+      </div>
     </button>
   );
 };
