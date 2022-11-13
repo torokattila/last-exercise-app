@@ -32,7 +32,7 @@ const RegistrationForm = (): JSX.Element => {
 
   return (
     <AnimatePresence>
-      <motion.div className="mt-6 flex flex-col items-center px-2 lg:px-0">
+      <motion.div className="mt-18 flex flex-col items-center px-2 lg:px-0">
         <form autoComplete="off" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-y-3">
             <motion.div
