@@ -11,7 +11,7 @@ module.exports = {
       boxShadow: {
         top: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
         'top-dark': 'rgba(255, 255, 255, 0.35) 0px 5px 15px 0px;',
-        'card': 'rgba(0, 0, 0, 0.35) 0px 5px 15px;'
+        card: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
       },
       spacing: {
         0: '0px',
@@ -55,6 +55,10 @@ module.exports = {
         38: '304px',
         39: '312px',
         40: '320px',
+        41: '328px',
+        42: '336px',
+        43: '344px',
+        44: '352px',
         58: '464px',
         59: '472px',
         60: '480px',

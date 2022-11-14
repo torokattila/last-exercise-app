@@ -29,4 +29,7 @@ export default class Exercise extends EntityBase {
 
   @Column({ name: 'text_color', default: '#fff' })
   textColor: string;
+
+  @Column({ name: 'order', default: 1 })
+  order: number;
 }

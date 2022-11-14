@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import ExerciseCard from '../../components/ExerciseCard';
 import AddExerciseButton from '../../components/shared/AddExerciseButton';
 import useHome from '../../hooks/useHome';
@@ -5,6 +6,24 @@ import Exercise from '../../models/Exercise';
 
 const Home = (): JSX.Element => {
   const { refetchUser, user } = useHome();
+
+  const sortExerciseByOrder = (a: Exercise, b: Exercise): number => {
+    if (a.order === b.order) {
+      if ((a.modified ?? '') < (b.modified ?? '')) return -1;
+      if ((a.modified ?? '') > (b.modified ?? '')) return 1;
+      return 0;
+    } else {
+      return a.order - b.order;
+    }
+  };
+
+  const sortedExercises = useMemo(() => {
+    if (user?.exercises) {
+      return user?.exercises.sort(sortExerciseByOrder);
+    } else {
+      return [];
+    }
+  }, [user]);
 
   return (
     <div className="overflow-y-auto pb-16 lg:pb-7 px-5 bg-white flex flex-col w-full h-screen dark:bg-[#28282B]">
@@ -34,12 +53,11 @@ const Home = (): JSX.Element => {
         </h2>
 
         <div className="mt-3 lg:mt-5 flex flex-col lg:flex-row lg:flex-wrap gap-4">
-          {user?.exercises &&
-            user?.exercises?.map((exercise: Exercise) => (
-              <div key={exercise.id}>
-                <ExerciseCard exercise={exercise} />
-              </div>
-            ))}
+          {sortedExercises.map((exercise: Exercise) => (
+            <div key={exercise.id}>
+              <ExerciseCard exercise={exercise} />
+            </div>
+          ))}
         </div>
       </div>
 
