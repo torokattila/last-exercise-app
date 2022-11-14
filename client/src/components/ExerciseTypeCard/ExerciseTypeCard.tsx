@@ -70,7 +70,7 @@ const ExerciseTypeCard = ({ exerciseType }: Props) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row lg:flex-wrap gap-3 items-center mt-3 px-3 lg:px-0">
+    <div className="flex flex-col lg:flex-row lg:flex-wrap gap-3 items-center mt-1 lg:mt-3 px-3 lg:px-0">
       <>
         {dynamicCards.map((card, index: number) => (
           <div
