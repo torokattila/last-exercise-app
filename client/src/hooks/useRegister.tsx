@@ -83,6 +83,7 @@ const useRegister = () => {
           if (error.response.data.errors[0] === 'email_already_exists') {
             const key = enqueueSnackbar('Email already exists!', {
               variant: 'error',
+              autoHideDuration: 3000,
               onClick: () => {
                 closeSnackbar(key);
               },

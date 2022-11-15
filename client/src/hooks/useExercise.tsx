@@ -32,6 +32,7 @@ const useExercise = () => {
 
       const key = enqueueSnackbar('Last exercise updated!', {
         variant: 'success',
+        autoHideDuration: 3000,
         onClick: () => {
           closeSnackbar(key);
         },
@@ -43,6 +44,7 @@ const useExercise = () => {
     } catch (error: any) {
       const key = enqueueSnackbar('Error in last exercise update!', {
         variant: 'error',
+        autoHideDuration: 3000,
         onClick: () => {
           closeSnackbar(key);
         },
