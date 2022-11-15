@@ -4,30 +4,14 @@ import useExercise from '../../hooks/useExercise';
 import ExerciseType from '../../models/ExerciseType';
 
 const Exercise = () => {
-  const { isLoading, currentExercise, refetch, handleFinishExercise } =
-    useExercise();
+  const {
+    isLoading,
+    currentExercise,
+    refetch,
+    handleFinishExercise,
+    sortedExerciseTypes,
+  } = useExercise();
   const [duration, setDuration] = useState<string>('');
-
-  const sortExerciseTypesByOrder = (
-    a: ExerciseType,
-    b: ExerciseType
-  ): number => {
-    if (a.order === b.order) {
-      if ((a.modified ?? '') < (b.modified ?? '')) return -1;
-      if ((a.modified ?? '') > (b.modified ?? '')) return 1;
-      return 0;
-    } else {
-      return a.order - b.order;
-    }
-  };
-
-  const sortedExerciseTypes = useMemo(() => {
-    if (currentExercise?.exerciseTypes) {
-      return currentExercise?.exerciseTypes.sort(sortExerciseTypesByOrder);
-    } else {
-      return [];
-    }
-  }, [currentExercise]);
 
   return (
     <>

@@ -1,7 +1,9 @@
 import { useSnackbar } from 'notistack';
+import { useMemo } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import ExerciseType from '../models/ExerciseType';
 import useApi from './useApi';
 import useHome from './useHome';
 
@@ -23,6 +25,27 @@ const useExercise = () => {
       refetchOnWindowFocus: false,
     }
   );
+
+  const sortExerciseTypesByOrder = (
+    a: ExerciseType,
+    b: ExerciseType
+  ): number => {
+    if (a.order === b.order) {
+      if ((a.modified ?? '') < (b.modified ?? '')) return -1;
+      if ((a.modified ?? '') > (b.modified ?? '')) return 1;
+      return 0;
+    } else {
+      return a.order - b.order;
+    }
+  };
+
+  const sortedExerciseTypes = useMemo(() => {
+    if (currentExercise?.exerciseTypes) {
+      return currentExercise?.exerciseTypes.sort(sortExerciseTypesByOrder);
+    } else {
+      return [];
+    }
+  }, [currentExercise]);
 
   const finishExercise = async (exerciseId: string): Promise<boolean> => {
     try {
@@ -92,6 +115,7 @@ const useExercise = () => {
     currentExercise,
     refetch,
     handleFinishExercise,
+    sortedExerciseTypes,
   };
 };
 
