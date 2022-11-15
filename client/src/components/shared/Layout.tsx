@@ -6,9 +6,9 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className='flex lg:flex-row flex-col'>
+    <div className="flex lg:flex-row flex-col">
       <Menu />
-      {children}
+      <div className='lg:pl-14'>{children}</div>
     </div>
   );
 };

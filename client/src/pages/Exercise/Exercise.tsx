@@ -22,7 +22,7 @@ const Exercise = () => {
           </h1>
         </div>
 
-        <div className="relative flex flex-col h-full pb-16 lg:pb-7">
+        <div className="relative flex flex-col h-screen lg:pb-8">
           {sortedExerciseTypes.map((type) => (
             <div key={type.id} className="mt-3">
               <h1 className="font-semibold text-lg dark:text-white text-gray-800">
@@ -31,6 +31,15 @@ const Exercise = () => {
               <ExerciseTypeCard key={type.id} exerciseType={type} />
             </div>
           ))}
+
+          <div className="mt-10 pb-7 flex justify-center flex-row items-center">
+            <button
+              className="uppercase font-medium rounded-full bg-[#4A9ECB] hover:bg-[#0e6696] py-2 px-10 transition-all shadow-card text-white"
+              onClick={() => handleFinishExercise(currentExercise?.id ?? '')}
+            >
+              finish exercise
+            </button>
+          </div>
         </div>
       </div>
 

@@ -21,7 +21,7 @@ const DesktopMenu = () => {
   }, [location.pathname]);
 
   return (
-    <div className="relative lg:flex flex-col items-center hidden w-12 h-screen shadow-xl bg-white dark:bg-[#28282B]">
+    <div className="fixed lg:flex flex-col items-center hidden w-12 h-screen shadow-xl bg-white dark:bg-[#28282B]">
       <div className="mt-3 cursor-pointer" onClick={() => navigate('/')}>
         <img
           src={`${process.env.PUBLIC_URL}/workout.png`}
