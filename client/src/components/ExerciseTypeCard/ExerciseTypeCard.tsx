@@ -47,20 +47,20 @@ const ExerciseTypeCard = ({ exerciseType }: Props) => {
 
             <div className="mt-4 flex flex-row gap-x-2 justify-end">
               <button
-                className="px-2 py-1 bg-[#4A9ECC] hover:bg-[#0e6696] rounded-full text-white transition-all"
+                className="px-2 py-1 uppercase bg-[#4A9ECC] hover:bg-[#0e6696] rounded-full text-white transition-all"
                 onClick={() => onClose()}
               >
-                CANCEL
+                cancel
               </button>
 
               <button
-                className="px-2 py-1 bg-red-500 transition-all hover:bg-red-700 rounded-full text-white font-bold"
+                className="px-2 py-1 uppercase bg-red-500 transition-all hover:bg-red-700 rounded-full text-white font-bold"
                 onClick={() => {
                   deleteCard(card);
                   onClose();
                 }}
               >
-                DELETE
+                delete
               </button>
             </div>
           </div>

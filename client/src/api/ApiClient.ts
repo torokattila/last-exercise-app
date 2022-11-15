@@ -56,6 +56,22 @@ class ApiClient {
     return response.data;
   }
 
+  async finishExercise(userId: string, exerciseId: string): Promise<User> {
+    const response: AxiosResponse<User> = await this.client.put<User>(
+      `/users/${userId}/lastexercise`,
+      {
+        exerciseId,
+      },
+      {
+        headers: {
+          access_token: Storage.getItem('access_token') || '',
+        },
+      }
+    );
+
+    return response.data;
+  }
+
   // Exercise
   async getExercise(exerciseId: string): Promise<Exercise> {
     const response: AxiosResponse<Exercise> = await this.client.get<Exercise>(

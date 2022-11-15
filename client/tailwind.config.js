@@ -9,9 +9,9 @@ module.exports = {
         greys: ['', '#6C6C6C'],
       },
       boxShadow: {
-        top: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
-        'top-dark': 'rgba(255, 255, 255, 0.35) 0px 5px 15px 0px;',
-        card: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
+        top: '0px 5px 15px rgba(0, 0, 0, 0.35);',
+        'top-dark': '0px 5px 15px 0px rgba(255, 255, 255, 0.35);',
+        card: '0px 5px 15px rgba(0, 0, 0, 0.35);',
       },
       spacing: {
         0: '0px',
