@@ -20,7 +20,7 @@ const MobileMenu = () => {
   }, [location.pathname]);
 
   return (
-    <div className="lg:hidden fixed z-20 gap-x-3 justify-evenly bottom-0 items-center flex flex-row h-12 shadow-top dark:shadow-top-dark w-full bg-white dark:bg-[#28282B]">
+    <div className="lg:hidden fixed z-20 gap-x-3 justify-evenly bottom-0 items-center flex flex-row h-9 shadow-top dark:shadow-top-dark w-full bg-white dark:bg-[#28282B]">
       <div
         className={classNames(
           `p-1.5 rounded-2xl cursor-pointer transition-all`,

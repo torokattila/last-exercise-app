@@ -46,7 +46,7 @@ const LoginForm = (): JSX.Element => {
                 placeholder={errors.email ? errors.email : 'Email'}
                 value={email}
                 className={classNames(
-                  `border-2 w-auto lg:w-96 border-white bg-transparent rounded-full py-1.5 pl-8 pr-4 focus:border-blues-1 outline-none transition-all`,
+                  `w-auto rounded-full border-2 border-white bg-transparent py-1.5 pl-8 pr-4 outline-none transition-all focus:border-blues-1 lg:w-96`,
                   {
                     'text-greys-1': !email.length,
                     'text-white': email.length,
@@ -81,7 +81,7 @@ const LoginForm = (): JSX.Element => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 className={classNames(
-                  `border-2 w-auto lg:w-96 border-white bg-transparent rounded-full py-1.5 pl-8 pr-4 focus:border-blues-1 outline-none transition-all`,
+                  `w-auto rounded-full border-2 border-white bg-transparent py-1.5 pl-8 pr-4 outline-none transition-all focus:border-blues-1 lg:w-96`,
                   {
                     'text-greys-1': !password.length,
                     'text-white': password.length,
@@ -105,7 +105,7 @@ const LoginForm = (): JSX.Element => {
             </motion.div>
 
             <motion.div
-              className="relative flex flex-row gap-x-1 mt-1 justify-between"
+              className="relative mt-1 flex flex-row justify-between gap-x-1"
               initial={{
                 opacity: 0,
               }}
@@ -119,12 +119,12 @@ const LoginForm = (): JSX.Element => {
               <button
                 onClick={() => navigate('/register')}
                 type="button"
-                className="p-1.5 border-white transition-all uppercase rounded-full text-white hover:text-[#4A9ECC] w-full"
+                className="w-full rounded-full border-white p-1.5 uppercase text-white transition-all hover:text-[#4A9ECC]"
               >
                 register
               </button>
 
-              <button className="p-1.5 hover:bg-[#0e6696] transition-all bg-[#4A9ECC] w-full rounded-full uppercase text-white">
+              <button className="w-full rounded-full bg-[#4A9ECC] p-1.5 uppercase text-white transition-all hover:bg-[#0e6696]">
                 login
               </button>
             </motion.div>

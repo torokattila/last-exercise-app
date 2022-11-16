@@ -13,12 +13,12 @@ const Exercise = () => {
     sortedExerciseTypes,
   } = useExercise();
   const [duration, setDuration] = useState<string>('');
-  const [showStopWatch, setShowStopWatch] = useState<boolean>(true);
+  const [showStopWatch, setShowStopWatch] = useState<boolean>(false);
 
   return (
     <>
       <div className="h-screen w-full px-5 relative hidden flex-col lg:flex">
-        <StopWatch show={showStopWatch} />
+        <StopWatch show={showStopWatch} setShowStopWatch={setShowStopWatch} />
         <div className="w-full mt-5 flex">
           <h1 className="text-2xl text-gray-800 dark:text-white font-bold">
             {currentExercise?.name}
@@ -46,7 +46,7 @@ const Exercise = () => {
         </div>
       </div>
 
-      <StopWatch show={showStopWatch} />
+      <StopWatch show={showStopWatch} setShowStopWatch={setShowStopWatch} />
       <div
         style={{
           backgroundColor: currentExercise?.cardColor,
