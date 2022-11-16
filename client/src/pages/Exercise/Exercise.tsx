@@ -17,27 +17,31 @@ const Exercise = () => {
 
   return (
     <>
-      <div className="h-screen w-full px-5 relative hidden flex-col lg:flex">
-        <StopWatch show={showStopWatch} setShowStopWatch={setShowStopWatch} />
-        <div className="w-full mt-5 flex">
-          <h1 className="text-2xl text-gray-800 dark:text-white font-bold">
+      <div className="relative hidden h-screen w-full flex-col px-5 lg:flex">
+        <StopWatch
+          show={showStopWatch}
+          setDuration={setDuration}
+          setShowStopWatch={setShowStopWatch}
+        />
+        <div className="mt-5 flex w-full">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
             {currentExercise?.name}
           </h1>
         </div>
 
-        <div className="relative flex flex-col h-screen lg:pb-8">
+        <div className="relative flex h-screen flex-col lg:pb-8">
           {sortedExerciseTypes.map((type) => (
             <div key={type.id} className="mt-3">
-              <h1 className="font-semibold text-lg dark:text-white text-gray-800">
+              <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
                 {type.name}
               </h1>
               <ExerciseTypeCard key={type.id} exerciseType={type} />
             </div>
           ))}
 
-          <div className="mt-10 pb-7 flex justify-center flex-row items-center">
+          <div className="mt-10 flex flex-row items-center justify-center pb-7">
             <button
-              className="uppercase font-medium rounded-full bg-[#4A9ECB] hover:bg-[#0e6696] py-2 px-10 transition-all shadow-card text-white"
+              className="rounded-full bg-blues-1 py-2 px-10 font-medium uppercase text-white shadow-card transition-all hover:bg-blues-2"
               onClick={() => handleFinishExercise(currentExercise?.id ?? '')}
             >
               finish exercise
@@ -46,14 +50,18 @@ const Exercise = () => {
         </div>
       </div>
 
-      <StopWatch show={showStopWatch} setShowStopWatch={setShowStopWatch} />
+      <StopWatch
+        show={showStopWatch}
+        setShowStopWatch={setShowStopWatch}
+        setDuration={setDuration}
+      />
       <div
         style={{
           backgroundColor: currentExercise?.cardColor,
         }}
-        className="h-full relative flex flex-col lg:hidden"
+        className="relative flex h-full flex-col lg:hidden"
       >
-        <div className="w-full h-13 flex items-center justify-center">
+        <div className="flex h-13 w-full items-center justify-center">
           <h1
             style={{
               color: currentExercise?.textColor,
@@ -64,18 +72,18 @@ const Exercise = () => {
           </h1>
         </div>
 
-        <div className="relative flex flex-col h-full bg-white dark:bg-[#28282B] rounded-t-[40px] pb-17">
+        <div className="relative flex h-full flex-col rounded-t-[40px] bg-white pb-17 dark:bg-[#28282B]">
           {sortedExerciseTypes.map((type) => (
             <div key={type.id}>
-              <h1 className="font-semibold text-lg mt-5 text-center dark:text-white text-gray-800">
+              <h1 className="mt-5 text-center text-lg font-semibold text-gray-800 dark:text-white">
                 {type.name}
               </h1>
               <ExerciseTypeCard key={type.id} exerciseType={type} />
             </div>
           ))}
-          <div className="mt-5 flex justify-center flex-row items-center">
+          <div className="mt-5 flex flex-row items-center justify-center">
             <button
-              className="uppercase font-medium rounded-full bg-[#4A9ECB] hover:bg-[#0e6696] py-2 px-4 transition-all shadow-card text-white"
+              className="rounded-full bg-[#4A9ECB] py-2 px-4 font-medium uppercase text-white shadow-card transition-all hover:bg-[#0e6696]"
               onClick={() => handleFinishExercise(currentExercise?.id ?? '')}
             >
               finish exercise
