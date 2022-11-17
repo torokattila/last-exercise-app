@@ -56,11 +56,16 @@ class ApiClient {
     return response.data;
   }
 
-  async finishExercise(userId: string, exerciseId: string): Promise<User> {
+  async finishExercise(
+    userId: string,
+    exerciseId: string,
+    duration: string
+  ): Promise<User> {
     const response: AxiosResponse<User> = await this.client.put<User>(
       `/users/${userId}/lastexercise`,
       {
         exerciseId,
+        duration,
       },
       {
         headers: {

@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { Logger } from 'common';
 import User from '../entities/User';
 import { getConnection } from 'typeorm';
+import ExerciseService from './ExerciseService';
 
 const logger = Logger(__filename);
 const getUserRepository = () => getConnection().getRepository(User);
@@ -25,7 +26,10 @@ const findById = async (userId: string): Promise<User> => {
     queryBuilder.leftJoinAndSelect('user.exercises', 'exercises');
     queryBuilder.leftJoinAndSelect('exercises.exerciseTypes', 'exerciseTypes');
     queryBuilder.leftJoinAndSelect('user.lastExercise', 'lastExercise');
-    queryBuilder.leftJoinAndSelect('lastExercise.exerciseTypes', 'lastExerciseTypes')
+    queryBuilder.leftJoinAndSelect(
+      'lastExercise.exerciseTypes',
+      'lastExerciseTypes'
+    );
     queryBuilder.andWhere('user.id = :id', { id: userId });
 
     const user = await queryBuilder.getOne();
@@ -88,7 +92,8 @@ const updatePassword = async (
 
 const updateLastExercise = async (
   userId: string,
-  exerciseId: string
+  exerciseId: string,
+  duration: string
 ): Promise<User> => {
   try {
     const foundUser = await getUserRepository().findOne({
@@ -96,6 +101,10 @@ const updateLastExercise = async (
     });
     foundUser.modified = new Date();
     foundUser.lastExerciseId = exerciseId;
+    const foundExercise = await ExerciseService.findById(exerciseId);
+    foundExercise.duration = duration;
+
+    await ExerciseService.update(foundExercise);
 
     const savedUser = await save(foundUser);
 

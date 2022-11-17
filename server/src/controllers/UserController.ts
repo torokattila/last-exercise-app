@@ -173,6 +173,7 @@ class UserController {
 
     const id = req.params.id;
     const exerciseId = req.body.exerciseId;
+    const duration = req.body.duration;
 
     if (!id || !uuidValidate(id)) throw new Error('invalid_path_parameters');
 
@@ -186,7 +187,8 @@ class UserController {
 
     const updatedUser = await UserService.updateLastExercise(
       id,
-      exerciseId
+      exerciseId,
+      duration,
     );
 
     logger.info(`PUT /users/${id}/lastexercise status code ${StatusCodes.OK}`);

@@ -47,9 +47,12 @@ const useExercise = () => {
     }
   }, [currentExercise]);
 
-  const finishExercise = async (exerciseId: string): Promise<boolean> => {
+  const finishExercise = async (
+    exerciseId: string,
+    duration: string
+  ): Promise<boolean> => {
     try {
-      await apiClient.finishExercise(user?.id ?? '', exerciseId);
+      await apiClient.finishExercise(user?.id ?? '', exerciseId, duration);
 
       refetchUser();
 
@@ -77,27 +80,27 @@ const useExercise = () => {
     }
   };
 
-  const handleFinishExercise = (exerciseId: string) => {
+  const handleFinishExercise = (exerciseId: string, duration: string) => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
-          <div className="shadow-card bg-white p-3 lg:p-4 rounded-2xl backdrop-blur-xl">
-            <p className="text-left text-gray-800 font-medium lg:font-bold text-md lg:text-lg">
+          <div className="rounded-2xl bg-white p-3 shadow-card backdrop-blur-xl lg:p-4">
+            <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
               Are you sure you want to finish the exercise?
             </p>
 
-            <div className="mt-4 flex flex-row gap-x-2 justify-end">
+            <div className="mt-4 flex flex-row justify-end gap-x-2">
               <button
-                className="px-2 py-1 uppercase bg-[#4A9ECC] hover:bg-[#0e6696] rounded-full text-white transition-all"
+                className="rounded-full bg-[#4A9ECC] px-2 py-1 uppercase text-white transition-all hover:bg-[#0e6696]"
                 onClick={() => onClose()}
               >
                 cancel
               </button>
 
               <button
-                className="px-2 py-1 uppercase bg-red-500 transition-all hover:bg-red-700 rounded-full text-white font-bold"
+                className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
                 onClick={() => {
-                  finishExercise(exerciseId);
+                  finishExercise(exerciseId, duration);
                   onClose();
                 }}
               >
