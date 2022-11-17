@@ -26,9 +26,9 @@ const Home = (): JSX.Element => {
   }, [user]);
 
   return (
-    <div className="overflow-y-auto pb-16 lg:pb-7 px-5 bg-white flex flex-col w-full h-screen dark:bg-[#28282B]">
+    <div className="flex h-screen w-full flex-col overflow-y-auto bg-white px-5 pb-16 dark:bg-[#28282B] lg:pb-7">
       <div className="mt-5 lg:mt-7">
-        <h1 className="text-2xl font-bold dark:text-white text-gray-800">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
           Hello, {user?.firstname}! 👋
         </h1>
         <p className="mt-1 text-gray-500 dark:text-gray-400">
@@ -38,21 +38,22 @@ const Home = (): JSX.Element => {
 
       {user?.lastExercise && (
         <div className="mt-5 lg:mt-7">
-          <h1 className="text-gray-800 dark:text-white font-bold text-xl">
+          <h1 className="text-xl font-bold text-gray-800 dark:text-white">
             Your last exercise was:
           </h1>
           <div className="mt-3">
+            
             <ExerciseCard exercise={user?.lastExercise} isLastExercise />
           </div>
         </div>
       )}
 
       <div className="mt-10 flex flex-col">
-        <h2 className="text-gray-800 dark:text-white text-xl font-bold">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white">
           Your exercises:
         </h2>
 
-        <div className="mt-3 lg:mt-5 flex flex-col lg:flex-row lg:flex-wrap gap-4">
+        <div className="mt-3 flex flex-col gap-4 lg:mt-5 lg:flex-row lg:flex-wrap">
           {sortedExercises.map((exercise: Exercise) => (
             <div key={exercise.id}>
               <ExerciseCard exercise={exercise} />
@@ -61,11 +62,11 @@ const Home = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="lg:flex z-20 hidden absolute bottom-9 right-10">
+      <div className="absolute bottom-9 right-10 z-20 hidden lg:flex">
         <AddExerciseButton />
       </div>
 
-      <div className="lg:hidden z-20 flex absolute right-5 top-5">
+      <div className="absolute right-5 top-5 z-20 flex lg:hidden">
         <AddExerciseButton />
       </div>
     </div>

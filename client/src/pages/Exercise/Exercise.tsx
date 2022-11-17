@@ -1,17 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import ExerciseTypeCard from '../../components/ExerciseTypeCard';
 import StopWatch from '../../components/StopWatch';
 import useExercise from '../../hooks/useExercise';
-import ExerciseType from '../../models/ExerciseType';
 
 const Exercise = () => {
-  const {
-    isLoading,
-    currentExercise,
-    refetch,
-    handleFinishExercise,
-    sortedExerciseTypes,
-  } = useExercise();
+  const { currentExercise, handleFinishExercise, sortedExerciseTypes } =
+    useExercise();
   const [duration, setDuration] = useState<string>('');
   const [showStopWatch, setShowStopWatch] = useState<boolean>(false);
 

@@ -1,6 +1,5 @@
 import Timer from 'react-compound-timer';
-import { Tooltip } from '@mui/material';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import playCircleFill from '@iconify/icons-eva/play-circle-fill';
