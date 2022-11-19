@@ -3,7 +3,7 @@ import Exercise from './Exercise';
 
 interface ExerciseType extends EntityBase {
   name: string;
-  exercise: Exercise;
+  exercise: Exercise | null;
   exerciseId: string;
   seriesCardNumber: number | null;
   seriesCardsColor: string;

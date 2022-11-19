@@ -16,6 +16,9 @@ type ExerciseTypeCardColorOpen = {
 const EditExercise = () => {
   const { currentExercise } = useExercise();
 
+  const [exerciseId, setExerciseId] = useState<string>(
+    currentExercise?.id ?? ''
+  );
   const [exerciseCardColor, setExerciseCardColor] = useState<string>(
     currentExercise?.cardColor ?? ''
   );
@@ -45,12 +48,15 @@ const EditExercise = () => {
   console.log(currentExercise);
 
   useEffect(() => {
+    setExerciseId(currentExercise?.id ?? '');
     setExerciseCardColor(currentExercise?.cardColor ?? '');
     setExerciseName(currentExercise?.name ?? '');
     setExerciseOrder(currentExercise?.order ?? 0);
     setExerciseTextColor(currentExercise?.textColor ?? '');
     setExerciseTypes(currentExercise?.exerciseTypes ?? []);
+  }, [currentExercise]);
 
+  useEffect(() => {
     if (exerciseTypes.length > 0) {
       const initialOpenExerciseTypeCardColorValues: ExerciseTypeCardColorOpen[] =
         [];
@@ -75,9 +81,33 @@ const EditExercise = () => {
         initialOpenExerciseTypeCardTextColorValues
       );
     }
-  }, [currentExercise, exerciseTypes.length]);
+  }, [exerciseTypes.length]);
 
-  console.log(openExerciseTypeCardColorPicker);
+  const handleAddNewExerciseType = () => {
+    const types = [...exerciseTypes];
+    const newExerciseType: ExerciseType = {
+      id: '',
+      name: '',
+      order: 1,
+      exerciseId: exerciseId,
+      exercise: null,
+      cardTextColor: '#fff',
+      seriesCardsColor: '#005A92',
+      seriesCardNumber: null,
+    };
+    types.push(newExerciseType);
+    setExerciseTypes(types);
+    setOpenExerciseTypeCardColorPicker([
+      ...openExerciseTypeCardColorPicker,
+      {
+        index:
+          openExerciseTypeCardColorPicker[
+            openExerciseTypeCardColorPicker.length - 1
+          ].index + 1,
+        isOpen: false,
+      },
+    ]);
+  };
 
   return (
     <AnimatePresence>
@@ -262,7 +292,7 @@ const EditExercise = () => {
               {exerciseTypes.length > 0 &&
                 exerciseTypes.map((type, index: number) => (
                   <div
-                    key={type.id}
+                    key={`${index}_${type.id}`}
                     className="flex flex-col gap-y-3 rounded-2xl bg-blues-1 p-2 shadow-card"
                   >
                     <div className="flex flex-col gap-y-1">
@@ -540,6 +570,15 @@ const EditExercise = () => {
                 ))}
             </div>
           )}
+        </div>
+
+        <div className="self-end">
+          <button
+            onClick={handleAddNewExerciseType}
+            className="rounded-full bg-blues-1 px-3 py-2 text-sm uppercase text-white shadow-card transition-all hover:bg-blues-2"
+          >
+            add new exercise type
+          </button>
         </div>
       </div>
     </AnimatePresence>
