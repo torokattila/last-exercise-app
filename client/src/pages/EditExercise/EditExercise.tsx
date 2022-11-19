@@ -38,6 +38,10 @@ const EditExercise = () => {
     useState<boolean>(false);
   const [openExerciseTypeCardColorPicker, setOpenExerciseTypeCardColorPicker] =
     useState<ExerciseTypeCardColorOpen[]>([]);
+  const [
+    openExerciseTypeCardTextColorPicker,
+    setOpenExerciseTypeCardTextColorPicker,
+  ] = useState<ExerciseTypeCardColorOpen[]>([]);
   console.log(currentExercise);
 
   useEffect(() => {
@@ -50,9 +54,15 @@ const EditExercise = () => {
     if (exerciseTypes.length > 0) {
       const initialOpenExerciseTypeCardColorValues: ExerciseTypeCardColorOpen[] =
         [];
+      const initialOpenExerciseTypeCardTextColorValues: ExerciseTypeCardColorOpen[] =
+        [];
 
       for (let i = 0; i < exerciseTypes.length; i++) {
         initialOpenExerciseTypeCardColorValues.push({
+          index: i,
+          isOpen: false,
+        });
+        initialOpenExerciseTypeCardTextColorValues.push({
           index: i,
           isOpen: false,
         });
@@ -60,6 +70,9 @@ const EditExercise = () => {
 
       setOpenExerciseTypeCardColorPicker(
         initialOpenExerciseTypeCardColorValues
+      );
+      setOpenExerciseTypeCardTextColorPicker(
+        initialOpenExerciseTypeCardTextColorValues
       );
     }
   }, [currentExercise, exerciseTypes.length]);
@@ -401,6 +414,114 @@ const EditExercise = () => {
                                     isOpen: false,
                                   },
                                   ...openExerciseTypeCardColorPicker.slice(
+                                    index + 1
+                                  ),
+                                ])
+                              }
+                            >
+                              <Icon
+                                icon={saveOutline}
+                                fontSize={30}
+                                className="text-green-700"
+                              />
+                            </div>
+                          </motion.div>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col gap-y-1">
+                      <label className="font-medium text-white">
+                        Series card text color:
+                      </label>
+
+                      {openExerciseTypeCardTextColorPicker[index] &&
+                        !openExerciseTypeCardTextColorPicker[index].isOpen && (
+                          <motion.div
+                            initial={{
+                              scale: 0,
+                            }}
+                            animate={{
+                              scale: 1,
+                            }}
+                            exit={{
+                              scale: 0,
+                            }}
+                            transition={{
+                              duration: 0.4,
+                              type: 'spring',
+                            }}
+                            className="mt-1 h-5 w-12 cursor-pointer rounded-lg shadow-card"
+                            onClick={() =>
+                              setOpenExerciseTypeCardTextColorPicker([
+                                ...openExerciseTypeCardTextColorPicker.slice(
+                                  0,
+                                  index
+                                ),
+                                {
+                                  ...openExerciseTypeCardTextColorPicker[index],
+                                  isOpen:
+                                    !openExerciseTypeCardTextColorPicker[index]
+                                      .isOpen,
+                                },
+                                ...openExerciseTypeCardTextColorPicker.slice(
+                                  index + 1
+                                ),
+                              ])
+                            }
+                            style={{
+                              backgroundColor:
+                                exerciseTypes[index].cardTextColor,
+                            }}
+                          />
+                        )}
+                      {openExerciseTypeCardTextColorPicker[index] &&
+                        openExerciseTypeCardTextColorPicker[index].isOpen && (
+                          <motion.div
+                            initial={{
+                              scale: 0,
+                            }}
+                            animate={{
+                              scale: 1,
+                            }}
+                            exit={{
+                              scale: 0,
+                            }}
+                            transition={{
+                              duration: 0.4,
+                              type: 'spring',
+                            }}
+                            className="mt-2 flex flex-row gap-x-3"
+                          >
+                            <HexColorPicker
+                              className="rounded-3xl shadow-card"
+                              color={exerciseTypes[index].cardTextColor}
+                              onChange={(value) => {
+                                setExerciseTypes([
+                                  ...exerciseTypes.slice(0, index),
+                                  {
+                                    ...exerciseTypes[index],
+                                    cardTextColor: value,
+                                  },
+                                  ...exerciseTypes.slice(index + 1),
+                                ]);
+                              }}
+                            />
+
+                            <div
+                              className="cursor-pointer self-end rounded-full bg-white p-1 shadow-card transition-all hover:bg-gray-50"
+                              onClick={() =>
+                                setOpenExerciseTypeCardTextColorPicker([
+                                  ...openExerciseTypeCardTextColorPicker.slice(
+                                    0,
+                                    index
+                                  ),
+                                  {
+                                    ...openExerciseTypeCardTextColorPicker[
+                                      index
+                                    ],
+                                    isOpen: false,
+                                  },
+                                  ...openExerciseTypeCardTextColorPicker.slice(
                                     index + 1
                                   ),
                                 ])
