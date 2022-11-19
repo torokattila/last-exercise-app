@@ -4,6 +4,7 @@ import User from '../models/User';
 import { StatusCodes } from 'http-status-codes';
 import * as Storage from '../lib/storage';
 import Exercise from '../models/Exercise';
+import ExerciseType from '../models/ExerciseType';
 
 export const ApiURL =
   config.api.port !== 80 && config.api.port !== 443
@@ -81,6 +82,34 @@ class ApiClient {
   async getExercise(exerciseId: string): Promise<Exercise> {
     const response: AxiosResponse<Exercise> = await this.client.get<Exercise>(
       `/exercises/${exerciseId}`,
+      {
+        headers: {
+          access_token: Storage.getItem('access_token') || '',
+        },
+      }
+    );
+
+    return response.data;
+  }
+
+  async editExercise(exerciseId: string, data: Exercise): Promise<Exercise> {
+    const response: AxiosResponse<Exercise> = await this.client.put(
+      `/exercises/${exerciseId}`,
+      data,
+      {
+        headers: {
+          access_token: Storage.getItem('access_token') || '',
+        },
+      }
+    );
+
+    return response.data;
+  }
+
+  // Exercise type
+  async deleteExerciseType(exerciseTypeId: string): Promise<ExerciseType> {
+    const response: AxiosResponse = await this.client.delete<ExerciseType>(
+      `/exercisetypes/${exerciseTypeId}`,
       {
         headers: {
           access_token: Storage.getItem('access_token') || '',

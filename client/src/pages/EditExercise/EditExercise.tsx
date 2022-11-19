@@ -1,12 +1,13 @@
 import useExercise from '../../hooks/useExercise';
 import { HexColorPicker } from 'react-colorful';
 import { useEffect, useState } from 'react';
-import classNames from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
+import ExerciseType from '../../models/ExerciseType';
 
 import saveOutline from '@iconify/icons-eva/save-outline';
+import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import { Icon } from '@iconify/react';
-import ExerciseType from '../../models/ExerciseType';
+import useHome from '../../hooks/useHome';
 
 type ExerciseTypeCardColorOpen = {
   index: number;
@@ -14,7 +15,9 @@ type ExerciseTypeCardColorOpen = {
 };
 
 const EditExercise = () => {
-  const { currentExercise } = useExercise();
+  const { currentExercise, handleDeleteExerciseType, handleEditExercise } =
+    useExercise();
+  const { user } = useHome();
 
   const [exerciseId, setExerciseId] = useState<string>(
     currentExercise?.id ?? ''
@@ -34,6 +37,9 @@ const EditExercise = () => {
   const [exerciseTypes, setExerciseTypes] = useState<ExerciseType[]>(
     currentExercise?.exerciseTypes ?? []
   );
+  const [exerciseDuration, setExerciseDuration] = useState<string>(
+    currentExercise?.duration ?? ''
+  );
 
   const [openExerciseColorPicker, setOpenExeriseColorPicker] =
     useState<boolean>(false);
@@ -45,7 +51,6 @@ const EditExercise = () => {
     openExerciseTypeCardTextColorPicker,
     setOpenExerciseTypeCardTextColorPicker,
   ] = useState<ExerciseTypeCardColorOpen[]>([]);
-  console.log(currentExercise);
 
   useEffect(() => {
     setExerciseId(currentExercise?.id ?? '');
@@ -54,6 +59,7 @@ const EditExercise = () => {
     setExerciseOrder(currentExercise?.order ?? 0);
     setExerciseTextColor(currentExercise?.textColor ?? '');
     setExerciseTypes(currentExercise?.exerciseTypes ?? []);
+    setExerciseDuration(currentExercise?.duration ?? '');
   }, [currentExercise]);
 
   useEffect(() => {
@@ -109,6 +115,16 @@ const EditExercise = () => {
     ]);
   };
 
+  const handleDeleteType = (type: ExerciseType) => {
+    if (!type.id.length) {
+      const currentExerciseTypes = [...exerciseTypes];
+      currentExerciseTypes.pop();
+      setExerciseTypes(currentExerciseTypes);
+    } else {
+      handleDeleteExerciseType(type.id);
+    }
+  };
+
   return (
     <AnimatePresence>
       <div className="relative flex h-full w-full flex-col gap-y-4 px-5 pb-15">
@@ -116,6 +132,26 @@ const EditExercise = () => {
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
             {currentExercise?.name}
           </h1>
+        </div>
+
+        <div className="fixed top-10 right-3">
+          <button
+            onClick={() => {
+              handleEditExercise({
+                id: exerciseId,
+                userId: user?.id ?? '',
+                cardColor: exerciseCardColor,
+                duration: exerciseDuration,
+                exerciseTypes: exerciseTypes,
+                name: exerciseName,
+                order: Number(exerciseOrder),
+                textColor: exerciseTextColor,
+              });
+            }}
+            className="rounded-full bg-blues-1 px-3 py-2 uppercase text-white shadow-card transition-all hover:bg-blues-2"
+          >
+            Edit
+          </button>
         </div>
 
         <div className="flex flex-col py-2 lg:flex-row lg:gap-x-4">
@@ -291,9 +327,22 @@ const EditExercise = () => {
             <div className="mt-2 flex flex-col gap-y-2">
               {exerciseTypes.length > 0 &&
                 exerciseTypes.map((type, index: number) => (
-                  <div
+                  <motion.div
                     key={`${index}_${type.id}`}
                     className="flex flex-col gap-y-3 rounded-2xl bg-blues-1 p-2 shadow-card"
+                    initial={{
+                      scale: 0,
+                    }}
+                    animate={{
+                      scale: 1,
+                    }}
+                    exit={{
+                      scale: 0,
+                    }}
+                    transition={{
+                      duration: 0.4,
+                      type: 'spring',
+                    }}
                   >
                     <div className="flex flex-col gap-y-1">
                       <label className="font-medium text-white">Name:</label>
@@ -566,7 +615,14 @@ const EditExercise = () => {
                           </motion.div>
                         )}
                     </div>
-                  </div>
+
+                    <div
+                      onClick={() => handleDeleteType(type)}
+                      className="cursor-pointer self-end rounded-full bg-red-700 p-2 shadow-card transition-all hover:bg-red-800"
+                    >
+                      <Icon icon={trash2Fill} className="text-xl text-white" />
+                    </div>
+                  </motion.div>
                 ))}
             </div>
           )}

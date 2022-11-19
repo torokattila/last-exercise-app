@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import Exercise from '../models/Exercise';
 import ExerciseType from '../models/ExerciseType';
 import useApi from './useApi';
 import useHome from './useHome';
@@ -113,12 +114,140 @@ const useExercise = () => {
     });
   };
 
+  const deleteType = async (typeId: string): Promise<boolean> => {
+    try {
+      await apiClient.deleteExerciseType(typeId);
+
+      refetch();
+
+      const key = enqueueSnackbar('Exercise type deleted!', {
+        variant: 'success',
+        autoHideDuration: 3000,
+        onClick: () => {
+          closeSnackbar(key);
+        },
+      });
+
+      return true;
+    } catch (error: any) {
+      const key = enqueueSnackbar('Error in delete exercise type!', {
+        variant: 'error',
+        autoHideDuration: 3000,
+        onClick: () => {
+          closeSnackbar(key);
+        },
+      });
+
+      return false;
+    }
+  };
+
+  const handleDeleteExerciseType = (typeId: string) => {
+    confirmAlert({
+      customUI: ({ onClose }: { onClose: () => void }) => {
+        return (
+          <div className="rounded-2xl bg-white p-3 shadow-card backdrop-blur-xl lg:p-4">
+            <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
+              Are you sure you want to delete the Exercise type?
+            </p>
+
+            <div className="mt-4 flex flex-row justify-end gap-x-2">
+              <button
+                className="rounded-full bg-[#4A9ECC] px-2 py-1 uppercase text-white transition-all hover:bg-[#0e6696]"
+                onClick={() => onClose()}
+              >
+                cancel
+              </button>
+
+              <button
+                className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
+                onClick={() => {
+                  deleteType(typeId);
+                  onClose();
+                }}
+              >
+                finish
+              </button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+  const editExercise = async (exercise: Exercise) => {
+    try {
+      await apiClient.editExercise(exercise.id, exercise);
+
+      refetch();
+      refetchUser();
+
+      navigate('/');
+
+      const key = enqueueSnackbar('Exercise updated!', {
+        variant: 'success',
+        autoHideDuration: 3000,
+        onClick: () => {
+          closeSnackbar(key);
+        },
+      });
+
+      return true;
+    } catch (error: any) {
+      const key = enqueueSnackbar('Error in Exercise update!', {
+        variant: 'error',
+        autoHideDuration: 3000,
+        onClick: () => {
+          closeSnackbar(key);
+        },
+      });
+
+      return false;
+    }
+  };
+
+  const handleEditExercise = (exercise: Exercise) => {
+    confirmAlert({
+      customUI: ({ onClose }: { onClose: () => void }) => {
+        return (
+          <div className="rounded-2xl bg-white p-3 shadow-card backdrop-blur-xl lg:p-4">
+            <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
+              Are you sure you want to edit this Exercise?
+            </p>
+
+            <div className="mt-4 flex flex-row justify-end gap-x-2">
+              <button
+                className="rounded-full bg-[#4A9ECC] px-2 py-1 uppercase text-white transition-all hover:bg-[#0e6696]"
+                onClick={() => onClose()}
+              >
+                cancel
+              </button>
+
+              <button
+                className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
+                onClick={() => {
+                  editExercise(exercise);
+                  onClose();
+                }}
+              >
+                edit
+              </button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
   return {
     isLoading,
     currentExercise,
     refetch,
     handleFinishExercise,
     sortedExerciseTypes,
+    handleDeleteExerciseType,
+    handleEditExercise,
+    user,
   };
 };
 
