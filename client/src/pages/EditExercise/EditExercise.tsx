@@ -316,7 +316,10 @@ const EditExercise = () => {
                 Exercise name:
               </label>
               <input
-                className="w-full rounded-full border-2 border-blues-1 bg-transparent py-1.5 px-3 outline-none transition-all focus:shadow-card dark:text-white"
+                style={{
+                  borderColor: exerciseCardColor,
+                }}
+                className="w-full rounded-full border-2 bg-transparent py-1.5 px-3 outline-none transition-all focus:shadow-card dark:text-white"
                 value={exerciseName}
                 onChange={(e) => setExerciseName(e.target.value)}
                 placeholder="Exercise Name"
@@ -328,7 +331,10 @@ const EditExercise = () => {
                 Exercise order on the Home page:
               </label>
               <input
-                className="w-full rounded-full border-2 border-blues-1 bg-transparent py-1.5 px-3 outline-none transition-all focus:shadow-card dark:text-white"
+                style={{
+                  borderColor: exerciseCardColor,
+                }}
+                className="w-full rounded-full border-2 bg-transparent py-1.5 px-3 outline-none transition-all focus:shadow-card dark:text-white"
                 value={exerciseOrder}
                 type="number"
                 min={1}
@@ -353,8 +359,12 @@ const EditExercise = () => {
                   {exerciseTypes.length > 0 &&
                     exerciseTypes.map((type, index: number) => (
                       <motion.div
+                        style={{
+                          backgroundColor:
+                            exerciseTypes[index].seriesCardsColor,
+                        }}
                         key={`${index}_${type.id}`}
-                        className="flex flex-col gap-y-3 rounded-2xl bg-blues-1 p-2 shadow-card"
+                        className="flex flex-col gap-y-3 rounded-2xl p-2 shadow-card"
                         initial={{
                           scale: 0,
                         }}
@@ -370,7 +380,12 @@ const EditExercise = () => {
                         }}
                       >
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color: exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Name:
                           </label>
                           <input
@@ -391,7 +406,12 @@ const EditExercise = () => {
                         </div>
 
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color: exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Order on the Exercise page:
                           </label>
                           <input
@@ -412,7 +432,12 @@ const EditExercise = () => {
                         </div>
 
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color: exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Number of series card:
                           </label>
                           <input
@@ -433,7 +458,12 @@ const EditExercise = () => {
                         </div>
 
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color: exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Color of the series cards:
                           </label>
 
@@ -541,7 +571,12 @@ const EditExercise = () => {
                         </div>
 
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color: exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Series card text color:
                           </label>
 
@@ -670,8 +705,12 @@ const EditExercise = () => {
 
             <div className="self-end">
               <button
+                style={{
+                  backgroundColor: exerciseCardColor,
+                  color: exerciseTextColor,
+                }}
                 onClick={handleAddNewExerciseType}
-                className="rounded-full bg-blues-1 px-3 py-2 text-sm uppercase text-white shadow-card transition-all hover:bg-blues-2"
+                className="rounded-full px-3 py-2 text-sm uppercase shadow-card transition-all hover:opacity-90"
               >
                 add new exercise type
               </button>

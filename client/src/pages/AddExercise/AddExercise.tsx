@@ -130,7 +130,7 @@ const AddExercise = () => {
                   backgroundColor: exercise.cardColor,
                   color: exercise.textColor,
                 }}
-                className="rounded-full px-3 hover:opacity-90 py-2 uppercase shadow-card transition-all"
+                className="rounded-full px-3 py-2 uppercase shadow-card transition-all hover:opacity-90"
               >
                 create
               </button>
@@ -281,7 +281,10 @@ const AddExercise = () => {
                 Exercise name:
               </label>
               <input
-                className="w-full rounded-full border-2 border-blues-1 bg-transparent py-1.5 px-3 outline-none transition-all focus:shadow-card dark:text-white"
+                style={{
+                  borderColor: exercise.cardColor,
+                }}
+                className="w-full rounded-full border-2 bg-transparent py-1.5 px-3 outline-none transition-all focus:shadow-card dark:text-white"
                 value={exercise.name}
                 onChange={(e) =>
                   setExercise({ ...exercise, name: e.target.value })
@@ -295,7 +298,10 @@ const AddExercise = () => {
                 Exercise order on the Home page:
               </label>
               <input
-                className="w-full rounded-full border-2 border-blues-1 bg-transparent py-1.5 px-3 outline-none transition-all focus:shadow-card dark:text-white"
+                style={{
+                  borderColor: exercise.cardColor,
+                }}
+                className="w-full rounded-full border-2 bg-transparent py-1.5 px-3 outline-none transition-all focus:shadow-card dark:text-white"
                 value={exercise.order}
                 type="number"
                 min={1}
@@ -317,7 +323,11 @@ const AddExercise = () => {
                     exercise.exerciseTypes.map((type, index: number) => (
                       <motion.div
                         key={`${index}_${type.id}`}
-                        className="flex flex-col gap-y-3 rounded-2xl bg-blues-1 p-2 shadow-card"
+                        style={{
+                          backgroundColor:
+                            exercise.exerciseTypes[index].seriesCardsColor,
+                        }}
+                        className="flex flex-col gap-y-3 rounded-2xl p-2 shadow-card"
                         initial={{
                           scale: 0,
                         }}
@@ -333,7 +343,13 @@ const AddExercise = () => {
                         }}
                       >
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color:
+                                exercise.exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Name:
                           </label>
                           <input
@@ -357,7 +373,13 @@ const AddExercise = () => {
                         </div>
 
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color:
+                                exercise.exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Order on the Exercise page:
                           </label>
                           <input
@@ -381,7 +403,13 @@ const AddExercise = () => {
                         </div>
 
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color:
+                                exercise.exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Number of series card:
                           </label>
                           <input
@@ -405,7 +433,13 @@ const AddExercise = () => {
                         </div>
 
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color:
+                                exercise.exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Color of the series cards:
                           </label>
 
@@ -525,7 +559,13 @@ const AddExercise = () => {
                         </div>
 
                         <div className="flex flex-col gap-y-1">
-                          <label className="font-medium text-white">
+                          <label
+                            style={{
+                              color:
+                                exercise.exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
                             Series card text color:
                           </label>
 
@@ -664,8 +704,12 @@ const AddExercise = () => {
 
             <div className="self-end">
               <button
+                style={{
+                  backgroundColor: exercise.cardColor,
+                  color: exercise.textColor,
+                }}
                 onClick={handleAddNewExerciseType}
-                className="rounded-full bg-blues-1 px-3 py-2 text-sm uppercase text-white shadow-card transition-all hover:bg-blues-2"
+                className="rounded-full px-3 py-2 text-sm uppercase text-white shadow-card transition-all"
               >
                 add new exercise type
               </button>
