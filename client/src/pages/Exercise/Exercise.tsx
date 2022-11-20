@@ -35,7 +35,11 @@ const Exercise = () => {
 
           <div className="mt-10 flex flex-row items-center justify-center pb-7">
             <button
-              className="rounded-full bg-blues-1 py-2 px-10 font-medium uppercase text-white shadow-card transition-all hover:bg-blues-2"
+              style={{
+                backgroundColor: currentExercise?.cardColor,
+                color: currentExercise?.textColor,
+              }}
+              className="rounded-full py-2 px-10 font-medium uppercase shadow-card transition-all hover:opacity-90"
               onClick={() =>
                 handleFinishExercise(currentExercise?.id ?? '', duration)
               }
@@ -79,7 +83,11 @@ const Exercise = () => {
           ))}
           <div className="mt-5 flex flex-row items-center justify-center">
             <button
-              className="rounded-full bg-[#4A9ECB] py-2 px-4 font-medium uppercase text-white shadow-card transition-all hover:bg-[#0e6696]"
+              style={{
+                backgroundColor: currentExercise?.cardColor,
+                color: currentExercise?.textColor,
+              }}
+              className="rounded-full py-2 px-4 font-medium uppercase shadow-card transition-all hover:opacity-90"
               onClick={() =>
                 handleFinishExercise(currentExercise?.id ?? '', duration)
               }

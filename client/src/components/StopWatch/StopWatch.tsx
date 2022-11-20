@@ -9,6 +9,7 @@ import closeCircleFill from '@iconify/icons-eva/close-circle-fill';
 import saveOutline from '@iconify/icons-eva/save-outline';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
+import useExercise from '../../hooks/useExercise';
 
 type Props = {
   show: boolean;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const StopWatch = ({ show, setShowStopWatch, setDuration }: Props) => {
+  const { currentExercise } = useExercise();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   function padTo2Digits(num: number) {
@@ -157,12 +159,15 @@ const StopWatch = ({ show, setShowStopWatch, setDuration }: Props) => {
           }}
           key="shrinked_timer"
           onClick={() => setShowStopWatch(true)}
-          className="fixed bottom-16 right-2 z-30 flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded-full bg-blues-1 shadow-card hover:bg-blues-2 lg:bottom-10 lg:right-5"
+          style={{
+            backgroundColor: currentExercise?.cardColor,
+          }}
+          className="fixed bottom-16 right-2 z-30 flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded-full shadow-card hover:opacity-90 lg:bottom-10 lg:right-5"
         >
           <Icon
             className="z-40"
             icon={clockOutline}
-            color="white"
+            color={`${currentExercise?.textColor}`}
             fontSize={35}
           />
         </motion.div>
