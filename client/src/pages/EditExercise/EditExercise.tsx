@@ -11,8 +11,12 @@ import useHome from '../../hooks/useHome';
 import { ExerciseTypeCardColorOpen } from '../../@types/ExerciseTypeCardColorOpen';
 
 const EditExercise = () => {
-  const { currentExercise, handleDeleteExerciseType, handleEditExercise } =
-    useExercise();
+  const {
+    currentExercise,
+    handleDeleteExerciseType,
+    handleEditExercise,
+    handleDeleteExercise,
+  } = useExercise();
   const { user } = useHome();
 
   const [exerciseId, setExerciseId] = useState<string>(
@@ -142,7 +146,7 @@ const EditExercise = () => {
           </div>
 
           <div className="relative flex w-full flex-col gap-y-4 rounded-t-[40px] bg-white px-5 pb-15 dark:bg-[#28282B] lg:rounded-none">
-            <div className="fixed top-17 right-3 lg:top-10">
+            <div className="fixed top-17 right-3 flex flex-col items-end gap-y-2 lg:top-10">
               <button
                 onClick={() => {
                   handleEditExercise({
@@ -160,9 +164,16 @@ const EditExercise = () => {
                   backgroundColor: exerciseCardColor,
                   color: exerciseTextColor,
                 }}
-                className="rounded-full px-3 py-2 uppercase shadow-card transition-all"
+                className="rounded-full px-3 py-2 uppercase shadow-card transition-all hover:opacity-90"
               >
                 Edit
+              </button>
+
+              <button
+                onClick={() => handleDeleteExercise(exerciseId)}
+                className="flex h-7 w-7 flex-col items-center justify-center rounded-full bg-red-700 p-2 uppercase shadow-card transition-all hover:bg-red-800"
+              >
+                <Icon icon={trash2Fill} className="text-2xl text-white" />
               </button>
             </div>
 

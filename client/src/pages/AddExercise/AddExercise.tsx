@@ -130,7 +130,7 @@ const AddExercise = () => {
                   backgroundColor: exercise.cardColor,
                   color: exercise.textColor,
                 }}
-                className="rounded-full px-3 py-2 uppercase shadow-card transition-all"
+                className="rounded-full px-3 hover:opacity-90 py-2 uppercase shadow-card transition-all"
               >
                 create
               </button>

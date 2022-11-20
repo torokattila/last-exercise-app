@@ -84,7 +84,7 @@ const useExercise = () => {
     }
   };
 
-  const handleFinishExercise = (exerciseId: string, duration: string) => {
+  const handleFinishExercise = (exerciseId: string, duration: string): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -147,7 +147,7 @@ const useExercise = () => {
     }
   };
 
-  const handleDeleteExerciseType = (typeId: string) => {
+  const handleDeleteExerciseType = (typeId: string): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -213,7 +213,7 @@ const useExercise = () => {
     }
   };
 
-  const handleEditExercise = (exercise: Exercise) => {
+  const handleEditExercise = (exercise: Exercise): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -280,7 +280,7 @@ const useExercise = () => {
     }
   };
 
-  const handleCreateExercise = (exercise: ExercisePayload) => {
+  const handleCreateExercise = (exercise: ExercisePayload): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -315,6 +315,72 @@ const useExercise = () => {
     });
   };
 
+  const deleteExercise = async (exerciseId: string): Promise<boolean> => {
+    try {
+      await apiClient.deleteExercise(exerciseId);
+
+      refetch();
+      refetchUser();
+
+      navigate('/');
+
+      const key = enqueueSnackbar('Exercise deleted!', {
+        variant: 'success',
+        autoHideDuration: 3000,
+        onClick: () => {
+          closeSnackbar(key);
+        },
+      });
+
+      return true;
+    } catch (error: any) {
+      const key = enqueueSnackbar('Error in Exercise delete!', {
+        variant: 'error',
+        autoHideDuration: 3000,
+        onClick: () => {
+          closeSnackbar(key);
+        },
+      });
+
+      return false;
+    }
+  };
+
+  const handleDeleteExercise = (exerciseId: string): void => {
+    confirmAlert({
+      customUI: ({ onClose }: { onClose: () => void }) => {
+        return (
+          <ConfirmAlertLayout>
+            <>
+              <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
+                Are you sure you want to delete this Exercise?
+              </p>
+
+              <div className="mt-4 flex flex-row justify-end gap-x-2">
+                <button
+                  className="rounded-full bg-[#4A9ECC] px-2 py-1 uppercase text-white transition-all hover:bg-[#0e6696]"
+                  onClick={() => onClose()}
+                >
+                  cancel
+                </button>
+
+                <button
+                  className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
+                  onClick={() => {
+                    deleteExercise(exerciseId);
+                    onClose();
+                  }}
+                >
+                  delete
+                </button>
+              </div>
+            </>
+          </ConfirmAlertLayout>
+        );
+      },
+    });
+  };
+
   return {
     isLoading,
     currentExercise,
@@ -325,6 +391,7 @@ const useExercise = () => {
     handleEditExercise,
     user,
     handleCreateExercise,
+    handleDeleteExercise,
   };
 };
 

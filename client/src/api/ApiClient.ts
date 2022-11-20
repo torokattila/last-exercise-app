@@ -121,6 +121,19 @@ class ApiClient {
     return response.data;
   }
 
+  async deleteExercise(exerciseId: string): Promise<Exercise> {
+    const response: AxiosResponse<Exercise> = await this.client.delete(
+      `/exercises/${exerciseId}`,
+      {
+        headers: {
+          access_token: Storage.getItem('access_token') || '',
+        },
+      }
+    );
+
+    return response.data;
+  }
+
   // Exercise type
   async deleteExerciseType(exerciseTypeId: string): Promise<ExerciseType> {
     const response: AxiosResponse = await this.client.delete<ExerciseType>(
