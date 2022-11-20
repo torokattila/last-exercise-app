@@ -8,11 +8,7 @@ import saveOutline from '@iconify/icons-eva/save-outline';
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import { Icon } from '@iconify/react';
 import useHome from '../../hooks/useHome';
-
-type ExerciseTypeCardColorOpen = {
-  index: number;
-  isOpen: boolean;
-};
+import { ExerciseTypeCardColorOpen } from '../../@types/ExerciseTypeCardColorOpen';
 
 const EditExercise = () => {
   const { currentExercise, handleDeleteExerciseType, handleEditExercise } =
@@ -134,7 +130,7 @@ const EditExercise = () => {
         className={`relative lg:!bg-white dark:lg:!bg-[#28282B]`}
       >
         <div className="relative flex h-full w-full flex-col gap-y-4 lg:gap-y-0">
-          <div className="mt-5 flex w-full lg:px-5 items-center justify-center lg:justify-start">
+          <div className="mt-5 flex w-full items-center justify-center lg:justify-start lg:px-5">
             <h1
               style={{
                 color: exerciseTextColor,
@@ -160,7 +156,11 @@ const EditExercise = () => {
                     textColor: exerciseTextColor,
                   });
                 }}
-                className="rounded-full bg-blues-1 px-3 py-2 uppercase text-white shadow-card transition-all hover:bg-blues-2"
+                style={{
+                  backgroundColor: exerciseCardColor,
+                  color: exerciseTextColor,
+                }}
+                className="rounded-full px-3 py-2 uppercase shadow-card transition-all"
               >
                 Edit
               </button>
