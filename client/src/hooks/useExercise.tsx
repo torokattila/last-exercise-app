@@ -9,6 +9,7 @@ import ExerciseType from '../models/ExerciseType';
 import useApi from './useApi';
 import useHome from './useHome';
 import { motion, AnimatePresence } from 'framer-motion';
+import ConfirmAlertLayout from '../components/shared/ConfirmAlertLayout';
 
 const useExercise = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -87,30 +88,32 @@ const useExercise = () => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
-          <div className="rounded-2xl bg-white p-3 shadow-card backdrop-blur-xl lg:p-4">
-            <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
-              Are you sure you want to finish the exercise?
-            </p>
+          <ConfirmAlertLayout>
+            <>
+              <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
+                Are you sure you want to finish the exercise?
+              </p>
 
-            <div className="mt-4 flex flex-row justify-end gap-x-2">
-              <button
-                className="rounded-full bg-[#4A9ECC] px-2 py-1 uppercase text-white transition-all hover:bg-[#0e6696]"
-                onClick={() => onClose()}
-              >
-                cancel
-              </button>
+              <div className="mt-4 flex flex-row justify-end gap-x-2">
+                <button
+                  className="rounded-full bg-[#4A9ECC] px-2 py-1 uppercase text-white transition-all hover:bg-[#0e6696]"
+                  onClick={() => onClose()}
+                >
+                  cancel
+                </button>
 
-              <button
-                className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
-                onClick={() => {
-                  finishExercise(exerciseId, duration);
-                  onClose();
-                }}
-              >
-                finish
-              </button>
-            </div>
-          </div>
+                <button
+                  className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
+                  onClick={() => {
+                    finishExercise(exerciseId, duration);
+                    onClose();
+                  }}
+                >
+                  finish
+                </button>
+              </div>
+            </>
+          </ConfirmAlertLayout>
         );
       },
     });
@@ -148,24 +151,8 @@ const useExercise = () => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
-          <>
-            <div className="fixed top-0 left-0 z-10 h-screen w-full bg-black opacity-80" />
-            <motion.div
-              initial={{
-                scale: 0,
-              }}
-              animate={{
-                scale: 1,
-              }}
-              exit={{
-                scale: 0,
-              }}
-              transition={{
-                duration: 0.4,
-                type: 'spring',
-              }}
-              className="rounded-t-1.5 fixed inset-0 top-0 left-0 right-0 z-50 my-auto mx-auto h-20 overflow-auto rounded-2xl bg-white p-3 align-middle opacity-100 shadow-card lg:w-65"
-            >
+          <ConfirmAlertLayout>
+            <>
               <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
                 Are you sure you want to delete the Exercise type?
               </p>
@@ -188,8 +175,8 @@ const useExercise = () => {
                   finish
                 </button>
               </div>
-            </motion.div>
-          </>
+            </>
+          </ConfirmAlertLayout>
         );
       },
     });
@@ -230,24 +217,8 @@ const useExercise = () => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
-          <>
-            <div className="fixed top-0 left-0 z-10 h-screen w-full bg-black opacity-80" />
-            <motion.div
-              initial={{
-                scale: 0,
-              }}
-              animate={{
-                scale: 1,
-              }}
-              exit={{
-                scale: 0,
-              }}
-              transition={{
-                duration: 0.4,
-                type: 'spring',
-              }}
-              className="rounded-t-1.5 fixed inset-0 top-0 left-0 right-0 z-50 my-auto mx-auto h-20 overflow-auto rounded-2xl bg-white p-3 align-middle opacity-100 shadow-card lg:w-65"
-            >
+          <ConfirmAlertLayout>
+            <>
               <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
                 Are you sure you want to edit this Exercise?
               </p>
@@ -270,8 +241,8 @@ const useExercise = () => {
                   edit
                 </button>
               </div>
-            </motion.div>
-          </>
+            </>
+          </ConfirmAlertLayout>
         );
       },
     });
@@ -313,24 +284,8 @@ const useExercise = () => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
-          <>
-            <div className="fixed top-0 left-0 z-10 h-screen w-full bg-black opacity-80" />
-            <motion.div
-              initial={{
-                scale: 0,
-              }}
-              animate={{
-                scale: 1,
-              }}
-              exit={{
-                scale: 0,
-              }}
-              transition={{
-                duration: 0.4,
-                type: 'spring',
-              }}
-              className="rounded-t-1.5 fixed inset-0 top-0 left-0 right-0 z-50 my-auto mx-auto h-20 overflow-auto rounded-2xl bg-white p-3 align-middle opacity-100 shadow-card lg:w-65"
-            >
+          <ConfirmAlertLayout>
+            <>
               <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
                 Are you sure you want to create this Exercise?
               </p>
@@ -353,8 +308,8 @@ const useExercise = () => {
                   create
                 </button>
               </div>
-            </motion.div>
-          </>
+            </>
+          </ConfirmAlertLayout>
         );
       },
     });
