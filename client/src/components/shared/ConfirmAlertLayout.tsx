@@ -22,7 +22,7 @@ const ConfirmAlertLayout = ({ children }: Props) => {
           duration: 0.4,
           type: 'spring',
         }}
-        className="rounded-t-1.5 fixed inset-0 top-0 left-0 right-0 z-50 my-auto mx-auto h-18 rounded-2xl bg-white p-3 align-middle opacity-100 shadow-card lg:w-65"
+        className="rounded-t-1.5 fixed inset-0 top-0 left-0 right-0 z-50 my-auto mx-auto h-20 rounded-2xl bg-white p-3 align-middle opacity-100 shadow-card lg:w-65"
       >
         {children}
       </motion.div>

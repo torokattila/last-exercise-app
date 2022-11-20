@@ -1,12 +1,11 @@
 import ExerciseType from "../../models/ExerciseType";
 
 interface ExercisePayload {
-  id: string;
   name: string;
   cardColor: string;
   textColor: string;
   duration: string;
-  exerciseTypes: ExerciseType[];
+  exerciseTypes: Partial<ExerciseType>[];
   order: number;
   userId: string;
 }

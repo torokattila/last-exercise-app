@@ -26,7 +26,6 @@ const AddExercise = () => {
   ] = useState<ExerciseTypeCardColorOpen[]>([]);
 
   const [exercise, setExercise] = useState<ExercisePayload>({
-    id: '',
     name: '',
     cardColor: '#005A92',
     textColor: '#fff',
@@ -38,8 +37,7 @@ const AddExercise = () => {
 
   const handleAddNewExerciseType = () => {
     const types = [...exercise.exerciseTypes];
-    const newExerciseType: ExerciseType = {
-      id: '',
+    const newExerciseType: Partial<ExerciseType> = {
       name: '',
       order: 1,
       exerciseId: '',
@@ -62,7 +60,7 @@ const AddExercise = () => {
     ]);
   };
 
-  const handleDeleteType = (type: ExerciseType, index: number) => {
+  const handleDeleteType = (type: Partial<ExerciseType>, index: number) => {
     let currentExerciseTypes = [...exercise.exerciseTypes];
     currentExerciseTypes = currentExerciseTypes.filter(
       (exType, innerIndex: number) => innerIndex !== index
@@ -97,6 +95,10 @@ const AddExercise = () => {
       );
     }
   }, [exercise.exerciseTypes.length]);
+
+  useEffect(() => {
+    setExercise({ ...exercise, userId: user?.id ?? '' });
+  }, [user]);
 
   return (
     <AnimatePresence>
