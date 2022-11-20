@@ -6,6 +6,8 @@ import * as Storage from '../lib/storage';
 import Exercise from '../models/Exercise';
 import ExerciseType from '../models/ExerciseType';
 import ExercisePayload from './payloads/ExercisePayload';
+import UserEditPayload from './payloads/UserEditPayload';
+import PasswordChangePayload from './payloads/PasswordChangePayload';
 
 export const ApiURL =
   config.api.port !== 80 && config.api.port !== 443
@@ -69,6 +71,50 @@ class ApiClient {
         exerciseId,
         duration,
       },
+      {
+        headers: {
+          access_token: Storage.getItem('access_token') || '',
+        },
+      }
+    );
+
+    return response.data;
+  }
+
+  async updateUser(userId: string, data: UserEditPayload): Promise<User> {
+    const response: AxiosResponse<User> = await this.client.put(
+      `/users/${userId}`,
+      data,
+      {
+        headers: {
+          access_token: Storage.getItem('access_token') || '',
+        },
+      }
+    );
+
+    return response.data;
+  }
+
+  async updateUserPassword(
+    userId: string,
+    data: PasswordChangePayload
+  ): Promise<User> {
+    const response: AxiosResponse<User> = await this.client.put(
+      `/users/${userId}/password/update`,
+      data,
+      {
+        headers: {
+          access_token: Storage.getItem('access_token') || '',
+        },
+      }
+    );
+
+    return response.data;
+  }
+
+  async deleteUser(userId: string): Promise<User> {
+    const response: AxiosResponse<User> = await this.client.delete(
+      `/users/${userId}`,
       {
         headers: {
           access_token: Storage.getItem('access_token') || '',

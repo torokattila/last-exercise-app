@@ -8,7 +8,6 @@ import Exercise from '../models/Exercise';
 import ExerciseType from '../models/ExerciseType';
 import useApi from './useApi';
 import useHome from './useHome';
-import { motion, AnimatePresence } from 'framer-motion';
 import ConfirmAlertLayout from '../components/shared/ConfirmAlertLayout';
 
 const useExercise = () => {
