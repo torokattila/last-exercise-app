@@ -42,25 +42,33 @@ const Home = (): JSX.Element => {
             Your last exercise was:
           </h1>
           <div className="mt-3">
-            
             <ExerciseCard exercise={user?.lastExercise} isLastExercise />
           </div>
         </div>
       )}
 
-      <div className="mt-10 flex flex-col">
-        <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-          Your exercises:
-        </h2>
+      {user?.exercises && user?.exercises.length > 0 ? (
+        <div className="mt-10 flex flex-col">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+            Your exercises:
+          </h2>
 
-        <div className="mt-3 flex flex-col gap-4 lg:mt-5 lg:flex-row lg:flex-wrap">
-          {sortedExercises.map((exercise: Exercise) => (
-            <div key={exercise.id}>
-              <ExerciseCard exercise={exercise} />
-            </div>
-          ))}
+          <div className="mt-3 flex flex-col gap-4 lg:mt-5 lg:flex-row lg:flex-wrap">
+            {sortedExercises.map((exercise: Exercise) => (
+              <div key={exercise.id}>
+                <ExerciseCard exercise={exercise} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="mt-10 flex flex-col">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+            Looks like you have no exercises yet. 🙁
+            <br /> Create some by pressing the blue Plus button! 💪
+          </h2>
+        </div>
+      )}
 
       <div className="absolute bottom-9 right-10 z-20 hidden lg:flex">
         <AddExerciseButton />
