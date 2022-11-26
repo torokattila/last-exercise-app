@@ -257,7 +257,10 @@ const Profile = () => {
         </div>
 
         <div className="mt-4">
-          <button className="mb-1 rounded-xl border-2 border-white bg-transparent px-3 py-1 font-semibold uppercase text-white shadow-card transition-all hover:bg-red-700">
+          <button
+            onClick={handleDeleteUser}
+            className="mb-1 rounded-xl border-2 border-white bg-transparent px-3 py-1 font-semibold uppercase text-white shadow-card transition-all hover:bg-red-700"
+          >
             delete profile
           </button>
         </div>
