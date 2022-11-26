@@ -45,10 +45,8 @@ const Profile = () => {
     >
       <div className="mt-5 lg:mt-7">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-          Edit Profile <span className='ml-1'>✏️</span>
+          Edit Profile <span className="ml-1">✏️</span>
         </h1>
-
-
       </div>
 
       <div className="mt-4 flex w-full flex-col rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 p-3 shadow-card lg:mt-10 lg:w-1/2">
@@ -105,6 +103,16 @@ const Profile = () => {
             color="white"
             fontSize={25}
           />
+        </div>
+
+        <div className="mt-2 self-end">
+          <button
+            type="button"
+            onClick={handleUpdateUser}
+            className="rounded-full border-2 border-white px-4 py-1 uppercase text-white shadow-card transition-all hover:border-cyan-200"
+          >
+            Save
+          </button>
         </div>
       </div>
 
@@ -172,7 +180,7 @@ const Profile = () => {
         </div>
 
         <div className="mt-4">
-          <button className="rounded-xl border-2 mb-1 transition-all hover:bg-red-700 border-white bg-transparent px-3 py-1 font-semibold uppercase text-white shadow-card">
+          <button className="mb-1 rounded-xl border-2 border-white bg-transparent px-3 py-1 font-semibold uppercase text-white shadow-card transition-all hover:bg-red-700">
             delete profile
           </button>
         </div>

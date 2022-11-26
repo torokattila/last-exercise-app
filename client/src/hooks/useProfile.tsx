@@ -8,11 +8,12 @@ import PasswordChangePayload from '../api/payloads/PasswordChangePayload';
 import { confirmAlert } from 'react-confirm-alert';
 import ConfirmAlertLayout from '../components/shared/ConfirmAlertLayout';
 import { useNavigate } from 'react-router-dom';
+import useHome from './useHome';
 
 const useProfile = () => {
   const apiClient = useApi();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const user = LocalStorageManager.getUser();
+  const { user, refetchUser } = useHome();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>(user?.email ?? '');
@@ -112,6 +113,8 @@ const useProfile = () => {
       try {
         await apiClient.updateUser(user?.id ?? '', payload);
 
+        refetchUser();
+
         const key = enqueueSnackbar('User data updated!', {
           variant: 'success',
           autoHideDuration: 3000,
@@ -196,6 +199,8 @@ const useProfile = () => {
     if (isVerified) {
       try {
         await apiClient.updateUserPassword(user?.id ?? '', payload);
+
+        refetchUser();
 
         const key = enqueueSnackbar('Password updated!', {
           variant: 'success',
