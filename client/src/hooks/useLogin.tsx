@@ -65,7 +65,7 @@ const useLogin = () => {
           navigate('/');
         })
         .catch((error: any) => {
-          const key = enqueueSnackbar('Wrong username or password!', {
+          const key = enqueueSnackbar('Wrong email or password!', {
             variant: 'error',
             autoHideDuration: 3000,
             onClick: () => {

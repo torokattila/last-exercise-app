@@ -9,6 +9,7 @@ import personAddOutline from '@iconify/icons-eva/person-add-outline';
 import shieldOutline from '@iconify/icons-eva/shield-outline';
 import alertTriangleOutline from '@iconify/icons-eva/alert-triangle-outline';
 import { Icon } from '@iconify/react';
+import classNames from 'classnames';
 
 const Profile = () => {
   const {
@@ -59,9 +60,15 @@ const Profile = () => {
           <input
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
-            placeholder="First name"
+            placeholder={baseDataErrors.firstname ?? 'First name'}
             autoComplete="new-firstname"
-            className="mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200"
+            className={classNames(
+              'mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200',
+              {
+                'border-red-400 placeholder:text-red-400':
+                  baseDataErrors.firstname,
+              }
+            )}
           />
           <Icon
             className="absolute top-6 left-3"
@@ -76,9 +83,15 @@ const Profile = () => {
           <input
             value={lastname}
             onChange={(e) => setLastname(e.target.value)}
-            placeholder="Last name"
+            placeholder={baseDataErrors.lastname ?? 'Last name'}
             autoComplete="new-lastname"
-            className="mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200"
+            className={classNames(
+              'mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200',
+              {
+                'border-red-400 placeholder:text-red-400':
+                  baseDataErrors.lastname,
+              }
+            )}
           />
           <Icon
             className="absolute top-6 left-3"
@@ -93,9 +106,14 @@ const Profile = () => {
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            placeholder={baseDataErrors.email ?? 'Email'}
             autoComplete="new-email"
-            className="mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200"
+            className={classNames(
+              'mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200',
+              {
+                'border-red-400 placeholder:text-red-400': baseDataErrors.email,
+              }
+            )}
           />
           <Icon
             className="absolute top-6 left-3"
@@ -128,9 +146,17 @@ const Profile = () => {
             value={currentPassword}
             type={isCurrentPassword ? 'password' : 'text'}
             onChange={(e) => setCurrentPassword(e.target.value)}
-            placeholder="Current password"
+            placeholder={
+              passwordChangeErrors.currentPassword ?? 'Current password'
+            }
             autoComplete="new-password"
-            className="mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200"
+            className={classNames(
+              'mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200',
+              {
+                'border-red-400 placeholder:text-red-400':
+                  passwordChangeErrors.currentPassword,
+              }
+            )}
           />
           <Icon
             className="absolute top-6 left-3"
@@ -153,9 +179,15 @@ const Profile = () => {
             value={newPassword}
             type={isNewPassword ? 'password' : 'text'}
             onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="New password"
+            placeholder={passwordChangeErrors.newPassword ?? 'New password'}
             autoComplete="new-password"
-            className="mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200"
+            className={classNames(
+              'mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200',
+              {
+                'border-red-400 placeholder:text-red-400':
+                  passwordChangeErrors.newPassword,
+              }
+            )}
           />
           <Icon
             className="absolute top-6 left-3"
@@ -170,6 +202,51 @@ const Profile = () => {
             color="white"
             fontSize={25}
           />
+        </div>
+
+        <div className="relative mt-2 flex flex-col gap-y-1 pb-2">
+          <label className="font-medium text-white">
+            New password confirm:
+          </label>
+          <input
+            value={newPasswordConfirm}
+            type={isNewPasswordConfirm ? 'password' : 'text'}
+            onChange={(e) => setNewPasswordConfirm(e.target.value)}
+            placeholder={
+              passwordChangeErrors.newPasswordConfirm ?? 'New password confirm'
+            }
+            autoComplete="new-password"
+            className={classNames(
+              'mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200',
+              {
+                'border-red-400 placeholder:text-red-400':
+                  passwordChangeErrors.newPasswordConfirm,
+              }
+            )}
+          />
+          <Icon
+            className="absolute top-6 left-3"
+            icon={lockOutline}
+            color="white"
+            fontSize={25}
+          />
+          <Icon
+            className="absolute top-6 right-3 cursor-pointer"
+            icon={isNewPasswordConfirm ? eyeOutline : eyeOffOutline}
+            onClick={() => setIsNewPasswordConfirm(!isNewPasswordConfirm)}
+            color="white"
+            fontSize={25}
+          />
+        </div>
+
+        <div className="mt-2 self-end">
+          <button
+            type="button"
+            onClick={handlePasswordChangeSubmit}
+            className="rounded-full border-2 border-white px-4 py-1 uppercase text-white shadow-card transition-all hover:border-cyan-200"
+          >
+            Save
+          </button>
         </div>
       </div>
 

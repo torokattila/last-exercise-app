@@ -13,7 +13,8 @@ import useHome from './useHome';
 const useProfile = () => {
   const apiClient = useApi();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { user, refetchUser } = useHome();
+  const { refetchUser } = useHome();
+  const user = LocalStorageManager.getUser();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>(user?.email ?? '');
@@ -111,9 +112,9 @@ const useProfile = () => {
 
     if (isVerified) {
       try {
-        await apiClient.updateUser(user?.id ?? '', payload);
+        const updatedUser = await apiClient.updateUser(user?.id ?? '', payload);
 
-        refetchUser();
+        LocalStorageManager.setUser(updatedUser);
 
         const key = enqueueSnackbar('User data updated!', {
           variant: 'success',
