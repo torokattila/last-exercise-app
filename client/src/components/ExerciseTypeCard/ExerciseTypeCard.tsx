@@ -12,7 +12,6 @@ type Card = {
 };
 
 const ExerciseTypeCard = ({ exerciseType }: Props) => {
-  console.log(exerciseType);
   const cards: Card[] = useMemo(() => {
     const generatedCards: Card[] = [];
 
