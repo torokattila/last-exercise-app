@@ -9,6 +9,7 @@ interface ExerciseType extends EntityBase {
   seriesCardsColor: string;
   cardTextColor: string;
   order: number;
+  numberOfRepetitions: number | null;
 }
 
 export default ExerciseType;

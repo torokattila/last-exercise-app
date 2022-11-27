@@ -28,4 +28,7 @@ export default class ExerciseType extends EntityBase {
 
   @Column({ name: 'order', default: 1 })
   order: number;
+
+  @Column({ name: 'number_of_repetitions', nullable: true })
+  numberOfRepetitions: number;
 }

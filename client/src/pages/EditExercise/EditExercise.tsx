@@ -100,6 +100,7 @@ const EditExercise = () => {
       cardTextColor: '#fff',
       seriesCardsColor: '#005A92',
       seriesCardNumber: null,
+      numberOfRepetitions: null,
     };
     types.push(newExerciseType);
     setExerciseTypes(types);
@@ -311,7 +312,7 @@ const EditExercise = () => {
               </div>
             </div>
 
-            <div className="flex flex-col">
+            <div className="xl:w-1/3 flex flex-col">
               <label className="mb-1 font-medium dark:text-white">
                 Exercise name:
               </label>
@@ -326,7 +327,7 @@ const EditExercise = () => {
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="xl:w-1/3 flex flex-col">
               <label className="mb-1 font-medium dark:text-white">
                 Exercise order on the Home page:
               </label>
@@ -349,7 +350,7 @@ const EditExercise = () => {
               />
             </div>
 
-            <div>
+            <div className='xl:w-1/3'>
               <h3 className="font-semibold text-gray-800 dark:text-white">
                 Exercise types:
               </h3>
@@ -450,6 +451,32 @@ const EditExercise = () => {
                                 {
                                   ...exerciseTypes[index],
                                   seriesCardNumber: Number(e.target.value),
+                                },
+                                ...exerciseTypes.slice(index + 1),
+                              ]);
+                            }}
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-y-1">
+                          <label
+                            style={{
+                              color: exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
+                            Number of repetitions:
+                          </label>
+                          <input
+                            value={Number(type.numberOfRepetitions)}
+                            type="number"
+                            className="w-full rounded-full border-2 bg-white py-1.5 px-3 outline-none transition-all focus:shadow-card dark:bg-[#28282B] dark:text-white"
+                            onChange={(e) => {
+                              setExerciseTypes([
+                                ...exerciseTypes.slice(0, index),
+                                {
+                                  ...exerciseTypes[index],
+                                  numberOfRepetitions: Number(e.target.value),
                                 },
                                 ...exerciseTypes.slice(index + 1),
                               ]);

@@ -12,6 +12,7 @@ type Card = {
 };
 
 const ExerciseTypeCard = ({ exerciseType }: Props) => {
+  console.log(exerciseType);
   const cards: Card[] = useMemo(() => {
     const generatedCards: Card[] = [];
 
@@ -40,21 +41,21 @@ const ExerciseTypeCard = ({ exerciseType }: Props) => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
-          <div className="shadow-card bg-white p-3 lg:p-4 rounded-2xl backdrop-blur-xl">
-            <p className="text-left text-gray-800 font-medium lg:font-bold text-md lg:text-lg">
+          <div className="rounded-2xl bg-white p-3 shadow-card backdrop-blur-xl lg:p-4">
+            <p className="text-md text-left font-medium text-gray-800 lg:text-lg lg:font-bold">
               Are you sure you want to delete this card?
             </p>
 
-            <div className="mt-4 flex flex-row gap-x-2 justify-end">
+            <div className="mt-4 flex flex-row justify-end gap-x-2">
               <button
-                className="px-2 py-1 uppercase bg-[#4A9ECC] hover:bg-[#0e6696] rounded-full text-white transition-all"
+                className="rounded-full bg-[#4A9ECC] px-2 py-1 uppercase text-white transition-all hover:bg-[#0e6696]"
                 onClick={() => onClose()}
               >
                 cancel
               </button>
 
               <button
-                className="px-2 py-1 uppercase bg-red-500 transition-all hover:bg-red-700 rounded-full text-white font-bold"
+                className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
                 onClick={() => {
                   deleteCard(card);
                   onClose();
@@ -70,19 +71,25 @@ const ExerciseTypeCard = ({ exerciseType }: Props) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row lg:flex-wrap gap-3 items-center mt-1 lg:mt-3 px-3 lg:px-0">
+    <div className="mt-1 flex flex-col items-center gap-3 px-3 lg:mt-3 lg:flex-row lg:flex-wrap lg:px-0">
       <>
         {dynamicCards.map((card, index: number) => (
           <div
             key={`type_card_${index}`}
-            className="flex flex-col justify-center items-center rounded-2xl shadow-card h-10 w-full lg:w-43 p-2 cursor-pointer transition-all hover:opacity-90"
+            className="flex h-10 w-full cursor-pointer flex-col items-center justify-center rounded-2xl p-2 shadow-card transition-all hover:opacity-90 lg:w-43"
             style={{
               backgroundColor: exerciseType.seriesCardsColor,
               color: exerciseType.cardTextColor,
             }}
             onClick={() => handleDeleteCard(card)}
           >
-            <h1 className="font-semibold text-md">{card.name}</h1>
+            <h1 className="text-md font-semibold">
+              {card.name}{' '}
+              {exerciseType.numberOfRepetitions !== null &&
+                exerciseType.numberOfRepetitions !== 0 && (
+                  <span>({exerciseType.numberOfRepetitions})</span>
+                )}
+            </h1>
           </div>
         ))}
       </>

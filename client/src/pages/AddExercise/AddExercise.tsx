@@ -45,6 +45,7 @@ const AddExercise = () => {
       cardTextColor: '#fff',
       seriesCardsColor: '#005A92',
       seriesCardNumber: null,
+      numberOfRepetitions: null,
     };
     types.push(newExerciseType);
     setExercise({ ...exercise, exerciseTypes: types });
@@ -276,7 +277,7 @@ const AddExercise = () => {
               </div>
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col xl:w-1/3">
               <label className="mb-1 font-medium dark:text-white">
                 Exercise name:
               </label>
@@ -293,7 +294,7 @@ const AddExercise = () => {
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col xl:w-1/3">
               <label className="mb-1 font-medium dark:text-white">
                 Exercise order on the Home page:
               </label>
@@ -312,7 +313,7 @@ const AddExercise = () => {
               />
             </div>
 
-            <div>
+            <div className="xl:w-1/3">
               <h3 className="font-semibold text-gray-800 dark:text-white">
                 Exercise types:
               </h3>
@@ -424,6 +425,36 @@ const AddExercise = () => {
                                   {
                                     ...exercise.exerciseTypes[index],
                                     seriesCardNumber: Number(e.target.value),
+                                  },
+                                  ...exercise.exerciseTypes.slice(index + 1),
+                                ],
+                              });
+                            }}
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-y-1">
+                          <label
+                            style={{
+                              color:
+                                exercise.exerciseTypes[index].cardTextColor,
+                            }}
+                            className="font-medium"
+                          >
+                            Number of repetitions:
+                          </label>
+                          <input
+                            value={Number(type.numberOfRepetitions)}
+                            type="number"
+                            className="w-full rounded-full border-2 bg-white py-1.5 px-3 outline-none transition-all focus:shadow-card dark:bg-[#28282B] dark:text-white"
+                            onChange={(e) => {
+                              setExercise({
+                                ...exercise,
+                                exerciseTypes: [
+                                  ...exercise.exerciseTypes.slice(0, index),
+                                  {
+                                    ...exercise.exerciseTypes[index],
+                                    numberOfRepetitions: Number(e.target.value),
                                   },
                                   ...exercise.exerciseTypes.slice(index + 1),
                                 ],
