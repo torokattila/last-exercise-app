@@ -36,16 +36,13 @@ const prodConfig: ConfigInterface = {
   ...baseConfig,
   api: {
     protocol: 'https',
-    baseUrl: '',
+    baseUrl: 'last-exercise-api.onrender.com',
     port: 443,
   },
-  apiUrl: '',
-  loginUrl: '',
-  registrationUrl: '',
+  apiUrl: 'https://last-exercise-api.onrender.com',
+  loginUrl: 'https://last-exercise-api.onrender.com/login',
+  registrationUrl: 'https://last-exercise-api.onrender.com/register',
   frontendUrl: '',
-  social: {
-    googleUrl: '',
-  },
 };
 
 const config: ConfigInterface = env === 'production' ? prodConfig : baseConfig;
