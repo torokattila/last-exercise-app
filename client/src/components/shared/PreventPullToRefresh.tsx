@@ -1,27 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-const PreventPullToRefresh = ({
-  children,
-  enabled = true,
-}: {
-  children: React.ReactNode;
-  enabled?: boolean;
-}) => {
+const PreventPullToRefresh = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
-    if (!enabled) return;
+    let touchStartY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 1 || window.scrollY === 0) {
+      const currentY = e.touches[0].clientY;
+
+      // Prevent pull-to-refresh when scrolling up from the very top
+      if (window.scrollY === 0 && currentY > touchStartY) {
         e.preventDefault();
       }
     };
 
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener("touchstart", handleTouchStart, { passive: true });
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     return () => {
-      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [enabled]);
+  }, []);
 
   return <>{children}</>;
 };
