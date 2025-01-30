@@ -1033,8 +1033,8 @@ video {
 }
 
 .shadow-top {
-  --tw-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
-  --tw-shadow-colored: 0px 5px 15px; var(--tw-shadow-color);
+  --tw-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  --tw-shadow-colored: 0px 5px 15px, var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -1153,8 +1153,8 @@ code {
 }
 
 .dark .dark\:shadow-top-dark {
-  --tw-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px 0px;;
-  --tw-shadow-colored: 0px 5px 15px 0px; var(--tw-shadow-color);
+  --tw-shadow: rgba(255, 255, 255, 0.185) 0px 5px 15px 0px;
+  --tw-shadow-colored: 0px 5px 15px 0px, var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 

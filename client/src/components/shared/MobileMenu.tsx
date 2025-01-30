@@ -1,13 +1,13 @@
+import { Icon } from '@iconify/react';
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Icon } from '@iconify/react';
 
-import personFill from '@iconify/icons-eva/person-fill';
 import homeFill from '@iconify/icons-eva/home-fill';
 import logOutFill from '@iconify/icons-eva/log-out-fill';
-import DarkModeSwitch from '../DarkModeSwitch';
+import personFill from '@iconify/icons-eva/person-fill';
 import LocalStorageManager from '../../utils/LocalStorageManager';
+import DarkModeSwitch from '../DarkModeSwitch';
 
 const MobileMenu = () => {
   const navigate = useNavigate();
@@ -20,25 +20,33 @@ const MobileMenu = () => {
   }, [location.pathname]);
 
   return (
-    <div className="lg:hidden fixed z-20 gap-x-3 justify-evenly bottom-0 items-center flex flex-row h-9 shadow-top dark:shadow-top-dark w-full bg-white dark:bg-[#28282B]">
+    <div
+      style={{
+        transform: 'translateX(-50%)',
+      }}
+      className={`
+      fixed bottom-1 left-1/2 z-20 flex h-8 w-[96%] flex-row 
+      items-center justify-evenly gap-x-3 rounded-full bg-white shadow-top 
+      dark:bg-[#38383a] lg:hidden`}
+    >
       <div
         className={classNames(
-          `p-1.5 rounded-2xl cursor-pointer transition-all`,
+          `cursor-pointer rounded-2xl p-1.25 transition-all`,
           {
-            'bg-[#4A9ECB] shadow-xl text-white hover:bg-[#0e6696]': isHomePage,
+            'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]': isHomePage,
             'text-[#4A9ECB] hover:text-[#0e6696]': !isHomePage,
           }
         )}
         onClick={() => navigate('/')}
       >
-        <Icon icon={homeFill} fontSize={25} />
+        <Icon icon={homeFill} fontSize={24} />
       </div>
 
       <div
         className={classNames(
-          `p-1.5 rounded-2xl cursor-pointer transition-all`,
+          `cursor-pointer rounded-2xl p-1.25 transition-all`,
           {
-            'bg-[#4A9ECB] shadow-xl text-white hover:bg-[#0e6696]':
+            'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]':
               isProfilePage,
             'text-[#4A9ECB] hover:text-[#0e6696]': !isProfilePage,
           }
@@ -53,7 +61,7 @@ const MobileMenu = () => {
       </div>
 
       <div
-        className="text-[#4A9ECB] hover:text-[#0e6696] transition-all cursor-pointer p-1.5"
+        className="cursor-pointer p-1.25 text-[#4A9ECB] transition-all hover:text-[#0e6696]"
         onClick={() => {
           LocalStorageManager.removeLocalStorage();
           navigate('/login');
