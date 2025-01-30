@@ -4,11 +4,11 @@ import { confirmAlert } from 'react-confirm-alert';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import ExercisePayload from '../api/payloads/ExercisePayload';
+import ConfirmAlertLayout from '../components/shared/ConfirmAlertLayout';
 import Exercise from '../models/Exercise';
 import ExerciseType from '../models/ExerciseType';
 import useApi from './useApi';
 import useHome from './useHome';
-import ConfirmAlertLayout from '../components/shared/ConfirmAlertLayout';
 
 const useExercise = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

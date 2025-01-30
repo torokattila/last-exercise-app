@@ -6,12 +6,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import homeFill from '@iconify/icons-eva/home-fill';
 import logOutFill from '@iconify/icons-eva/log-out-fill';
 import personFill from '@iconify/icons-eva/person-fill';
-import LocalStorageManager from '../../utils/LocalStorageManager';
+import useLogout from '../../hooks/useLogout';
 import DarkModeSwitch from '../DarkModeSwitch';
 
 const MobileMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { handleLogoutConfirm } = useLogout();
   const isHomePage = useMemo(() => {
     return location.pathname === '/';
   }, [location.pathname]);
@@ -62,10 +63,7 @@ const MobileMenu = () => {
 
       <div
         className="cursor-pointer p-1.25 text-[#4A9ECB] transition-all hover:text-[#0e6696]"
-        onClick={() => {
-          LocalStorageManager.removeLocalStorage();
-          navigate('/login');
-        }}
+        onClick={handleLogoutConfirm}
       >
         <Icon icon={logOutFill} fontSize={30} />
       </div>
