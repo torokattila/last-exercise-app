@@ -1,6 +1,5 @@
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
 import DarkModeSwitch from '../DarkModeSwitch';
 
 import homeFill from '@iconify/icons-eva/home-fill';
@@ -10,17 +9,27 @@ import { Icon } from '@iconify/react';
 import useMenu from '../../hooks/useMenu';
 
 const DesktopMenu = () => {
-  const navigate = useNavigate();
   const {
     handleLogoutConfirm,
     isHomePage,
     isProfilePage,
-    handleNavigateToProfilePage,
+    handleNavigateToOtherPage,
+    handleConfirmPageNavigation,
+    isExercisePage,
   } = useMenu();
 
   return (
     <div className="fixed hidden h-screen w-12 flex-col items-center bg-white shadow-xl dark:bg-[#28282B] lg:flex">
-      <div className="mt-3 cursor-pointer" onClick={() => navigate('/')}>
+      <div
+        className="mt-3 cursor-pointer"
+        onClick={() => {
+          if (isExercisePage) {
+            handleConfirmPageNavigation('home');
+          } else {
+            handleNavigateToOtherPage('home');
+          }
+        }}
+      >
         <img
           src={`${process.env.PUBLIC_URL}/workout.png`}
           alt="workout_logo"
@@ -39,7 +48,13 @@ const DesktopMenu = () => {
                 'text-[#4A9ECB] hover:text-[#0e6696]': !isHomePage,
               }
             )}
-            onClick={() => navigate('/')}
+            onClick={() => {
+              if (isExercisePage) {
+                handleConfirmPageNavigation('home');
+              } else {
+                handleNavigateToOtherPage('home');
+              }
+            }}
           >
             <Icon icon={homeFill} fontSize={25} />
           </div>
@@ -55,7 +70,13 @@ const DesktopMenu = () => {
                 'text-[#4A9ECB] hover:text-[#0e6696]': !isProfilePage,
               }
             )}
-            onClick={handleNavigateToProfilePage}
+            onClick={() => {
+              if (isExercisePage) {
+                handleConfirmPageNavigation('profile');
+              } else {
+                handleNavigateToOtherPage('profile');
+              }
+            }}
           >
             <Icon icon={personFill} fontSize={25} />
           </div>

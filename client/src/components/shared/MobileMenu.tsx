@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react';
 import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
 
 import homeFill from '@iconify/icons-eva/home-fill';
 import logOutFill from '@iconify/icons-eva/log-out-fill';
@@ -9,14 +8,13 @@ import useMenu from '../../hooks/useMenu';
 import DarkModeSwitch from '../DarkModeSwitch';
 
 const MobileMenu = () => {
-  const navigate = useNavigate();
   const {
     handleLogoutConfirm,
     isHomePage,
     isProfilePage,
     isExercisePage,
-    handleNavigateToProfilePage,
-    handleConfirmProfilePageNavigation,
+    handleNavigateToOtherPage,
+    handleConfirmPageNavigation,
   } = useMenu();
 
   return (
@@ -37,7 +35,13 @@ const MobileMenu = () => {
             'text-[#4A9ECB] hover:text-[#0e6696]': !isHomePage,
           }
         )}
-        onClick={() => navigate('/')}
+        onClick={() => {
+          if (isExercisePage) {
+            handleConfirmPageNavigation('home');
+          } else {
+            handleNavigateToOtherPage('home');
+          }
+        }}
       >
         <Icon icon={homeFill} fontSize={24} />
       </div>
@@ -53,9 +57,9 @@ const MobileMenu = () => {
         )}
         onClick={() => {
           if (isExercisePage) {
-            handleConfirmProfilePageNavigation();
+            handleConfirmPageNavigation('profile');
           } else {
-            handleNavigateToProfilePage();
+            handleNavigateToOtherPage('profile');
           }
         }}
       >

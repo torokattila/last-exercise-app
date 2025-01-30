@@ -18,11 +18,20 @@ const useMenu = () => {
     return location.pathname.includes('/exercises');
   }, [location.pathname]);
 
-  const handleNavigateToProfilePage = (): void => {
-    navigate('/profile');
+  const handleNavigateToOtherPage = (page: 'home' | 'profile'): void => {
+    switch (page) {
+      case 'home':
+        navigate('/');
+        break;
+      case 'profile':
+        navigate('/profile');
+        break;
+      default:
+        throw new Error('Invalid page');
+    }
   };
 
-  const handleConfirmProfilePageNavigation = (): void => {
+  const handleConfirmPageNavigation = (page: 'home' | 'profile'): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -42,7 +51,11 @@ const useMenu = () => {
               <button
                 className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
                 onClick={() => {
-                  handleNavigateToProfilePage();
+                  if (page === 'profile') {
+                    handleNavigateToOtherPage('profile');
+                  } else if (page === 'home') {
+                    handleNavigateToOtherPage('home');
+                  }
                   onClose();
                 }}
               >
@@ -60,8 +73,8 @@ const useMenu = () => {
     isHomePage,
     isProfilePage,
     isExercisePage,
-    handleNavigateToProfilePage,
-    handleConfirmProfilePageNavigation,
+    handleNavigateToOtherPage,
+    handleConfirmPageNavigation,
   };
 };
 
