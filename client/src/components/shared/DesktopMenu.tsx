@@ -1,42 +1,40 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useMemo } from 'react';
-import classNames from 'classnames';
 import { Tooltip } from '@mui/material';
+import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
 import DarkModeSwitch from '../DarkModeSwitch';
-import LocalStorageManager from '../../utils/LocalStorageManager';
 
-import { Icon } from '@iconify/react';
-import personFill from '@iconify/icons-eva/person-fill';
 import homeFill from '@iconify/icons-eva/home-fill';
 import logOutFill from '@iconify/icons-eva/log-out-fill';
+import personFill from '@iconify/icons-eva/person-fill';
+import { Icon } from '@iconify/react';
+import useMenu from '../../hooks/useMenu';
 
 const DesktopMenu = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isHomePage = useMemo(() => {
-    return location.pathname === '/';
-  }, [location.pathname]);
-  const isProfilePage = useMemo(() => {
-    return location.pathname === '/profile';
-  }, [location.pathname]);
+  const {
+    handleLogoutConfirm,
+    isHomePage,
+    isProfilePage,
+    handleNavigateToProfilePage,
+  } = useMenu();
 
   return (
-    <div className="fixed lg:flex flex-col items-center hidden w-12 h-screen shadow-xl bg-white dark:bg-[#28282B]">
+    <div className="fixed hidden h-screen w-12 flex-col items-center bg-white shadow-xl dark:bg-[#28282B] lg:flex">
       <div className="mt-3 cursor-pointer" onClick={() => navigate('/')}>
         <img
           src={`${process.env.PUBLIC_URL}/workout.png`}
           alt="workout_logo"
-          className="max-w-[72px] max-h-[72px]"
+          className="max-h-[72px] max-w-[72px]"
         />
       </div>
 
-      <div className="flex flex-col gap-y-3 mt-10">
+      <div className="mt-10 flex flex-col gap-y-3">
         <Tooltip title="Exercises" arrow placement="right">
           <div
             className={classNames(
-              `p-1.5 rounded-2xl cursor-pointer transition-all`,
+              `cursor-pointer rounded-2xl p-1.5 transition-all`,
               {
-                'bg-[#4A9ECB] shadow-xl text-white hover:bg-[#0e6696]':
+                'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]':
                   isHomePage,
                 'text-[#4A9ECB] hover:text-[#0e6696]': !isHomePage,
               }
@@ -50,14 +48,14 @@ const DesktopMenu = () => {
         <Tooltip title="Profile" arrow placement="right">
           <div
             className={classNames(
-              `p-1.5 rounded-2xl cursor-pointer transition-all`,
+              `cursor-pointer rounded-2xl p-1.5 transition-all`,
               {
-                'bg-[#4A9ECB] shadow-xl text-white hover:bg-[#0e6696]':
+                'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]':
                   isProfilePage,
                 'text-[#4A9ECB] hover:text-[#0e6696]': !isProfilePage,
               }
             )}
-            onClick={() => navigate('/profile')}
+            onClick={handleNavigateToProfilePage}
           >
             <Icon icon={personFill} fontSize={25} />
           </div>
@@ -71,11 +69,8 @@ const DesktopMenu = () => {
 
         <Tooltip title="Log out" arrow placement="right">
           <div
-            className="absolute bottom-7 text-[#4A9ECB] hover:text-[#0e6696] transition-all cursor-pointer p-1.5"
-            onClick={() => {
-              LocalStorageManager.removeLocalStorage();
-              navigate('/login');
-            }}
+            className="absolute bottom-7 cursor-pointer p-1.5 text-[#4A9ECB] transition-all hover:text-[#0e6696]"
+            onClick={handleLogoutConfirm}
           >
             <Icon icon={logOutFill} fontSize={30} />
           </div>

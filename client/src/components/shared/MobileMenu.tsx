@@ -1,24 +1,23 @@
 import { Icon } from '@iconify/react';
 import classNames from 'classnames';
-import { useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import homeFill from '@iconify/icons-eva/home-fill';
 import logOutFill from '@iconify/icons-eva/log-out-fill';
 import personFill from '@iconify/icons-eva/person-fill';
-import useLogout from '../../hooks/useLogout';
+import useMenu from '../../hooks/useMenu';
 import DarkModeSwitch from '../DarkModeSwitch';
 
 const MobileMenu = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { handleLogoutConfirm } = useLogout();
-  const isHomePage = useMemo(() => {
-    return location.pathname === '/';
-  }, [location.pathname]);
-  const isProfilePage = useMemo(() => {
-    return location.pathname === '/profile';
-  }, [location.pathname]);
+  const {
+    handleLogoutConfirm,
+    isHomePage,
+    isProfilePage,
+    isExercisePage,
+    handleNavigateToProfilePage,
+    handleConfirmProfilePageNavigation,
+  } = useMenu();
 
   return (
     <div
@@ -52,7 +51,13 @@ const MobileMenu = () => {
             'text-[#4A9ECB] hover:text-[#0e6696]': !isProfilePage,
           }
         )}
-        onClick={() => navigate('/profile')}
+        onClick={() => {
+          if (isExercisePage) {
+            handleConfirmProfilePageNavigation();
+          } else {
+            handleNavigateToProfilePage();
+          }
+        }}
       >
         <Icon icon={personFill} fontSize={25} />
       </div>
