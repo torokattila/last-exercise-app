@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import Loadable from '../components/Loadable';
 import AuthGuard from '../guards/AuthGuard';
 import Layout from '../components/shared/Layout';
+import CalendarPage from '../pages/Calendar';
 
 export default function Router(): React.ReactElement | null {
   return useRoutes([
@@ -30,6 +31,16 @@ export default function Router(): React.ReactElement | null {
         <AuthGuard>
           <Layout>
             <Profile />
+          </Layout>
+        </AuthGuard>
+      ),
+    },
+    {
+      path: '/calendar',
+      element: (
+        <AuthGuard>
+          <Layout>
+            <CalendarPage />
           </Layout>
         </AuthGuard>
       ),

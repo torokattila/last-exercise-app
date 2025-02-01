@@ -13,7 +13,6 @@ import classNames from 'classnames';
 
 const Profile = () => {
   const {
-    user,
     email,
     setEmail,
     firstname,

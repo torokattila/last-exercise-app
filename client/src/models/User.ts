@@ -10,7 +10,9 @@ interface User extends EntityBase {
   exercises: Exercise[];
   lastExercise: Exercise;
   lastExerciseId: string | null;
-  exerciseHistory?: { date: string; exerciseId: string }[] | null;
+  exerciseHistory?:
+    | { date: string; exerciseId: string; exercise?: Exercise }[]
+    | null;
 }
 
 export default User;
