@@ -1,4 +1,4 @@
-import { Logger } from 'common';
+import { Logger } from '../common';
 import User from 'entities/User';
 import UserService from './UserService';
 
