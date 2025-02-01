@@ -16,6 +16,7 @@ const MobileMenu = () => {
     isExercisePage,
     handleNavigateToOtherPage,
     handleConfirmPageNavigation,
+    isCalendarPage,
   } = useMenu();
 
   return (
@@ -72,8 +73,8 @@ const MobileMenu = () => {
           `cursor-pointer rounded-2xl p-1.25 transition-all`,
           {
             'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]':
-              isProfilePage,
-            'text-[#4A9ECB] hover:text-[#0e6696]': !isProfilePage,
+            isCalendarPage,
+            'text-[#4A9ECB] hover:text-[#0e6696]': !isCalendarPage,
           }
         )}
         onClick={() => {

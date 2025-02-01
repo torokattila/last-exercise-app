@@ -17,6 +17,9 @@ const useMenu = () => {
   const isExercisePage = useMemo(() => {
     return location.pathname.includes('/exercises');
   }, [location.pathname]);
+  const isCalendarPage = useMemo(() => {
+    return location.pathname.includes('/calendar');
+  }, [location.pathname]);
 
   const handleNavigateToOtherPage = (
     page: 'home' | 'profile' | 'calendar'
@@ -90,6 +93,7 @@ const useMenu = () => {
     isHomePage,
     isProfilePage,
     isExercisePage,
+    isCalendarPage,
     handleNavigateToOtherPage,
     handleConfirmPageNavigation,
   };
