@@ -18,7 +18,9 @@ const useMenu = () => {
     return location.pathname.includes('/exercises');
   }, [location.pathname]);
 
-  const handleNavigateToOtherPage = (page: 'home' | 'profile'): void => {
+  const handleNavigateToOtherPage = (
+    page: 'home' | 'profile' | 'calendar'
+  ): void => {
     switch (page) {
       case 'home':
         navigate('/');
@@ -26,12 +28,34 @@ const useMenu = () => {
       case 'profile':
         navigate('/profile');
         break;
+      case 'calendar':
+        navigate('/calendar');
+        break;
       default:
         throw new Error('Invalid page');
     }
   };
 
-  const handleConfirmPageNavigation = (page: 'home' | 'profile'): void => {
+  const handleLeavePage = (
+    onClose: () => void,
+    page: 'home' | 'profile' | 'calendar'
+  ) => {
+    onClose();
+    switch (page) {
+      case 'profile':
+        return handleNavigateToOtherPage('profile');
+      case 'home':
+        return handleNavigateToOtherPage('home');
+      case 'calendar':
+        return handleNavigateToOtherPage('calendar');
+      default:
+        return;
+    }
+  };
+
+  const handleConfirmPageNavigation = (
+    page: 'home' | 'profile' | 'calendar'
+  ): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -50,14 +74,7 @@ const useMenu = () => {
 
               <button
                 className="rounded-full bg-red-500 px-2 py-1 font-bold uppercase text-white transition-all hover:bg-red-700"
-                onClick={() => {
-                  if (page === 'profile') {
-                    handleNavigateToOtherPage('profile');
-                  } else if (page === 'home') {
-                    handleNavigateToOtherPage('home');
-                  }
-                  onClose();
-                }}
+                onClick={() => handleLeavePage(onClose, page)}
               >
                 Leave
               </button>
