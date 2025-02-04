@@ -2,9 +2,9 @@ import { format, getDay, parse, startOfWeek } from 'date-fns';
 import hu from 'date-fns/locale/hu';
 import { useMemo } from 'react';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-import LocalStorageManager from '../../utils/LocalStorageManager';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import useHome from '../../hooks/useHome';
 import './Calendar.css';
 import CustomToolbar from './components/CustomToolbar';
 
@@ -44,7 +44,7 @@ const eventStyleGetter = (
 };
 
 const CalendarPage = () => {
-  const user = LocalStorageManager.getUser();
+  const { user } = useHome();
   const events: CalendarEvent[] = useMemo(() => {
     return (
       user?.exerciseHistory?.map((history) => ({
@@ -59,7 +59,9 @@ const CalendarPage = () => {
   }, [user?.exerciseHistory]);
 
   return (
-    <div className={'h-[100vh] w-full overflow-x-auto bg-white dark:bg-[#28282B]'}>
+    <div
+      className={'h-[100vh] w-full overflow-x-auto bg-white dark:bg-[#28282B]'}
+    >
       <Calendar
         toolbar={true}
         localizer={localizer}
