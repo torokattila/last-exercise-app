@@ -1,7 +1,6 @@
-import { PromiseRejectionHandler } from 'common';
-import User from 'entities/User';
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { PromiseRejectionHandler } from '../common';
 import UserService from '../services/UserService';
 
 class MeController {
