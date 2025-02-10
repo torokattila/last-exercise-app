@@ -43,7 +43,10 @@ const Exercise = () => {
                 }}
                 className="rounded-full py-2 px-10 font-medium uppercase shadow-card transition-all hover:opacity-90"
                 onClick={() =>
-                  handleFinishExercise(currentExercise?.id ?? '', duration)
+                  handleFinishExercise(
+                    Number(currentExercise?.id) ?? null,
+                    duration
+                  )
                 }
               >
                 finish exercise
@@ -91,7 +94,10 @@ const Exercise = () => {
                 }}
                 className="rounded-full py-2 px-4 font-medium uppercase shadow-card transition-all hover:opacity-90"
                 onClick={() =>
-                  handleFinishExercise(currentExercise?.id ?? '', duration)
+                  handleFinishExercise(
+                    Number(currentExercise?.id) ?? null,
+                    duration
+                  )
                 }
               >
                 finish exercise

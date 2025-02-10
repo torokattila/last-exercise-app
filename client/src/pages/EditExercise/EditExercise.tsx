@@ -19,8 +19,8 @@ const EditExercise = () => {
   } = useExercise();
   const { user } = useHome();
 
-  const [exerciseId, setExerciseId] = useState<string>(
-    currentExercise?.id ?? ''
+  const [exerciseId, setExerciseId] = useState<number | undefined>(
+    currentExercise?.id ?? undefined
   );
   const [exerciseCardColor, setExerciseCardColor] = useState<string>(
     currentExercise?.cardColor ?? ''
@@ -53,7 +53,7 @@ const EditExercise = () => {
   ] = useState<ExerciseTypeCardColorOpen[]>([]);
 
   useEffect(() => {
-    setExerciseId(currentExercise?.id ?? '');
+    setExerciseId(currentExercise?.id ?? undefined);
     setExerciseCardColor(currentExercise?.cardColor ?? '');
     setExerciseName(currentExercise?.name ?? '');
     setExerciseOrder(currentExercise?.order ?? 0);
@@ -92,10 +92,10 @@ const EditExercise = () => {
   const handleAddNewExerciseType = () => {
     const types = [...exerciseTypes];
     const newExerciseType: ExerciseType = {
-      id: '',
+      id: undefined,
       name: '',
       order: 1,
-      exerciseId: exerciseId,
+      exerciseId: Number(exerciseId),
       exercise: null,
       cardTextColor: '#fff',
       seriesCardsColor: '#005A92',
@@ -117,7 +117,7 @@ const EditExercise = () => {
   };
 
   const handleDeleteType = (type: ExerciseType) => {
-    if (!type.id.length) {
+    if (!type?.id) {
       const currentExerciseTypes = [...exerciseTypes];
       currentExerciseTypes.pop();
       setExerciseTypes(currentExerciseTypes);
@@ -152,7 +152,7 @@ const EditExercise = () => {
                 onClick={() => {
                   handleEditExercise({
                     id: exerciseId,
-                    userId: user?.id ?? '',
+                    userId: Number(user?.id) ?? undefined,
                     cardColor: exerciseCardColor,
                     duration: exerciseDuration,
                     exerciseTypes: exerciseTypes,
@@ -171,7 +171,7 @@ const EditExercise = () => {
               </button>
 
               <button
-                onClick={() => handleDeleteExercise(exerciseId)}
+                onClick={() => handleDeleteExercise(exerciseId ?? undefined)}
                 className="flex h-7 w-7 flex-col items-center justify-center rounded-full bg-red-700 p-2 uppercase shadow-card transition-all hover:bg-red-800"
               >
                 <Icon icon={trash2Fill} className="text-2xl text-white" />
@@ -312,7 +312,7 @@ const EditExercise = () => {
               </div>
             </div>
 
-            <div className="xl:w-1/3 flex flex-col">
+            <div className="flex flex-col xl:w-1/3">
               <label className="mb-1 font-medium dark:text-white">
                 Exercise name:
               </label>
@@ -327,7 +327,7 @@ const EditExercise = () => {
               />
             </div>
 
-            <div className="xl:w-1/3 flex flex-col">
+            <div className="flex flex-col xl:w-1/3">
               <label className="mb-1 font-medium dark:text-white">
                 Exercise order on the Home page:
               </label>
@@ -350,7 +350,7 @@ const EditExercise = () => {
               />
             </div>
 
-            <div className='xl:w-1/3'>
+            <div className="xl:w-1/3">
               <h3 className="font-semibold text-gray-800 dark:text-white">
                 Exercise types:
               </h3>

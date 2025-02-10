@@ -112,7 +112,10 @@ const useProfile = () => {
 
     if (isVerified) {
       try {
-        const updatedUser = await apiClient.updateUser(user?.id ?? '', payload);
+        const updatedUser = await apiClient.updateUser(
+          Number(user?.id) ?? '',
+          payload
+        );
 
         LocalStorageManager.setUser(updatedUser);
 
@@ -199,7 +202,7 @@ const useProfile = () => {
 
     if (isVerified) {
       try {
-        await apiClient.updateUserPassword(user?.id ?? '', payload);
+        await apiClient.updateUserPassword(Number(user?.id) ?? null, payload);
 
         refetchUser();
 
@@ -281,7 +284,7 @@ const useProfile = () => {
 
   const deleteUser = async (): Promise<void> => {
     try {
-      await apiClient.deleteUser(user?.id ?? '');
+      await apiClient.deleteUser(Number(user?.id) ?? null);
       await LocalStorageManager.removeLocalStorage();
       navigate('/');
     } catch (error: any) {

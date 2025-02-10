@@ -32,7 +32,7 @@ const AddExercise = () => {
     duration: '',
     exerciseTypes: [],
     order: 1,
-    userId: user?.id ?? '',
+    userId: Number(user?.id) ?? undefined,
   });
 
   const handleAddNewExerciseType = () => {
@@ -40,7 +40,7 @@ const AddExercise = () => {
     const newExerciseType: Partial<ExerciseType> = {
       name: '',
       order: 1,
-      exerciseId: '',
+      exerciseId: undefined,
       exercise: null,
       cardTextColor: '#fff',
       seriesCardsColor: '#005A92',
@@ -98,7 +98,7 @@ const AddExercise = () => {
   }, [exercise.exerciseTypes.length]);
 
   useEffect(() => {
-    setExercise({ ...exercise, userId: user?.id ?? '' });
+    setExercise({ ...exercise, userId: Number(user?.id) ?? undefined });
   }, [user]);
 
   return (

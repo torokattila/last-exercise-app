@@ -1,5 +1,5 @@
 interface EntityBase {
-  id: string;
+  id: number | undefined;
   created?: string;
   modified?: string;
 }

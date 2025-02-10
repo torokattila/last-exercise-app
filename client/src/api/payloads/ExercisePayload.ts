@@ -7,7 +7,7 @@ interface ExercisePayload {
   duration: string;
   exerciseTypes: Partial<ExerciseType>[];
   order: number;
-  userId: string;
+  userId: number;
 }
 
 export default ExercisePayload

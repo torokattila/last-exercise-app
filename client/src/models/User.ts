@@ -9,7 +9,7 @@ interface User extends EntityBase {
   password: string;
   exercises: Exercise[];
   lastExercise: Exercise;
-  lastExerciseId: string | null;
+  lastExerciseId: number | null;
   exerciseHistory?:
     | { date: string; exerciseId: string; exercise?: Exercise }[]
     | null;

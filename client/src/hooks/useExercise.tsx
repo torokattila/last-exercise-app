@@ -23,7 +23,8 @@ const useExercise = () => {
     refetch,
   } = useQuery(
     ['getExercise', { exerciseId: params.exerciseId }],
-    async () => await apiClient.getExercise(params.exerciseId as string),
+    async () =>
+      await apiClient.getExercise(Number(params.exerciseId)),
     {
       refetchOnWindowFocus: false,
     }
@@ -51,11 +52,15 @@ const useExercise = () => {
   }, [currentExercise]);
 
   const finishExercise = async (
-    exerciseId: string,
+    exerciseId: number,
     duration: string
   ): Promise<boolean> => {
     try {
-      await apiClient.finishExercise(user?.id ?? '', exerciseId, duration);
+      await apiClient.finishExercise(
+        Number(user?.id) ?? null,
+        exerciseId,
+        duration
+      );
 
       refetchUser();
 
@@ -83,7 +88,7 @@ const useExercise = () => {
     }
   };
 
-  const handleFinishExercise = (exerciseId: string, duration: string): void => {
+  const handleFinishExercise = (exerciseId: number, duration: string): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -118,7 +123,7 @@ const useExercise = () => {
     });
   };
 
-  const deleteType = async (typeId: string): Promise<boolean> => {
+  const deleteType = async (typeId: number): Promise<boolean> => {
     try {
       await apiClient.deleteExerciseType(typeId);
 
@@ -146,7 +151,7 @@ const useExercise = () => {
     }
   };
 
-  const handleDeleteExerciseType = (typeId: string): void => {
+  const handleDeleteExerciseType = (typeId: number): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -183,7 +188,7 @@ const useExercise = () => {
 
   const editExercise = async (exercise: Exercise): Promise<boolean> => {
     try {
-      await apiClient.editExercise(exercise.id, exercise);
+      await apiClient.editExercise(Number(exercise.id), exercise);
 
       refetch();
       refetchUser();
@@ -314,7 +319,7 @@ const useExercise = () => {
     });
   };
 
-  const deleteExercise = async (exerciseId: string): Promise<boolean> => {
+  const deleteExercise = async (exerciseId: number): Promise<boolean> => {
     try {
       await apiClient.deleteExercise(exerciseId);
 
@@ -345,7 +350,9 @@ const useExercise = () => {
     }
   };
 
-  const handleDeleteExercise = (exerciseId: string): void => {
+  const handleDeleteExercise = (exerciseId: number | undefined): void => {
+    if (!exerciseId) return;
+    
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (

@@ -61,8 +61,8 @@ class ApiClient {
   }
 
   async finishExercise(
-    userId: string,
-    exerciseId: string,
+    userId: number,
+    exerciseId: number,
     duration: string
   ): Promise<User> {
     const response: AxiosResponse<User> = await this.client.put<User>(
@@ -81,7 +81,7 @@ class ApiClient {
     return response.data;
   }
 
-  async updateUser(userId: string, data: UserEditPayload): Promise<User> {
+  async updateUser(userId: number, data: UserEditPayload): Promise<User> {
     const response: AxiosResponse<User> = await this.client.put(
       `/users/${userId}`,
       data,
@@ -96,7 +96,7 @@ class ApiClient {
   }
 
   async updateUserPassword(
-    userId: string,
+    userId: number,
     data: PasswordChangePayload
   ): Promise<User> {
     const response: AxiosResponse<User> = await this.client.put(
@@ -112,7 +112,7 @@ class ApiClient {
     return response.data;
   }
 
-  async deleteUser(userId: string): Promise<User> {
+  async deleteUser(userId: number): Promise<User> {
     const response: AxiosResponse<User> = await this.client.delete(
       `/users/${userId}`,
       {
@@ -126,7 +126,7 @@ class ApiClient {
   }
 
   // Exercise
-  async getExercise(exerciseId: string): Promise<Exercise> {
+  async getExercise(exerciseId: number): Promise<Exercise> {
     const response: AxiosResponse<Exercise> = await this.client.get<Exercise>(
       `/exercises/${exerciseId}`,
       {
@@ -139,7 +139,7 @@ class ApiClient {
     return response.data;
   }
 
-  async editExercise(exerciseId: string, data: Exercise): Promise<Exercise> {
+  async editExercise(exerciseId: number, data: Exercise): Promise<Exercise> {
     const response: AxiosResponse<Exercise> = await this.client.put(
       `/exercises/${exerciseId}`,
       data,
@@ -167,7 +167,7 @@ class ApiClient {
     return response.data;
   }
 
-  async deleteExercise(exerciseId: string): Promise<Exercise> {
+  async deleteExercise(exerciseId: number): Promise<Exercise> {
     const response: AxiosResponse<Exercise> = await this.client.delete(
       `/exercises/${exerciseId}`,
       {
@@ -181,7 +181,7 @@ class ApiClient {
   }
 
   // Exercise type
-  async deleteExerciseType(exerciseTypeId: string): Promise<ExerciseType> {
+  async deleteExerciseType(exerciseTypeId: number): Promise<ExerciseType> {
     const response: AxiosResponse = await this.client.delete<ExerciseType>(
       `/exercisetypes/${exerciseTypeId}`,
       {
