@@ -1,10 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '../auth/dto/register.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
+import { UpdateLastExerciseDto } from './dto/update-last-exercise.dto';
 
 @Injectable()
 export class UsersService {
@@ -12,26 +17,13 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    const user = this.userRepository.create({
-      ...createUserDto,
-      password: hashedPassword,
+  async findById(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['lastExercise'],
     });
 
-    return this.userRepository.save(user);
-  }
-
-  async findAll(): Promise<User[]> {
-    return this.userRepository.find();
-  }
-
-  async findOne(id: number): Promise<User> {
-    const user = await this.userRepository.findOneBy({ id });
-
-    if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
+    if (!user) throw new NotFoundException('User not found');
 
     return user;
   }
@@ -41,20 +33,56 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.userRepository.preload({ id, ...updateUserDto });
+    const user = await this.findById(id);
+    Object.assign(user, updateUserDto);
+    user.updated_at = new Date();
 
-    if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+    return this.userRepository.save(user);
+  }
+
+  async updatePassword(id: number, dto: UpdatePasswordDto): Promise<void> {
+    const user = await this.findById(id);
+
+    if (!user) throw new NotFoundException('User not found');
+
+    const isValidPassword = await bcrypt.compare(
+      dto.currentPassword,
+      user.password,
+    );
+
+    if (!isValidPassword) {
+      throw new BadRequestException('Invalid current password');
     }
+
+    if (dto.newPassword !== dto.confirmPassword) {
+      throw new BadRequestException('Passwords must match');
+    }
+
+    user.password = await bcrypt.hash(dto.newPassword, 10);
+    user.updated_at = new Date();
+
+    await this.userRepository.save(user);
+  }
+
+  async updateLastExercise(
+    id: number,
+    dto: UpdateLastExerciseDto,
+  ): Promise<User> {
+    const user = await this.findById(id);
+
+    if (!user) throw new NotFoundException('User not found');
+
+    user.lastExerciseId = dto.exerciseId;
+    user.updated_at = new Date();
 
     return this.userRepository.save(user);
   }
 
   async remove(id: number): Promise<void> {
-    const result = await this.userRepository.delete(id);
+    const user = await this.findById(id);
 
-    if (!result.affected) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
+    if (!user) throw new NotFoundException('User not found');
+
+    await this.userRepository.remove(user);
   }
 }
