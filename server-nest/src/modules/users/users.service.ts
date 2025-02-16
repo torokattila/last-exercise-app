@@ -10,12 +10,19 @@ import { User } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UpdateLastExerciseDto } from './dto/update-last-exercise.dto';
+import { RegisterDto } from '../auth/dto/register.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
+
+  async create(dto: Partial<RegisterDto>): Promise<User> {
+    const createdUser = await this.userRepository.save(dto);
+
+    return createdUser;
+  }
 
   async findById(id: number): Promise<User> {
     const user = await this.userRepository.findOne({
@@ -29,11 +36,18 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
-    return this.userRepository.findOneBy({ email });
+    const user = await this.userRepository.findOneBy({ email });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findById(id);
+
+    if (!user) throw new NotFoundException('User not found');
+
     Object.assign(user, updateUserDto);
     user.updated_at = new Date();
 

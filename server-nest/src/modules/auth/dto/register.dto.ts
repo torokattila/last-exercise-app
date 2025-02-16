@@ -9,24 +9,24 @@ import { Match } from '../../../validators/match.validator';
 
 export class RegisterDto {
   @IsEmail()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Email is required' })
   email: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Password is required' })
   @MinLength(6)
   password: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'passwordConfirm is required' })
   @Validate(Match, ['password'], { message: 'Passwords do not match' })
   passwordConfirm: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'firstName is required' })
   firstName: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'lastName is required' })
   lastName: string;
 }

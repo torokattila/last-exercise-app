@@ -21,11 +21,11 @@ export class User extends BaseEntity {
 
   @OneToOne(() => Exercise, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'last_exercise_id' })
-  lastExercise: Exercise;
+  lastExercise?: Exercise | null;
 
   @Column({ name: 'last_exercise_id', nullable: true })
-  lastExerciseId: number;
+  lastExerciseId?: number | null;
 
   @Column({ type: 'jsonb', nullable: true, default: () => "'[]'" })
-  exerciseHistory: { date: string; exerciseId: number }[];
+  exerciseHistory?: { date: string; exerciseId: number }[] | null;
 }
