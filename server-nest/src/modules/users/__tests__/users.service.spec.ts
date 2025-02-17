@@ -9,20 +9,7 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
 import { UsersService } from '../users.service';
 import { UpdateLastExerciseDto } from '../dto/update-last-exercise.dto';
-
-const mockUser: User = {
-  id: 1,
-  email: 'test@example.com',
-  password: 'hashedPassword',
-  created_at: new Date(),
-  updated_at: new Date(),
-  firstname: 'John',
-  lastname: 'Doe',
-  exercises: [],
-  lastExerciseId: null,
-  lastExercise: null,
-  exerciseHistory: null,
-};
+import { mockUser } from '../../../../test/mock/mock-user';
 
 describe('UsersService', () => {
   let service: UsersService;
