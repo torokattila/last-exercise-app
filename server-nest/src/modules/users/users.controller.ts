@@ -1,5 +1,6 @@
 import {
   Body,
+  Controller,
   Delete,
   Get,
   HttpCode,
@@ -15,6 +16,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { UsersService } from './users.service';
 
+@Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

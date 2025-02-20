@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity } from '../../common/entities/base.entity';
-import { Exercise } from '../exercises/entities/exercise.entity';
+import { BaseEntity } from '../../../common/entities/base.entity';
+import { Exercise } from '../../exercises/entities/exercise.entity';
 
 @Entity({ name: 'exercise-types' })
 export class ExerciseType extends BaseEntity {

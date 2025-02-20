@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { ExerciseType } from '../../exercise-types/exercise-type.entity';
+import { ExerciseType } from '../../exercise-types/entities/exercise-type.entity';
 import { User } from '../../users/entities/user.entity';
 
 @Entity({ name: 'exercises' })
@@ -16,7 +16,7 @@ export class Exercise extends BaseEntity {
   user: User;
 
   @Column({ name: 'user_id' })
-  userId: string;
+  userId: number;
 
   @Column({ nullable: true })
   duration: string;
