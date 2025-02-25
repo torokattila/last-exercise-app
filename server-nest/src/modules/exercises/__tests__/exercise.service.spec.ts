@@ -1,10 +1,8 @@
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { ExerciseService } from '../exercise.service';
+import { ExerciseService } from '../../exercises/exercises.service';
 import { Exercise } from '../entities/exercise.entity';
-import { CreateExerciseDto } from '../dto/create-exercise.dto';
-import { UpdateExerciseDto } from '../dto/update-exercise.dto';
 import { mockExercise } from '../../../../test/mock/mock-exercise';
 
 const mockExerciseRepository = {
@@ -14,4 +12,24 @@ const mockExerciseRepository = {
   remove: jest.fn().mockResolvedValue(undefined),
 };
 
-describe('ExerciseService', () => {});
+describe('ExerciseService', () => {
+  let service: ExerciseService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        ExerciseService,
+        {
+          provide: getRepositoryToken(Exercise),
+          useValue: mockExerciseRepository,
+        },
+      ],
+    }).compile();
+
+    service = module.get<ExerciseService>(ExerciseService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
