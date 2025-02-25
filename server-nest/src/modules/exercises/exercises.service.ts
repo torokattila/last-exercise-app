@@ -100,8 +100,11 @@ export class ExerciseService {
     if (dto?.exerciseTypes?.length) {
       await Promise.all(
         dto.exerciseTypes.map(async (exerciseType: ExerciseType) => {
-          exerciseType.id
-            ? await this.exerciseTypeService.update(exerciseType)
+          return exerciseType.id
+            ? await this.exerciseTypeService.update(
+                exerciseType.id,
+                exerciseType,
+              )
             : await this.exerciseTypeService.create(exerciseType);
         }),
       );
