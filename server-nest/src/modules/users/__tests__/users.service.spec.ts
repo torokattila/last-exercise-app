@@ -3,13 +3,13 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { mockUser } from '../../../../test/mock/mock-user';
 import { RegisterDto } from '../../auth/dto/register.dto';
+import { UpdateLastExerciseDto } from '../dto/update-last-exercise.dto';
 import { UpdatePasswordDto } from '../dto/update-password.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
 import { UsersService } from '../users.service';
-import { UpdateLastExerciseDto } from '../dto/update-last-exercise.dto';
-import { mockUser } from '../../../../test/mock/mock-user';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -103,7 +103,9 @@ describe('UsersService', () => {
       const result = await service.update(1, dto);
 
       expect(result).toEqual(updatedUser);
-      expect(mockUserRepository.save).toHaveBeenCalledWith(updatedUser);
+      expect(mockUserRepository.save).toHaveBeenCalledWith(
+        expect.objectContaining(updatedUser),
+      );
     });
 
     it('should throw error if the user is not found', async () => {

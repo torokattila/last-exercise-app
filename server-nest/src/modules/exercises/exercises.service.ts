@@ -4,13 +4,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Exercise } from './entities/exercise.entity';
 import { Repository } from 'typeorm';
+import { ExerciseType } from '../exercise-types/entities/exercise-type.entity';
 import { ExerciseTypeService } from '../exercise-types/exercise-types.service';
 import { User } from '../users/entities/user.entity';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
-import { ExerciseType } from '../exercise-types/entities/exercise-type.entity';
+import { Exercise } from './entities/exercise.entity';
 
 @Injectable()
 export class ExerciseService {
@@ -81,7 +81,7 @@ export class ExerciseService {
     }
 
     return this.exerciseRepository.find({
-      where: { user: { id: userId } },
+      where: { userId },
       relations: ['exerciseTypes'],
       order: { order: 'ASC' },
     });
