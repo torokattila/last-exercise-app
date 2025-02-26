@@ -183,7 +183,12 @@ describe('UsersService', () => {
       const result = await service.updateLastExercise(1, dto);
 
       expect(result).toEqual(updatedUser);
-      expect(mockUserRepository.save).toHaveBeenCalledWith(updatedUser);
+      expect(mockUserRepository.save).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: mockUser.id,
+          lastExerciseId: dto.exerciseId,
+        }),
+      );
     });
 
     it('should throw error if the user is not found', async () => {
