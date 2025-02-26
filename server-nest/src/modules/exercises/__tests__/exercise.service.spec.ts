@@ -1,17 +1,19 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ExerciseService } from '../exercises.service';
-import { ExerciseTypeService } from '../../exercise-types/exercise-types.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Exercise } from '../entities/exercise.entity';
-import { ExerciseType } from '../../exercise-types/entities/exercise-type.entity';
-import { ExerciseTypeModule } from '../../exercise-types/exercise-types.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
-import { User } from '../../users/entities/user.entity';
+import { DataSource } from 'typeorm';
 import { mockExercise } from '../../../../test/mock/mock-exercise';
 import { mockExerciseType } from '../../../../test/mock/mock-exercise-type';
+import { mockUser } from '../../../../test/mock/mock-user';
+import { ExerciseType } from '../../exercise-types/entities/exercise-type.entity';
+import { ExerciseTypeService } from '../../exercise-types/exercise-types.service';
+import { User } from '../../users/entities/user.entity';
+import { CreateExerciseDto } from '../dto/create-exercise.dto';
+import { Exercise } from '../entities/exercise.entity';
+import { ExerciseService } from '../exercises.service';
 
 const mockExerciseRepository = {
+  create: jest.fn().mockResolvedValue(mockExercise),
   save: jest.fn().mockResolvedValue(mockExercise),
   findOne: jest.fn().mockResolvedValue(mockExercise),
   find: jest.fn().mockResolvedValue([mockExercise]),
@@ -25,11 +27,15 @@ const mockExerciseTypeRepository = {
   remove: jest.fn().mockResolvedValue(undefined),
 };
 
+const mockUserRepository = {
+  save: jest.fn().mockResolvedValue(mockUser),
+  findOne: jest.fn().mockResolvedValue(mockUser),
+  find: jest.fn().mockResolvedValue([mockUser]),
+  remove: jest.fn().mockResolvedValue(undefined),
+};
+
 describe('ExerciseService', () => {
   let service: ExerciseService;
-  let exerciseRepository: Repository<Exercise>;
-  let exerciseTypeRepository: Repository<ExerciseType>;
-  let userRepository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -46,26 +52,55 @@ describe('ExerciseService', () => {
         },
         {
           provide: getRepositoryToken(User),
-          useClass: Repository,
+          useValue: mockUserRepository,
         },
         {
           provide: DataSource,
-          useValue: {}, // Mock the DataSource dependency
+          useValue: {},
         },
       ],
     }).compile();
 
     service = module.get<ExerciseService>(ExerciseService);
-    exerciseRepository = module.get<Repository<Exercise>>(
-      getRepositoryToken(Exercise),
-    );
-    exerciseTypeRepository = module.get<Repository<ExerciseType>>(
-      getRepositoryToken(ExerciseType),
-    );
-    userRepository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('create', () => {
+    it('should create an exercise', async () => {
+      const dto: CreateExerciseDto = {
+        name: 'Push-ups',
+        userId: mockUser.id,
+      };
+
+      const result = await service.create(dto);
+      expect(result).toEqual(mockExercise);
+      expect(mockExerciseRepository.create).toHaveBeenCalledWith(
+        expect.objectContaining(dto),
+      );
+    });
+  });
+
+  describe('findById', () => {
+    it('should return an exercise if found', async () => {
+      const result = await service.findById(mockExercise.id);
+      expect(result).toEqual(mockExercise);
+      expect(mockExerciseRepository.findOne).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: {
+            id: mockExercise.id,
+          },
+        }),
+      );
+    });
+
+    it('should throw NotFoundException if exercise not found', async () => {
+      mockExerciseRepository.findOne.mockResolvedValueOnce(null);
+      await expect(service.findById(mockExercise.id + 1)).rejects.toThrow(
+        NotFoundException,
+      );
+    });
   });
 });
