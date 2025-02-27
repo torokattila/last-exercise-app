@@ -14,17 +14,19 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Auth } from '../../common/decorators/auth.decorator';
 import { AuthenticatedRequest } from '../../types/authenticated-request';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
+import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
 import { ExerciseService } from './exercises.service';
-import { UpdateExerciseDto } from './dto/update-exercise.dto';
 
 @Controller('exercises')
 export class ExerciseController {
   constructor(private readonly exerciseService: ExerciseService) {}
 
   @Post()
+  @Auth()
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
   async create(@Body() dto: CreateExerciseDto): Promise<Exercise> {
@@ -32,12 +34,14 @@ export class ExerciseController {
   }
 
   @Get(':id')
+  @Auth()
   @HttpCode(HttpStatus.OK)
   async findById(@Param('id', ParseIntPipe) id: number): Promise<Exercise> {
     return this.exerciseService.findById(id);
   }
 
   @Get()
+  @Auth()
   @HttpCode(HttpStatus.OK)
   async list(@Req() req: AuthenticatedRequest): Promise<Exercise[]> {
     if (!req.user?.id) {
@@ -48,6 +52,7 @@ export class ExerciseController {
   }
 
   @Put(':id')
+  @Auth()
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -57,6 +62,7 @@ export class ExerciseController {
   }
 
   @Delete(':id')
+  @Auth()
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     await this.exerciseService.remove(id);

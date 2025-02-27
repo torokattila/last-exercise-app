@@ -10,6 +10,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Auth } from '../../common/decorators/auth.decorator';
 import { UpdateLastExerciseDto } from './dto/update-last-exercise.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -21,6 +22,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get(':id')
+  @Auth()
   @HttpCode(HttpStatus.OK)
   async findOne(@Param('id') id: number): Promise<UserResponseDto> {
     const user = await this.usersService.findById(id);
@@ -28,6 +30,7 @@ export class UsersController {
   }
 
   @Put(':id')
+  @Auth()
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async updateUser(
@@ -39,6 +42,7 @@ export class UsersController {
   }
 
   @Put(':id/password')
+  @Auth()
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async updatePassword(
@@ -49,6 +53,7 @@ export class UsersController {
   }
 
   @Put(':id/last-exercise')
+  @Auth()
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async updateLastExercise(
@@ -63,6 +68,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @Auth()
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUser(@Param('id') id: number): Promise<void> {
     return this.usersService.remove(id);
