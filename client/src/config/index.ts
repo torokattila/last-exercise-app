@@ -24,8 +24,8 @@ const baseConfig: ConfigInterface = {
     port: 6060,
   },
   apiUrl: 'http://localhost:6060',
-  loginUrl: 'http://localhost:6060/login',
-  registrationUrl: 'http://localhost:6060/register',
+  loginUrl: 'http://localhost:6060/auth/login',
+  registrationUrl: 'http://localhost:6060/auth/register',
   frontendUrl: 'http://localhost:3000',
   social: {
     googleUrl: 'http://localhost:6060/auth/google',
