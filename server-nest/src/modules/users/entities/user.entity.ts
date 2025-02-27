@@ -11,10 +11,10 @@ export class User extends BaseEntity {
   password: string;
 
   @Column()
-  firstname: string;
+  firstName: string;
 
   @Column()
-  lastname: string;
+  lastName: string;
 
   @OneToMany(() => Exercise, (exercise) => exercise.user)
   exercises: Exercise[];

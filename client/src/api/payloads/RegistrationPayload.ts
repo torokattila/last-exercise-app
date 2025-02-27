@@ -1,6 +1,6 @@
 interface RegistrationPayload {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   passwordConfirm: string;

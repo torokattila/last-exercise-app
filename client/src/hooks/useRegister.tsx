@@ -11,8 +11,8 @@ const useRegister = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const [firstname, setFirstname] = useState<string>('');
-  const [lastname, setLastname] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
@@ -21,16 +21,16 @@ const useRegister = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const registerUser = {
-    firstname,
-    lastname,
+    firstName,
+    lastName,
     email,
     password,
     passwordConfirm,
   };
 
   const RegistrationSchema = Yup.object().shape({
-    firstname: Yup.string().required('First name is required!'),
-    lastname: Yup.string().required('Last name is required!'),
+    firstName: Yup.string().required('First name is required!'),
+    lastName: Yup.string().required('Last name is required!'),
     email: Yup.string().required('Email is required!'),
     password: Yup.string().required('Password is required!'),
     passwordConfirm: Yup.string()
@@ -60,8 +60,8 @@ const useRegister = () => {
     e.preventDefault();
 
     const payload: RegistrationPayload = {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
       password,
       passwordConfirm,
@@ -94,10 +94,10 @@ const useRegister = () => {
   };
 
   return {
-    firstname,
-    setFirstname,
-    lastname,
-    setLastname,
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
     email,
     setEmail,
     password,

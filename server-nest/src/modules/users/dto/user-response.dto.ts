@@ -7,8 +7,8 @@ export class UserResponseDto extends PickType(User, [
   'email',
   'created_at',
   'updated_at',
-  'firstname',
-  'lastname',
+  'firstName',
+  'lastName',
   'lastExercise',
   'lastExerciseId',
 ]) {
@@ -18,8 +18,8 @@ export class UserResponseDto extends PickType(User, [
     this.email = user.email;
     this.created_at = user.created_at;
     this.updated_at = user.updated_at;
-    this.firstname = user.firstname;
-    this.lastname = user.lastname;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
     this.lastExercise = user.lastExercise;
     this.lastExerciseId = user.lastExerciseId;
   }

@@ -12,10 +12,10 @@ import useRegister from '../../hooks/useRegister';
 const RegistrationForm = (): JSX.Element => {
   const navigate = useNavigate();
   const {
-    firstname,
-    setFirstname,
-    lastname,
-    setLastname,
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
     email,
     setEmail,
     password,
@@ -86,17 +86,17 @@ const RegistrationForm = (): JSX.Element => {
                 <input
                   type="text"
                   autoComplete="new-firstname"
-                  onChange={(e) => setFirstname(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                   placeholder={
                     errors.firstname ? errors.firstname : 'First name'
                   }
-                  value={firstname}
+                  value={firstName}
                   className={classNames(
                     `border-2 w-full border-white bg-transparent rounded-full py-1.5 pl-7 pr-4 focus:border-blues-1 outline-none transition-all`,
                     {
-                      'text-greys-1': !firstname.length,
-                      'text-white': firstname.length,
-                      'border-red-400 placeholder-red-400': errors.firstname,
+                      'text-greys-1': !firstName.length,
+                      'text-white': firstName.length,
+                      'border-red-400 placeholder-red-400': errors.firstName,
                     }
                   )}
                 />
@@ -111,15 +111,15 @@ const RegistrationForm = (): JSX.Element => {
                 <input
                   type="text"
                   autoComplete="new-lastname"
-                  onChange={(e) => setLastname(e.target.value)}
-                  placeholder={errors.lastname ? errors.lastname : 'Last name'}
-                  value={lastname}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder={errors.lastname ? errors.lastName : 'Last name'}
+                  value={lastName}
                   className={classNames(
                     `border-2 w-full border-white bg-transparent rounded-full py-1.5 pl-7 pr-4 focus:border-blues-1 outline-none transition-all`,
                     {
-                      'text-greys-1': !lastname.length,
-                      'text-white': lastname.length,
-                      'border-red-400 placeholder-red-400': errors.lastname,
+                      'text-greys-1': !lastName.length,
+                      'text-white': lastName.length,
+                      'border-red-400 placeholder-red-400': errors.lastName,
                     }
                   )}
                 />
