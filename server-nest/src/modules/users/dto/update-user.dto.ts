@@ -7,9 +7,9 @@ export class UpdateUserDto {
 
   @IsString({ message: 'First name is requierd' })
   @IsNotEmpty()
-  firstname: string;
+  firstName: string;
 
   @IsString({ message: 'Last name is required' })
   @IsNotEmpty()
-  lastname: string;
+  lastName: string;
 }

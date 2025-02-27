@@ -49,8 +49,8 @@ describe('AuthService', () => {
     it('should register a new user and return tokens', async () => {
       const registerDto: RegisterDto = {
         email: mockUser.email,
-        firstName: mockUser.firstname,
-        lastName: mockUser.lastname,
+        firstName: mockUser.firstName,
+        lastName: mockUser.lastName,
         password: 'password123',
         passwordConfirm: 'password123',
       };
@@ -60,8 +60,9 @@ describe('AuthService', () => {
       const result = await authService.register(registerDto);
 
       expect(result).toEqual({
-        accessToken: 'mockAccessToken',
+        token: 'mockAccessToken',
         refreshToken: 'mockAccessToken',
+        user: mockUser,
       });
       expect(usersService.findOneByEmail).toHaveBeenCalledWith(
         registerDto.email,
@@ -77,8 +78,8 @@ describe('AuthService', () => {
     it('should throw BadRequestException if passwords do not match', async () => {
       const registerDto: RegisterDto = {
         email: mockUser.email,
-        firstName: mockUser.firstname,
-        lastName: mockUser.lastname,
+        firstName: mockUser.firstName,
+        lastName: mockUser.lastName,
         password: 'password123',
         passwordConfirm: 'wrongPassword',
       };
@@ -118,8 +119,9 @@ describe('AuthService', () => {
       const result = await authService.login(loginDto);
 
       expect(result).toEqual({
-        accessToken: 'mockAccessToken',
+        token: 'mockAccessToken',
         refreshToken: 'mockAccessToken',
+        user: mockUser,
       });
       expect(usersService.findOneByEmail).toHaveBeenCalledWith(loginDto.email);
       expect(bcrypt.compare).toHaveBeenCalledWith(

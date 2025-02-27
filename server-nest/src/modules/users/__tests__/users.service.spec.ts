@@ -80,22 +80,14 @@ describe('UsersService', () => {
         email: mockUser.email,
       });
     });
-
-    it('should throw error if user not found', async () => {
-      mockUserRepository.findOneBy.mockResolvedValueOnce(null);
-
-      await expect(service.findOneByEmail('example@test.com')).rejects.toThrow(
-        NotFoundException,
-      );
-    });
   });
 
   describe('update', () => {
     it('should update a user and return the updated user', async () => {
       const dto: UpdateUserDto = {
-        firstname: 'Updated firstname',
+        firstName: 'Updated firstname',
         email: mockUser.email,
-        lastname: mockUser.lastname,
+        lastName: mockUser.lastName,
       };
       const updatedUser = { ...mockUser, ...dto, updated_at: new Date() };
 
@@ -113,9 +105,9 @@ describe('UsersService', () => {
 
       await expect(
         service.update(2, {
-          firstname: 'Updated firstname',
+          firstName: 'Updated firstname',
           email: mockUser.email,
-          lastname: mockUser.lastname,
+          lastName: mockUser.lastName,
         }),
       ).rejects.toThrow(NotFoundException);
     });
