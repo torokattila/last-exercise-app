@@ -70,8 +70,8 @@ describe('UsersController (e2e)', () => {
 
   it('should update user details', async () => {
     const updateUserDto: UpdateUserDto = {
-      firstname: 'Updated',
-      lastname: 'Name',
+      firstName: 'Updated',
+      lastName: 'Name',
       email: mockUser.email,
     };
 
