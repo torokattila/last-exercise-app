@@ -1,0 +1,157 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import * as request from 'supertest';
+import { DataSource } from 'typeorm';
+import { AppModule } from '../../../app.module';
+import { RegisterDto } from '../../auth/dto/register.dto';
+import { CreateExerciseDto } from '../dto/create-exercise.dto';
+import { UpdateExerciseDto } from '../dto/update-exercise.dto';
+import { mockUser } from '../../../../test/mock/mock-user';
+import { mockExercise } from '../../../../test/mock/mock-exercise';
+
+const BASE_ROUTE = '/exercises';
+
+describe('ExerciseController (e2e)', () => {
+  let app: INestApplication;
+  let dbConnection: DataSource;
+  let accessToken: string;
+  let userId: number;
+  let exerciseId: number;
+
+  beforeAll(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+    await app.init();
+
+    dbConnection = moduleFixture.get<DataSource>(DataSource);
+
+    const registerDto: RegisterDto = {
+      email: mockUser.email,
+      firstName: 'Test',
+      lastName: 'User',
+      password: 'TestPassword123',
+      passwordConfirm: 'TestPassword123',
+    };
+
+    const registerResponse = await request(app.getHttpServer())
+      .post('/auth/register')
+      .send(registerDto)
+      .expect(HttpStatus.CREATED);
+
+    accessToken = registerResponse.body.accessToken;
+
+    const userResponse = await request(app.getHttpServer())
+      .get('/users')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(HttpStatus.OK);
+
+    userId = userResponse.body.id;
+  });
+
+  it('should create an exercise', async () => {
+    const createExerciseDto: CreateExerciseDto = {
+      name: mockExercise.name,
+      userId,
+      exerciseTypes: [],
+    };
+
+    const response = await request(app.getHttpServer())
+      .post(BASE_ROUTE)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(createExerciseDto)
+      .expect(HttpStatus.CREATED);
+
+    expect(response.body).toMatchObject({
+      name: mockExercise.name,
+      userId,
+    });
+
+    exerciseId = response.body.id;
+  });
+
+  it('should retrieve an exercise by ID', async () => {
+    const response = await request(app.getHttpServer())
+      .get(`${BASE_ROUTE}/${exerciseId}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(HttpStatus.OK);
+
+    expect(response.body).toMatchObject({
+      id: exerciseId,
+      name: mockExercise.name,
+      userId,
+    });
+  });
+
+  it('should throw NotFoundException if exercise not found', async () => {
+    await request(app.getHttpServer())
+      .get(`${BASE_ROUTE}/${exerciseId + 1}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(HttpStatus.NOT_FOUND);
+  });
+
+  it('should list exercises for the user', async () => {
+    const response = await request(app.getHttpServer())
+      .get(BASE_ROUTE)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(HttpStatus.OK);
+
+    expect(response.body).toBeInstanceOf(Array);
+    expect(response.body.length).toBeGreaterThan(0);
+  });
+
+  it('should update an exercise', async () => {
+    const updateExerciseDto: UpdateExerciseDto = {
+      name: 'Modified Push-ups',
+      userId,
+    };
+
+    const response = await request(app.getHttpServer())
+      .put(`${BASE_ROUTE}/${exerciseId}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(updateExerciseDto)
+      .expect(HttpStatus.OK);
+
+    expect(response.body).toMatchObject({
+      id: exerciseId,
+      name: 'Modified Push-ups',
+      userId,
+    });
+  });
+
+  it('should delete an exercise', async () => {
+    await request(app.getHttpServer())
+      .delete(`${BASE_ROUTE}/${exerciseId}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(HttpStatus.NO_CONTENT);
+
+    await request(app.getHttpServer())
+      .get(`${BASE_ROUTE}/${exerciseId}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(HttpStatus.NOT_FOUND);
+  });
+
+  it('should now allow unauthorized access', async () => {
+    const createExerciseDto: CreateExerciseDto = {
+      name: 'Back + Shoulder',
+      userId,
+      exerciseTypes: [],
+    };
+
+    await request(app.getHttpServer())
+      .post(BASE_ROUTE)
+      .send(createExerciseDto)
+      .expect(HttpStatus.UNAUTHORIZED);
+  });
+
+  afterAll(async () => {
+    await dbConnection.destroy();
+    await app.close();
+  });
+});
