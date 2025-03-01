@@ -3,10 +3,10 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
-import { mockUser } from '../../../../test/mock/mock-user';
-import { AppModule } from '../../../app.module';
-import { LoginDto } from '../dto/login.dto';
-import { RegisterDto } from '../dto/register.dto';
+import { mockUser } from './mock/mock-user';
+import { AppModule } from '../src/app.module';
+import { LoginDto } from '../src/modules/auth/dto/login.dto';
+import { RegisterDto } from '../src/modules/auth/dto/register.dto';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;

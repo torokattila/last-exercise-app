@@ -5,12 +5,12 @@ import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
-import { mockUser } from '../../../../test/mock/mock-user';
-import { AppModule } from '../../../app.module';
-import { RegisterDto } from '../../auth/dto/register.dto';
-import { UpdateLastExerciseDto } from '../dto/update-last-exercise.dto';
-import { UpdatePasswordDto } from '../dto/update-password.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
+import { mockUser } from './mock/mock-user';
+import { AppModule } from '../src/app.module';
+import { RegisterDto } from '../src/modules/auth/dto/register.dto';
+import { UpdateLastExerciseDto } from '../src/modules/users/dto/update-last-exercise.dto';
+import { UpdatePasswordDto } from '../src/modules/users/dto/update-password.dto';
+import { UpdateUserDto } from '../src/modules/users/dto/update-user.dto';
 
 const BASE_ROUTE = '/users';
 
