@@ -1,20 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
-  CanActivate,
-  ExecutionContext,
   Injectable,
+  ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
+import { AuthGuard as NestAuthGuard } from '@nestjs/passport';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-  canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest();
+export class AuthGuard extends NestAuthGuard('jwt') {
+  canActivate(context: ExecutionContext) {
+    return super.canActivate(context);
+  }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (!request?.user?.id) {
+  handleRequest(err, user) {
+    if (err || !user) {
       throw new UnauthorizedException('User is not authenticated');
     }
-    return true;
+    return user;
   }
 }

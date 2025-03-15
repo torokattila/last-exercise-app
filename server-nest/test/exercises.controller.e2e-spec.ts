@@ -3,20 +3,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { LoginDto } from 'src/modules/auth/dto/login.dto';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
 import { AppModule } from '../src/app.module';
 import { RegisterDto } from '../src/modules/auth/dto/register.dto';
 import { CreateExerciseDto } from '../src/modules/exercises/dto/create-exercise.dto';
 import { UpdateExerciseDto } from '../src/modules/exercises/dto/update-exercise.dto';
-import { mockUser } from './mock/mock-user';
-import { mockExercise } from './mock/mock-exercise';
+import { mockExercise2 } from './mock/mock-exercise';
+import { mockUser3 } from './mock/mock-user';
 
 const BASE_ROUTE = '/exercises';
 
 describe('ExerciseController (e2e)', () => {
   let app: INestApplication;
-  let dbConnection: DataSource;
+  let dataSource: DataSource;
   let accessToken: string;
   let userId: number;
   let exerciseId: number;
@@ -30,34 +31,36 @@ describe('ExerciseController (e2e)', () => {
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
     await app.init();
 
-    dbConnection = moduleFixture.get<DataSource>(DataSource);
+    dataSource = moduleFixture.get<DataSource>(DataSource);
+    await dataSource.query(
+      'TRUNCATE TABLE users, exercises RESTART IDENTITY CASCADE',
+    );
 
     const registerDto: RegisterDto = {
-      email: mockUser.email,
+      email: mockUser3.email,
       firstName: 'Test',
       lastName: 'User',
       password: 'TestPassword123',
       passwordConfirm: 'TestPassword123',
     };
 
-    const registerResponse = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/auth/register')
       .send(registerDto)
       .expect(HttpStatus.CREATED);
 
-    accessToken = registerResponse.body.accessToken;
-
-    const userResponse = await request(app.getHttpServer())
-      .get('/users')
-      .set('Authorization', `Bearer ${accessToken}`)
+    const loginResponse = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({ email: mockUser3.email, password: 'TestPassword123' } as LoginDto)
       .expect(HttpStatus.OK);
 
-    userId = userResponse.body.id;
+    accessToken = loginResponse.body.token;
+    userId = loginResponse.body.user.id;
   });
 
   it('should create an exercise', async () => {
     const createExerciseDto: CreateExerciseDto = {
-      name: mockExercise.name,
+      name: mockExercise2.name,
       userId,
       exerciseTypes: [],
     };
@@ -69,7 +72,7 @@ describe('ExerciseController (e2e)', () => {
       .expect(HttpStatus.CREATED);
 
     expect(response.body).toMatchObject({
-      name: mockExercise.name,
+      name: mockExercise2.name,
       userId,
     });
 
@@ -84,7 +87,7 @@ describe('ExerciseController (e2e)', () => {
 
     expect(response.body).toMatchObject({
       id: exerciseId,
-      name: mockExercise.name,
+      name: mockExercise2.name,
       userId,
     });
   });
@@ -151,7 +154,7 @@ describe('ExerciseController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await dbConnection.destroy();
+    await dataSource.destroy();
     await app.close();
   });
 });

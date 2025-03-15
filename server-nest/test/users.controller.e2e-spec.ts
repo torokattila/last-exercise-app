@@ -3,20 +3,22 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { LoginDto } from 'src/modules/auth/dto/login.dto';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
-import { mockUser } from './mock/mock-user';
 import { AppModule } from '../src/app.module';
 import { RegisterDto } from '../src/modules/auth/dto/register.dto';
 import { UpdateLastExerciseDto } from '../src/modules/users/dto/update-last-exercise.dto';
 import { UpdatePasswordDto } from '../src/modules/users/dto/update-password.dto';
 import { UpdateUserDto } from '../src/modules/users/dto/update-user.dto';
+import { mockExercise } from './mock/mock-exercise';
+import { mockUser2 } from './mock/mock-user';
 
 const BASE_ROUTE = '/users';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
-  let dbConnection: DataSource;
+  let dataSource: DataSource;
   let accessToken: string;
   let userId: number;
 
@@ -29,29 +31,37 @@ describe('UsersController (e2e)', () => {
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
     await app.init();
 
-    dbConnection = moduleFixture.get<DataSource>(DataSource);
+    dataSource = moduleFixture.get<DataSource>(DataSource);
+    await dataSource.query(
+      'TRUNCATE TABLE users, exercises RESTART IDENTITY CASCADE',
+    );
 
     const registerDto: RegisterDto = {
-      email: mockUser.email,
+      email: mockUser2.email,
       firstName: 'Test',
       lastName: 'User',
       password: 'TestPassword123',
       passwordConfirm: 'TestPassword123',
     };
 
-    const registerResponse = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/auth/register')
       .send(registerDto)
       .expect(HttpStatus.CREATED);
 
-    accessToken = registerResponse.body.accessToken;
-
-    const userResponse = await request(app.getHttpServer())
-      .get(BASE_ROUTE)
-      .set('Authorization', `Bearer ${accessToken}`)
+    const loginResponse = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({ email: mockUser2.email, password: 'TestPassword123' } as LoginDto)
       .expect(HttpStatus.OK);
 
-    userId = userResponse.body.id;
+    accessToken = loginResponse.body.token;
+    userId = loginResponse.body.user.id;
+
+    await request(app.getHttpServer())
+      .post('/exercises')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(mockExercise)
+      .expect(HttpStatus.CREATED);
   });
 
   it('should retrieve a user by ID', async () => {
@@ -62,9 +72,9 @@ describe('UsersController (e2e)', () => {
 
     expect(response.body).toMatchObject({
       id: userId,
-      email: mockUser.email,
-      firstname: 'Test',
-      lastname: 'User',
+      email: mockUser2.email,
+      firstName: 'Test',
+      lastName: 'User',
     });
   });
 
@@ -72,7 +82,7 @@ describe('UsersController (e2e)', () => {
     const updateUserDto: UpdateUserDto = {
       firstName: 'Updated',
       lastName: 'Name',
-      email: mockUser.email,
+      email: mockUser2.email,
     };
 
     const response = await request(app.getHttpServer())
@@ -83,8 +93,8 @@ describe('UsersController (e2e)', () => {
 
     expect(response.body).toMatchObject({
       id: userId,
-      firstname: 'Updated',
-      lastname: 'Name',
+      firstName: 'Updated',
+      lastName: 'Name',
     });
   });
 
@@ -119,17 +129,17 @@ describe('UsersController (e2e)', () => {
   it('should delete the user', async () => {
     await request(app.getHttpServer())
       .delete(`${BASE_ROUTE}/${userId}`)
-      .set('Authorization', `Bearer ${userId}`)
+      .set('Authorization', `Bearer ${accessToken}`)
       .expect(HttpStatus.NO_CONTENT);
 
     await request(app.getHttpServer())
       .get(`${BASE_ROUTE}/${userId}`)
-      .set('Authorization', `Bearer ${userId}`)
+      .set('Authorization', `Bearer ${accessToken}`)
       .expect(HttpStatus.NOT_FOUND);
   });
 
   afterAll(async () => {
-    await dbConnection.destroy();
+    await dataSource.destroy();
     await app.close();
   });
 });

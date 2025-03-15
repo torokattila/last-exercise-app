@@ -3,10 +3,10 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
-import { mockUser } from './mock/mock-user';
 import { AppModule } from '../src/app.module';
 import { LoginDto } from '../src/modules/auth/dto/login.dto';
 import { RegisterDto } from '../src/modules/auth/dto/register.dto';
+import { mockUser } from './mock/mock-user';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
@@ -21,6 +21,9 @@ describe('AuthController (e2e)', () => {
     await app.init();
 
     dataSource = app.get(DataSource);
+    await dataSource.query(
+      'TRUNCATE TABLE users, exercises RESTART IDENTITY CASCADE',
+    );
   });
 
   afterAll(async () => {
@@ -41,7 +44,7 @@ describe('AuthController (e2e)', () => {
         } as RegisterDto);
 
       expect(response.status).toBe(HttpStatus.CREATED);
-      expect(response.body).toHaveProperty('accessToken');
+      expect(response.body).toHaveProperty('token');
       expect(response.body).toHaveProperty('refreshToken');
     });
   });
@@ -63,7 +66,7 @@ describe('AuthController (e2e)', () => {
         .send({ email: mockUser.email, password: 'password123' } as LoginDto);
 
       expect(response.status).toBe(HttpStatus.OK);
-      expect(response.body).toHaveProperty('accessToken');
+      expect(response.body).toHaveProperty('token');
       expect(response.body).toHaveProperty('refreshToken');
     });
   });

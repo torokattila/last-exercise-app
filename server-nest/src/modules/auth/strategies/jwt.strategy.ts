@@ -10,16 +10,9 @@ import { JwtPayload } from '../../../types/jwt-payload.interface';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: (req) => {
-        const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
-
-        if (typeof token !== 'string') {
-          throw new Error('Invalid token format');
-        }
-        return token;
-      },
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env?.JWT_TOKEN_SECRET ?? 'secret',
+      secretOrKey: process.env.JWT_TOKEN_SECRET ?? 'secret',
     });
   }
 

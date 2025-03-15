@@ -87,7 +87,13 @@ export class UsersService {
     user.lastExerciseId = dto.exerciseId;
     user.updated_at = new Date();
 
-    return this.userRepository.save(user);
+    await this.userRepository.update(id, {
+      lastExerciseId: dto.exerciseId,
+      updated_at: new Date(),
+    });
+    const updatedUser = await this.findById(id);
+
+    return updatedUser;
   }
 
   async remove(id: number): Promise<void> {

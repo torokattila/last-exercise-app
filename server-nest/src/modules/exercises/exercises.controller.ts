@@ -44,11 +44,11 @@ export class ExerciseController {
   @Auth()
   @HttpCode(HttpStatus.OK)
   async list(@Req() req: AuthenticatedRequest): Promise<Exercise[]> {
-    if (!req.user?.id) {
+    if (!req.user?.userId) {
       throw new UnauthorizedException('User is not authenticated');
     }
 
-    return this.exerciseService.list(req.user.id);
+    return this.exerciseService.list(req.user.userId);
   }
 
   @Put(':id')

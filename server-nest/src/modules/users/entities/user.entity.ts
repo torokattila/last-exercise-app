@@ -23,7 +23,7 @@ export class User extends BaseEntity {
   @JoinColumn({ name: 'last_exercise_id' })
   lastExercise?: Exercise | null;
 
-  @Column({ name: 'last_exercise_id', nullable: true })
+  @Column({ type: 'int', name: 'last_exercise_id', nullable: true })
   lastExerciseId?: number | null;
 
   @Column({ type: 'jsonb', nullable: true, default: () => "'[]'" })
