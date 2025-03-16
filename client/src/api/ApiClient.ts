@@ -51,11 +51,22 @@ class ApiClient {
 
   // User
   async getCurrentUser(): Promise<User> {
-    const response: AxiosResponse<User> = await this.client.get<User>('/me', {
-      headers: {
-        access_token: Storage.getItem('access_token') || '',
-      },
-    });
+    const user = Storage.getItem('user');
+    let userId = '';
+
+    if (user) {
+      userId = JSON.parse(user ?? '')?.id;
+    }
+
+    const response: AxiosResponse<User> = await this.client.get<User>(
+      `/users/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
+        },
+        withCredentials: true,
+      }
+    );
 
     return response.data;
   }
@@ -73,8 +84,9 @@ class ApiClient {
       },
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 
@@ -87,8 +99,9 @@ class ApiClient {
       data,
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 
@@ -104,8 +117,9 @@ class ApiClient {
       data,
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 
@@ -117,8 +131,9 @@ class ApiClient {
       `/users/${userId}`,
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 
@@ -131,8 +146,9 @@ class ApiClient {
       `/exercises/${exerciseId}`,
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 
@@ -145,8 +161,9 @@ class ApiClient {
       data,
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 
@@ -159,8 +176,9 @@ class ApiClient {
       data,
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 
@@ -172,8 +190,9 @@ class ApiClient {
       `/exercises/${exerciseId}`,
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 
@@ -186,8 +205,9 @@ class ApiClient {
       `/exercisetypes/${exerciseTypeId}`,
       {
         headers: {
-          access_token: Storage.getItem('access_token') || '',
+          Authorization: `Bearer ${Storage.getItem('access_token')}` || '',
         },
+        withCredentials: true,
       }
     );
 

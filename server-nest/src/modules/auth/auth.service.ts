@@ -9,6 +9,7 @@ import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { UserResponseDto } from '../users/dto/user-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -58,6 +59,10 @@ export class AuthService {
     const accessToken = this.jwtService.sign(payload, { expiresIn: '10m' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
-    return { token: accessToken, refreshToken, user };
+    return {
+      token: accessToken,
+      refreshToken,
+      user: new UserResponseDto(user),
+    };
   }
 }
