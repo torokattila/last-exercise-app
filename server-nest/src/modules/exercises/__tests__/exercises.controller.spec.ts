@@ -64,7 +64,7 @@ describe('ExerciseController', () => {
 
   describe('list', () => {
     it('should return an array of exercises', async () => {
-      const req = { user: { id: mockUser.id } } as AuthenticatedRequest;
+      const req = { user: { userId: mockUser.id } } as AuthenticatedRequest;
 
       const result = await exerciseController.list(req);
 

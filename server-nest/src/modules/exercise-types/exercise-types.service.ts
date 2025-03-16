@@ -21,23 +21,28 @@ export class ExerciseTypeService {
     id: number,
     updateDto: UpdateExerciseTypeDto,
   ): Promise<ExerciseType> {
-    const exercistType = await this.exerciseTypeRepository.preload({
+    const exerciseType = await this.exerciseTypeRepository.preload({
       id,
       ...updateDto,
     });
 
-    if (!exercistType) {
+    if (!exerciseType) {
       throw new NotFoundException(`ExerciseType with ID: ${id} not found`);
     }
 
-    return await this.exerciseTypeRepository.save(exercistType);
+    return await this.exerciseTypeRepository.save({
+      ...exerciseType,
+      updated_at: new Date(),
+    });
   }
 
   async remove(id: number): Promise<void> {
-    const result = await this.exerciseTypeRepository.delete(id);
+    const exerciseType = await this.exerciseTypeRepository.findOneBy({ id });
 
-    if (result.affected === 0) {
+    if (!exerciseType) {
       throw new NotFoundException(`ExerciseType with ID: ${id} not found`);
     }
+
+    await this.exerciseTypeRepository.remove(exerciseType);
   }
 }

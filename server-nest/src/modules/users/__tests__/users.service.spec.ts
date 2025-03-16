@@ -16,6 +16,7 @@ describe('UsersService', () => {
 
   const mockUserRepository = {
     save: jest.fn().mockResolvedValue(mockUser),
+    update: jest.fn().mockResolvedValue(mockUser),
     findOne: jest.fn().mockResolvedValue(mockUser),
     findOneBy: jest.fn().mockResolvedValue(mockUser),
     remove: jest.fn().mockResolvedValue(undefined),
