@@ -90,7 +90,7 @@ describe('UsersService', () => {
         email: mockUser.email,
         lastName: mockUser.lastName,
       };
-      const updatedUser = { ...mockUser, ...dto, updated_at: new Date() };
+      const updatedUser = { ...mockUser, ...dto, updated_at: expect.any(Date) };
 
       mockUserRepository.save.mockResolvedValue(updatedUser);
       const result = await service.update(1, dto);
@@ -173,7 +173,7 @@ describe('UsersService', () => {
       const updatedUser = {
         ...mockUser,
         lastExerciseId: 2,
-        updated_at: new Date(),
+        updated_at: expect.any(Date),
       };
 
       mockUserRepository.save.mockResolvedValue(updatedUser);
