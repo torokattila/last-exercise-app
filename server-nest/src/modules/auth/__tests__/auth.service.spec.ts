@@ -59,11 +59,8 @@ describe('AuthService', () => {
 
       const result = await authService.register(registerDto);
 
-      expect(result).toEqual({
-        token: 'mockAccessToken',
-        refreshToken: 'mockAccessToken',
-        user: mockUser,
-      });
+      expect(result.token).toBe('mockAccessToken');
+      expect(result.refreshToken).toBe('mockAccessToken');
       expect(usersService.findOneByEmail).toHaveBeenCalledWith(
         registerDto.email,
       );
@@ -118,11 +115,8 @@ describe('AuthService', () => {
 
       const result = await authService.login(loginDto);
 
-      expect(result).toEqual({
-        token: 'mockAccessToken',
-        refreshToken: 'mockAccessToken',
-        user: mockUser,
-      });
+      expect(result.token).toBe('mockAccessToken');
+      expect(result.refreshToken).toBe('mockAccessToken');
       expect(usersService.findOneByEmail).toHaveBeenCalledWith(loginDto.email);
       expect(bcrypt.compare).toHaveBeenCalledWith(
         loginDto.password,

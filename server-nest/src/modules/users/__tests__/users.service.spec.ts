@@ -96,9 +96,11 @@ describe('UsersService', () => {
       const result = await service.update(1, dto);
 
       expect(result).toEqual(updatedUser);
-      expect(mockUserRepository.save).toHaveBeenCalledWith(
-        expect.objectContaining(updatedUser),
-      );
+
+      const lastCallArg = (
+        mockUserRepository.save.mock.calls as unknown[][]
+      ).at(-1)?.[0];
+      expect(lastCallArg).toEqual(expect.objectContaining(updatedUser));
     });
 
     it('should throw error if the user is not found', async () => {
