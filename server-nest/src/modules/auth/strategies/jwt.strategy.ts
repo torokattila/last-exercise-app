@@ -16,14 +16,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate(payload: JwtPayload, done: VerifiedCallback): void {
-    try {
-      if (!payload.sub || !payload.email) {
-        throw new Error('Invalid token payload');
-      }
-      done(null, { userId: payload.sub, email: payload.email });
-    } catch (error: any) {
-      done(error, false);
+  validate(payload: JwtPayload, done: VerifiedCallback) {
+    if (!payload || typeof payload !== 'object') {
+      return done(new Error('Invalid token payload'), false);
     }
+
+    const { sub, email } = payload;
+
+    if (!sub || !email) {
+      return done(new Error('Invalid token payload'), false);
+    }
+
+    return done(null, { userId: sub, email });
   }
 }
