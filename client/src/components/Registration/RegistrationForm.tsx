@@ -87,8 +87,18 @@ const RegistrationForm = (): JSX.Element => {
                   type="text"
                   autoComplete="new-firstname"
                   onChange={(e) => setFirstName(e.target.value)}
-                  placeholder={errors.firstname ? errors.firstname : 'First name'}
+                  placeholder={
+                    errors.firstname ? errors.firstname : 'First name'
+                  }
                   value={firstname}
+                  className={classNames(
+                    `border-2 w-full border-white bg-transparent rounded-full py-1.5 pl-7 pr-4 focus:border-blues-1 outline-none transition-all`,
+                    {
+                      'text-greys-1': !firstname.length,
+                      'text-white': firstname.length,
+                      'border-red-400 placeholder-red-400': errors.firstname,
+                    }
+                  )}
                 />
                 <Icon
                   className="absolute top-1.5 left-3"
@@ -104,6 +114,14 @@ const RegistrationForm = (): JSX.Element => {
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder={errors.lastname ? errors.lastname : 'Last name'}
                   value={lastname}
+                  className={classNames(
+                    `border-2 w-full border-white bg-transparent rounded-full py-1.5 pl-7 pr-4 focus:border-blues-1 outline-none transition-all`,
+                    {
+                      'text-greys-1': !lastname.length,
+                      'text-white': lastname.length,
+                      'border-red-400 placeholder-red-400': errors.lastname,
+                    }
+                  )}
                 />
                 <Icon
                   className="absolute top-1.5 left-3"

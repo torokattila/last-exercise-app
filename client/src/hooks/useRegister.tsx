@@ -29,8 +29,8 @@ const useRegister = () => {
   };
 
   const RegistrationSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name is required!'),
-    lastName: Yup.string().required('Last name is required!'),
+    firstname: Yup.string().required('First name is required!'),
+    lastname: Yup.string().required('Last name is required!'),
     email: Yup.string().required('Email is required!'),
     password: Yup.string().required('Password is required!'),
     passwordConfirm: Yup.string()
@@ -39,12 +39,14 @@ const useRegister = () => {
   });
 
   const verifyForm = async (): Promise<boolean> => {
+    console.log('verify form');
     try {
       await RegistrationSchema.validate(registerUser, { abortEarly: false });
       setErrors({});
 
       return Promise.resolve(true);
     } catch (error: any) {
+      console.log('error: ', error.inner);
       const newErrors: { [key: string]: string } = {};
 
       for (const err of error.inner) {

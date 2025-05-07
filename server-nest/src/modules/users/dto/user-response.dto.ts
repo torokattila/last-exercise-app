@@ -11,6 +11,7 @@ export class UserResponseDto extends PickType(User, [
   'lastname',
   'lastExercise',
   'lastExerciseId',
+  'exercises',
 ]) {
   constructor(user: User) {
     super();
@@ -22,5 +23,6 @@ export class UserResponseDto extends PickType(User, [
     this.lastname = user.lastname;
     this.lastExercise = user.lastExercise;
     this.lastExerciseId = user.lastExerciseId;
+    this.exercises = user.exercises;
   }
 }
