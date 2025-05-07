@@ -61,8 +61,8 @@ describe('User Entity', () => {
     const user = new User();
     user.email = 'test@example.com';
     user.password = 'securepassword';
-    user.firstName = 'John';
-    user.lastName = 'Doe';
+    user.firstname = 'John';
+    user.lastname = 'Doe';
     user.exerciseHistory = [{ date: '2023-01-01', exerciseId: 1 }];
 
     const savedUser = await userRepository.save(user);
@@ -71,8 +71,8 @@ describe('User Entity', () => {
     expect(foundUser).toBeDefined();
     expect(foundUser?.email).toBe('test@example.com');
     expect(foundUser?.password).toBe('securepassword');
-    expect(foundUser?.firstName).toBe('John');
-    expect(foundUser?.lastName).toBe('Doe');
+    expect(foundUser?.firstname).toBe('John');
+    expect(foundUser?.lastname).toBe('Doe');
     expect(foundUser?.exerciseHistory).toEqual([
       { date: '2023-01-01', exerciseId: 1 },
     ]);
@@ -82,14 +82,14 @@ describe('User Entity', () => {
     const user1 = new User();
     user1.email = 'unique@example.com';
     user1.password = 'password1';
-    user1.firstName = 'User1';
-    user1.lastName = 'Test1';
+    user1.firstname = 'User1';
+    user1.lastname = 'Test1';
 
     const user2 = new User();
     user2.email = 'unique@example.com'; // Same email as user1
     user2.password = 'password2';
-    user2.firstName = 'User2';
-    user2.lastName = 'Test2';
+    user2.firstname = 'User2';
+    user2.lastname = 'Test2';
 
     await userRepository.save(user1);
 
@@ -100,8 +100,8 @@ describe('User Entity', () => {
     const user = new User();
     user.email = 'onetomany@example.com';
     user.password = 'password';
-    user.firstName = 'John';
-    user.lastName = 'Doe';
+    user.firstname = 'John';
+    user.lastname = 'Doe';
 
     const exercise1 = new Exercise();
     exercise1.name = 'Exercise 1';
@@ -131,8 +131,8 @@ describe('User Entity', () => {
     const user = new User();
     user.email = 'onetoone@example.com';
     user.password = 'password';
-    user.firstName = 'John';
-    user.lastName = 'Doe';
+    user.firstname = 'John';
+    user.lastname = 'Doe';
 
     await userRepository.save(user);
 
@@ -159,8 +159,8 @@ describe('User Entity', () => {
     const user = new User();
     user.email = 'default@example.com';
     user.password = 'password';
-    user.firstName = 'John';
-    user.lastName = 'Doe';
+    user.firstname = 'John';
+    user.lastname = 'Doe';
 
     const savedUser = await userRepository.save(user);
     const foundUser = await userRepository.findOneBy({ id: savedUser.id });

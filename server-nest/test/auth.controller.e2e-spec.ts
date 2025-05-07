@@ -37,8 +37,8 @@ describe('AuthController (e2e)', () => {
         .post('/auth/register')
         .send({
           email: mockUser.email,
-          firstName: 'Test',
-          lastName: 'User',
+          firstname: 'Test',
+          lastname: 'User',
           password: 'password123',
           passwordConfirm: 'password123',
         } as RegisterDto);
@@ -55,8 +55,8 @@ describe('AuthController (e2e)', () => {
         .post('/auth/register')
         .send({
           email: mockUser.email,
-          firstName: 'Test',
-          lastName: 'User',
+          firstname: 'Test',
+          lastname: 'User',
           password: 'password123',
           passwordConfirm: 'password123',
         } as RegisterDto);

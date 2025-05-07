@@ -11,8 +11,8 @@ const useRegister = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
+  const [firstname, setFirstName] = useState<string>('');
+  const [lastname, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
@@ -21,8 +21,8 @@ const useRegister = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const registerUser = {
-    firstName,
-    lastName,
+    firstname,
+    lastname,
     email,
     password,
     passwordConfirm,
@@ -60,8 +60,8 @@ const useRegister = () => {
     e.preventDefault();
 
     const payload: RegistrationPayload = {
-      firstName,
-      lastName,
+      firstname,
+      lastname,
       email,
       password,
       passwordConfirm,
@@ -94,9 +94,9 @@ const useRegister = () => {
   };
 
   return {
-    firstName,
+    firstname,
     setFirstName,
-    lastName,
+    lastname,
     setLastName,
     email,
     setEmail,

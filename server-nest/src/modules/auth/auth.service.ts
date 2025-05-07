@@ -19,7 +19,7 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const { email, firstName, lastName, password, passwordConfirm } =
+    const { email, firstname, lastname, password, passwordConfirm } =
       registerDto;
 
     if (password !== passwordConfirm) {
@@ -36,8 +36,8 @@ export class AuthService {
     const user = await this.usersService.create({
       email,
       password: hashedPassword,
-      firstName,
-      lastName,
+      firstname,
+      lastname,
     });
 
     return this.generateTokens(user.id, user);

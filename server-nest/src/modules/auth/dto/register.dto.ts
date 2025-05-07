@@ -23,10 +23,10 @@ export class RegisterDto {
   passwordConfirm: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'firstName is required' })
-  firstName: string;
+  @IsNotEmpty({ message: 'firstname is required' })
+  firstname: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'lastName is required' })
-  lastName: string;
+  @IsNotEmpty({ message: 'lastname is required' })
+  lastname: string;
 }

@@ -60,14 +60,6 @@ const Profile = () => {
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
             placeholder={baseDataErrors.firstname ?? 'First name'}
-            autoComplete="new-firstname"
-            className={classNames(
-              'mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200',
-              {
-                'border-red-400 placeholder:text-red-400':
-                  baseDataErrors.firstname,
-              }
-            )}
           />
           <Icon
             className="absolute top-6 left-3"
@@ -83,14 +75,6 @@ const Profile = () => {
             value={lastname}
             onChange={(e) => setLastname(e.target.value)}
             placeholder={baseDataErrors.lastname ?? 'Last name'}
-            autoComplete="new-lastname"
-            className={classNames(
-              'mt-1 rounded-full border-2 border-white bg-transparent py-1 pl-7 pr-4 text-white outline-none transition-all placeholder:text-gray-300 focus:border-cyan-200',
-              {
-                'border-red-400 placeholder:text-red-400':
-                  baseDataErrors.lastname,
-              }
-            )}
           />
           <Icon
             className="absolute top-6 left-3"

@@ -38,8 +38,8 @@ describe('UsersController (e2e)', () => {
 
     const registerDto: RegisterDto = {
       email: mockUser2.email,
-      firstName: 'Test',
-      lastName: 'User',
+      firstname: 'Test',
+      lastname: 'User',
       password: 'TestPassword123',
       passwordConfirm: 'TestPassword123',
     };
@@ -73,15 +73,15 @@ describe('UsersController (e2e)', () => {
     expect(response.body).toMatchObject({
       id: userId,
       email: mockUser2.email,
-      firstName: 'Test',
-      lastName: 'User',
+      firstname: 'Test',
+      lastname: 'User',
     });
   });
 
   it('should update user details', async () => {
     const updateUserDto: UpdateUserDto = {
-      firstName: 'Updated',
-      lastName: 'Name',
+      firstname: 'Updated',
+      lastname: 'Name',
       email: mockUser2.email,
     };
 
@@ -93,8 +93,8 @@ describe('UsersController (e2e)', () => {
 
     expect(response.body).toMatchObject({
       id: userId,
-      firstName: 'Updated',
-      lastName: 'Name',
+      firstname: 'Updated',
+      lastname: 'Name',
     });
   });
 

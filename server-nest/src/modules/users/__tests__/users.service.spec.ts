@@ -86,9 +86,9 @@ describe('UsersService', () => {
   describe('update', () => {
     it('should update a user and return the updated user', async () => {
       const dto: UpdateUserDto = {
-        firstName: 'Updated firstname',
+        firstname: 'Updated firstname',
         email: mockUser.email,
-        lastName: mockUser.lastName,
+        lastname: mockUser.lastname,
       };
       const updatedUser = { ...mockUser, ...dto, updated_at: expect.any(Date) };
 
@@ -108,9 +108,9 @@ describe('UsersService', () => {
 
       await expect(
         service.update(2, {
-          firstName: 'Updated firstname',
+          firstname: 'Updated firstname',
           email: mockUser.email,
-          lastName: mockUser.lastName,
+          lastname: mockUser.lastname,
         }),
       ).rejects.toThrow(NotFoundException);
     });

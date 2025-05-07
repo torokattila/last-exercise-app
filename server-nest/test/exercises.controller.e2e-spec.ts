@@ -38,8 +38,8 @@ describe('ExerciseController (e2e)', () => {
 
     const registerDto: RegisterDto = {
       email: mockUser3.email,
-      firstName: 'Test',
-      lastName: 'User',
+      firstname: 'Test',
+      lastname: 'User',
       password: 'TestPassword123',
       passwordConfirm: 'TestPassword123',
     };

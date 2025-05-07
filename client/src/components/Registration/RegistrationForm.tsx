@@ -12,9 +12,9 @@ import useRegister from '../../hooks/useRegister';
 const RegistrationForm = (): JSX.Element => {
   const navigate = useNavigate();
   const {
-    firstName,
+    firstname,
     setFirstName,
-    lastName,
+    lastname,
     setLastName,
     email,
     setEmail,
@@ -87,18 +87,8 @@ const RegistrationForm = (): JSX.Element => {
                   type="text"
                   autoComplete="new-firstname"
                   onChange={(e) => setFirstName(e.target.value)}
-                  placeholder={
-                    errors.firstname ? errors.firstname : 'First name'
-                  }
-                  value={firstName}
-                  className={classNames(
-                    `border-2 w-full border-white bg-transparent rounded-full py-1.5 pl-7 pr-4 focus:border-blues-1 outline-none transition-all`,
-                    {
-                      'text-greys-1': !firstName.length,
-                      'text-white': firstName.length,
-                      'border-red-400 placeholder-red-400': errors.firstName,
-                    }
-                  )}
+                  placeholder={errors.firstname ? errors.firstname : 'First name'}
+                  value={firstname}
                 />
                 <Icon
                   className="absolute top-1.5 left-3"
@@ -112,16 +102,8 @@ const RegistrationForm = (): JSX.Element => {
                   type="text"
                   autoComplete="new-lastname"
                   onChange={(e) => setLastName(e.target.value)}
-                  placeholder={errors.lastname ? errors.lastName : 'Last name'}
-                  value={lastName}
-                  className={classNames(
-                    `border-2 w-full border-white bg-transparent rounded-full py-1.5 pl-7 pr-4 focus:border-blues-1 outline-none transition-all`,
-                    {
-                      'text-greys-1': !lastName.length,
-                      'text-white': lastName.length,
-                      'border-red-400 placeholder-red-400': errors.lastName,
-                    }
-                  )}
+                  placeholder={errors.lastname ? errors.lastname : 'Last name'}
+                  value={lastname}
                 />
                 <Icon
                   className="absolute top-1.5 left-3"

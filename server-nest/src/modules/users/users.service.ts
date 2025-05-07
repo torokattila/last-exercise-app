@@ -46,7 +46,10 @@ export class UsersService {
 
     if (!user) throw new NotFoundException('User not found');
 
-    Object.assign(user, updateUserDto);
+    Object.assign(user, {
+      firstname: updateUserDto.firstname,
+      lastname: updateUserDto.lastname,
+    });
     user.updated_at = new Date();
 
     return this.userRepository.save(user);

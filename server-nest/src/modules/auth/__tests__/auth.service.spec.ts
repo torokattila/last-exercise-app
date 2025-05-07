@@ -49,8 +49,8 @@ describe('AuthService', () => {
     it('should register a new user and return tokens', async () => {
       const registerDto: RegisterDto = {
         email: mockUser.email,
-        firstName: mockUser.firstName,
-        lastName: mockUser.lastName,
+        firstname: mockUser.firstname,
+        lastname: mockUser.lastname,
         password: 'password123',
         passwordConfirm: 'password123',
       };
@@ -67,16 +67,16 @@ describe('AuthService', () => {
       expect(usersService.create).toHaveBeenCalledWith({
         email: registerDto.email,
         password: 'hashedPassword',
-        firstName: registerDto.firstName,
-        lastName: registerDto.lastName,
+        firstname: registerDto.firstname,
+        lastname: registerDto.lastname,
       });
     });
 
     it('should throw BadRequestException if passwords do not match', async () => {
       const registerDto: RegisterDto = {
         email: mockUser.email,
-        firstName: mockUser.firstName,
-        lastName: mockUser.lastName,
+        firstname: mockUser.firstname,
+        lastname: mockUser.lastname,
         password: 'password123',
         passwordConfirm: 'wrongPassword',
       };
@@ -91,8 +91,8 @@ describe('AuthService', () => {
 
       const registerDto: RegisterDto = {
         email: 'test@example.com',
-        firstName: 'John',
-        lastName: 'Doe',
+        firstname: 'John',
+        lastname: 'Doe',
         password: 'password123',
         passwordConfirm: 'password123',
       };

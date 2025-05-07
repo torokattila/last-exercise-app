@@ -5,11 +5,11 @@ export class UpdateUserDto {
   @IsNotEmpty()
   email: string;
 
-  @IsString({ message: 'First name is requierd' })
+  @IsString({ message: 'Firstname is required' })
   @IsNotEmpty()
-  firstName: string;
+  firstname: string;
 
-  @IsString({ message: 'Last name is required' })
+  @IsString({ message: 'Lastname is required' })
   @IsNotEmpty()
-  lastName: string;
+  lastname: string;
 }

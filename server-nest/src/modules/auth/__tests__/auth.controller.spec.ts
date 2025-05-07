@@ -61,8 +61,8 @@ describe('AuthController', () => {
     it('should register a new user and return tokens', async () => {
       const registerDto: RegisterDto = {
         email: mockUser.email,
-        firstName: mockUser.firstName,
-        lastName: mockUser.lastName,
+        firstname: mockUser.firstname,
+        lastname: mockUser.lastname,
         password: 'password123',
         passwordConfirm: 'password123',
       };
