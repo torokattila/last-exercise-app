@@ -206,7 +206,7 @@ class ApiClient {
   // Exercise type
   async deleteExerciseType(exerciseTypeId: number): Promise<ExerciseType> {
     const response: AxiosResponse = await this.client.delete<ExerciseType>(
-      `/exercisetypes/${exerciseTypeId}`,
+      `/exercise-types/${exerciseTypeId}`,
       {
         headers: {
           Authorization: `Bearer ${Storage.getItem('access_token')}` || '',

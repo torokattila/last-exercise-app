@@ -11,6 +11,7 @@ import { User } from '../users/entities/user.entity';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
+import { UpdateExerciseTypeDto } from '../exercise-types/dto/update-exercise-type.dto';
 
 @Injectable()
 export class ExerciseService {
@@ -99,13 +100,26 @@ export class ExerciseService {
 
     if (dto?.exerciseTypes?.length) {
       await Promise.all(
-        dto.exerciseTypes.map(async (exerciseType: ExerciseType) => {
+        dto.exerciseTypes.map(async (exerciseType) => {
+          if (!exerciseType.name) {
+            throw new Error('ExerciseType name is required');
+          }
           return exerciseType.id
-            ? await this.exerciseTypeService.update(
-                exerciseType.id,
-                exerciseType,
-              )
-            : await this.exerciseTypeService.create(exerciseType);
+            ? await this.exerciseTypeService.update(exerciseType.id, {
+                ...exerciseType,
+                created_at: exerciseType.created_at
+                  ? new Date(exerciseType.created_at).toISOString()
+                  : undefined,
+              } as UpdateExerciseTypeDto)
+            : await this.exerciseTypeService.create({
+                ...exerciseType,
+                created_at: exerciseType.created_at
+                  ? new Date(exerciseType.created_at)
+                  : undefined,
+                updated_at: exerciseType.updated_at
+                  ? new Date(exerciseType.updated_at)
+                  : undefined,
+              } as ExerciseType);
         }),
       );
     }

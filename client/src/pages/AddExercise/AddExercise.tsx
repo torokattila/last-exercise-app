@@ -41,7 +41,6 @@ const AddExercise = () => {
       name: '',
       order: 1,
       exerciseId: undefined,
-      exercise: null,
       cardTextColor: '#fff',
       seriesCardsColor: '#005A92',
       seriesCardNumber: null,

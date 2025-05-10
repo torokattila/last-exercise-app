@@ -4,7 +4,8 @@ import { Exercise } from '../../exercises/entities/exercise.entity';
 export class CreateExerciseTypeDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  @IsOptional()
+  name?: string | undefined;
 
   @IsOptional()
   @IsNumber()
