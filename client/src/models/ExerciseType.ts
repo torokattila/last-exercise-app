@@ -4,7 +4,7 @@ import Exercise from './Exercise';
 interface ExerciseType extends EntityBase {
   name: string;
   exercise?: Exercise | undefined;
-  exerciseId: number;
+  exerciseId?: number | undefined;
   seriesCardNumber: number | null;
   seriesCardsColor: string;
   cardTextColor: string;

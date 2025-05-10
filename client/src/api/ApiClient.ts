@@ -77,7 +77,7 @@ class ApiClient {
     duration: string
   ): Promise<User> {
     const response: AxiosResponse<User> = await this.client.put<User>(
-      `/users/${userId}/lastexercise`,
+      `/users/${userId}/last-exercise`,
       {
         exerciseId,
         duration,

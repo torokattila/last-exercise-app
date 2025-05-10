@@ -12,7 +12,9 @@ export class ExerciseTypeService {
     private readonly exerciseTypeRepository: Repository<ExerciseType>,
   ) {}
 
-  async create(createDto: CreateExerciseTypeDto): Promise<ExerciseType> {
+  async create(
+    createDto: CreateExerciseTypeDto & { created_at?: Date; updated_at?: Date },
+  ): Promise<ExerciseType> {
     const newExerciseType = this.exerciseTypeRepository.create(createDto);
     return await this.exerciseTypeRepository.save(newExerciseType);
   }

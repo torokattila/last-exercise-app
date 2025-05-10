@@ -40,7 +40,6 @@ const AddExercise = () => {
     const newExerciseType: Partial<ExerciseType> = {
       name: '',
       order: 1,
-      exerciseId: undefined,
       cardTextColor: '#fff',
       seriesCardsColor: '#005A92',
       seriesCardNumber: null,

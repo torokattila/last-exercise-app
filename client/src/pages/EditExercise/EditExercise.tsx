@@ -95,7 +95,6 @@ const EditExercise = () => {
       id: undefined,
       name: '',
       order: 1,
-      exerciseId: Number(exerciseId),
       cardTextColor: '#fff',
       seriesCardsColor: '#005A92',
       seriesCardNumber: null,

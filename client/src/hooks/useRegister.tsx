@@ -39,14 +39,12 @@ const useRegister = () => {
   });
 
   const verifyForm = async (): Promise<boolean> => {
-    console.log('verify form');
     try {
       await RegistrationSchema.validate(registerUser, { abortEarly: false });
       setErrors({});
 
       return Promise.resolve(true);
     } catch (error: any) {
-      console.log('error: ', error.inner);
       const newErrors: { [key: string]: string } = {};
 
       for (const err of error.inner) {

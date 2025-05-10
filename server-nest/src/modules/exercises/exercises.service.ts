@@ -45,6 +45,8 @@ export class ExerciseService {
           dto.exerciseTypes.map(async (exerciseType) => {
             await this.exerciseTypeService.create({
               ...exerciseType,
+              created_at: new Date(),
+              updated_at: new Date(),
               exerciseId: savedExercise.id,
             });
           }),
@@ -99,29 +101,36 @@ export class ExerciseService {
     exercise.updated_at = new Date();
 
     if (dto?.exerciseTypes?.length) {
-      await Promise.all(
+      const updatedExerciseTypes = await Promise.all(
         dto.exerciseTypes.map(async (exerciseType) => {
           if (!exerciseType.name) {
             throw new Error('ExerciseType name is required');
           }
-          return exerciseType.id
-            ? await this.exerciseTypeService.update(exerciseType.id, {
-                ...exerciseType,
-                created_at: exerciseType.created_at
-                  ? new Date(exerciseType.created_at).toISOString()
-                  : undefined,
-              } as UpdateExerciseTypeDto)
-            : await this.exerciseTypeService.create({
-                ...exerciseType,
-                created_at: exerciseType.created_at
-                  ? new Date(exerciseType.created_at)
-                  : undefined,
-                updated_at: exerciseType.updated_at
-                  ? new Date(exerciseType.updated_at)
-                  : undefined,
-              } as ExerciseType);
+          if (exerciseType.id) {
+            return await this.exerciseTypeService.update(exerciseType.id, {
+              ...exerciseType,
+              exerciseId: exercise.id,
+              created_at: exerciseType.created_at
+                ? new Date(exerciseType.created_at).toISOString()
+                : new Date(),
+            } as UpdateExerciseTypeDto);
+          } else {
+            const createdExerciseType = await this.exerciseTypeService.create({
+              ...exerciseType,
+              exerciseId: exercise.id,
+              created_at: exerciseType.created_at
+                ? new Date(exerciseType.created_at)
+                : new Date(),
+              updated_at: exerciseType.updated_at
+                ? new Date(exerciseType.updated_at)
+                : new Date(),
+            } as ExerciseType);
+            return createdExerciseType;
+          }
         }),
       );
+
+      exercise.exerciseTypes = updatedExerciseTypes;
     }
 
     return this.exerciseRepository.save(exercise);
