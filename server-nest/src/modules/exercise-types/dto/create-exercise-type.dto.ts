@@ -6,9 +6,9 @@ export class CreateExerciseTypeDto {
   @IsString()
   name: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
-  exerciseId: number;
+  exerciseId?: number;
 
   @IsOptional()
   exercise?: Exercise;
