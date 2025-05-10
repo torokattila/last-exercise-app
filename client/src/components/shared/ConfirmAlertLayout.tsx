@@ -7,7 +7,7 @@ type Props = {
 const ConfirmAlertLayout = ({ children }: Props) => {
   return (
     <AnimatePresence>
-      <div className="fixed top-0 left-0 z-10 h-screen w-full bg-black opacity-80" />
+      <div className="fixed top-0 left-0 z-40 h-screen w-full bg-black opacity-80" />
       <motion.div
         initial={{
           scale: 0,

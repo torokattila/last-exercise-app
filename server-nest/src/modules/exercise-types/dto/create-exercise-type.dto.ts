@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Exercise } from '../../exercises/entities/exercise.entity';
 
 export class CreateExerciseTypeDto {
   @IsNotEmpty()
@@ -8,6 +9,9 @@ export class CreateExerciseTypeDto {
   @IsNotEmpty()
   @IsNumber()
   exerciseId: number;
+
+  @IsOptional()
+  exercise?: Exercise;
 
   @IsOptional()
   @IsNumber()

@@ -23,8 +23,7 @@ const useExercise = () => {
     refetch,
   } = useQuery(
     ['getExercise', { exerciseId: params.exerciseId }],
-    async () =>
-      await apiClient.getExercise(Number(params.exerciseId)),
+    async () => await apiClient.getExercise(Number(params.exerciseId)),
     {
       refetchOnWindowFocus: false,
     }
@@ -186,7 +185,7 @@ const useExercise = () => {
     });
   };
 
-  const editExercise = async (exercise: Exercise): Promise<boolean> => {
+  const editExercise = async (exercise: Partial<Exercise>): Promise<boolean> => {
     try {
       await apiClient.editExercise(Number(exercise.id), exercise);
 
@@ -217,7 +216,7 @@ const useExercise = () => {
     }
   };
 
-  const handleEditExercise = (exercise: Exercise): void => {
+  const handleEditExercise = (exercise: Partial<Exercise>): void => {
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (
@@ -352,7 +351,7 @@ const useExercise = () => {
 
   const handleDeleteExercise = (exerciseId: number | undefined): void => {
     if (!exerciseId) return;
-    
+
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (

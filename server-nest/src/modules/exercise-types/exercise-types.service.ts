@@ -30,6 +30,8 @@ export class ExerciseTypeService {
       throw new NotFoundException(`ExerciseType with ID: ${id} not found`);
     }
 
+    delete updateDto.exercise;
+
     return await this.exerciseTypeRepository.save({
       ...exerciseType,
       updated_at: new Date(),

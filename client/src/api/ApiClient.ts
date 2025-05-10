@@ -155,7 +155,11 @@ class ApiClient {
     return response.data;
   }
 
-  async editExercise(exerciseId: number, data: Exercise): Promise<Exercise> {
+  async editExercise(
+    exerciseId: number,
+    data: Partial<Exercise>
+  ): Promise<Exercise> {
+    delete data.id;
     const response: AxiosResponse<Exercise> = await this.client.put(
       `/exercises/${exerciseId}`,
       data,
