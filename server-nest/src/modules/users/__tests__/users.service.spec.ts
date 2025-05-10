@@ -61,7 +61,13 @@ describe('UsersService', () => {
       expect(result).toEqual(mockUser);
       expect(mockUserRepository.findOne).toHaveBeenCalledWith({
         where: { id: 1 },
-        relations: ['lastExercise'],
+        relations: [
+          'lastExercise',
+          'exercises',
+          'exercises.exerciseTypes',
+          'lastExercise',
+          'lastExercise.exerciseTypes',
+        ],
       });
     });
 
