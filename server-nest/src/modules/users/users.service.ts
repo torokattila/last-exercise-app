@@ -5,17 +5,20 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UpdatePasswordDto } from './dto/update-password.dto';
-import { UpdateLastExerciseDto } from './dto/update-last-exercise.dto';
+import { In, Repository } from 'typeorm';
 import { RegisterDto } from '../auth/dto/register.dto';
+import { Exercise } from '../exercises/entities/exercise.entity';
+import { UpdateLastExerciseDto } from './dto/update-last-exercise.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Exercise)
+    private readonly exerciseRepository: Repository<Exercise>,
   ) {}
 
   async create(dto: Partial<RegisterDto>): Promise<User> {
@@ -37,6 +40,20 @@ export class UsersService {
     });
 
     if (!user) throw new NotFoundException('User not found');
+
+    if (user.exerciseHistory && user.exerciseHistory.length > 0) {
+      const exerciseIds = user.exerciseHistory.map(
+        (history) => history.exerciseId,
+      );
+      const exercises = await this.exerciseRepository.findBy({
+        id: In(exerciseIds),
+      });
+
+      user.exerciseHistory = user.exerciseHistory.map((history) => {
+        const exercise = exercises.find((ex) => ex.id === history.exerciseId);
+        return { ...history, exercise };
+      });
+    }
 
     return user;
   }
@@ -96,9 +113,15 @@ export class UsersService {
     user.lastExerciseId = dto.exerciseId;
     user.updated_at = new Date();
 
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
     await this.userRepository.update(id, {
       lastExerciseId: dto.exerciseId,
       updated_at: new Date(),
+      exerciseHistory: [
+        ...(user.exerciseHistory ?? []),
+        { date: today, exerciseId: Number(dto.exerciseId) },
+      ],
     });
     const updatedUser = await this.findById(id);
 
