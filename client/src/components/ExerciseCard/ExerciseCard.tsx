@@ -23,7 +23,7 @@ const ExerciseCard = ({ exercise, isLastExercise }: Props) => {
         backgroundColor: exercise.cardColor,
         color: exercise.textColor,
       }}
-      className={`relative z-10 h-19 w-full cursor-pointer rounded-2xl p-2 shadow-card transition-all hover:opacity-90 lg:w-40`}
+      className={`relative z-10 h-20 w-full cursor-pointer rounded-2xl p-2 shadow-card transition-all hover:opacity-90 lg:w-40`}
     >
       <div
         onClick={() => navigate(`/exercises/${exercise.id}/edit`)}
@@ -45,7 +45,7 @@ const ExerciseCard = ({ exercise, isLastExercise }: Props) => {
           style={{
             color: exercise.textColor,
           }}
-          className="relative -mb-0.5 w-full self-start font-semibold opacity-80"
+          className="relative -mb-2 w-full self-start font-semibold opacity-80"
         >
           <p>Number of exercise types: {numberOfExerciseTypes}</p>
           {isLastExercise &&

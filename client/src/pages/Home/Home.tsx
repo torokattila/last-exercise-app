@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import ExerciseCard from '../../components/ExerciseCard';
 import AddExerciseButton from '../../components/shared/AddExerciseButton';
 import useHome from '../../hooks/useHome';
 import Exercise from '../../models/Exercise';
 
 const Home = (): JSX.Element => {
-  const { refetchUser, user } = useHome();
+  const { user } = useHome();
 
   const sortExerciseByOrder = (a: Exercise, b: Exercise): number => {
     if (a.order === b.order) {
@@ -48,17 +51,34 @@ const Home = (): JSX.Element => {
       )}
 
       {user?.exercises && user?.exercises.length > 0 ? (
-        <div className="mt-10 flex flex-col">
+        <div className="mt-6 flex flex-col">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white">
             Your exercises:
           </h2>
-
-          <div className="mt-3 flex flex-col gap-4 lg:mt-5 lg:flex-row lg:flex-wrap">
-            {sortedExercises.map((exercise: Exercise) => (
-              <div key={exercise.id}>
-                <ExerciseCard exercise={exercise} />
-              </div>
-            ))}
+          <div className="mt-3 w-full">
+            <Swiper
+              spaceBetween={20}
+              slidesPerView={1.2}
+              style={{
+                marginLeft: '-40px',
+                marginRight: '-40px',
+                paddingLeft: 40,
+                paddingRight: 40,
+              }}
+              breakpoints={{
+                640: { slidesPerView: 2.2 },
+                1024: { slidesPerView: 3.2 },
+              }}
+            >
+              {sortedExercises.map((exercise: Exercise) => (
+                <SwiperSlide
+                  key={exercise.id}
+                  style={{ paddingTop: '20px', paddingBottom: '20px' }}
+                >
+                  <ExerciseCard exercise={exercise} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       ) : (
