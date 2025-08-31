@@ -3,14 +3,12 @@ import classNames from 'classnames';
 import DarkModeSwitch from '../DarkModeSwitch';
 
 import homeFill from '@iconify/icons-eva/home-fill';
-import logOutFill from '@iconify/icons-eva/log-out-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import { Icon } from '@iconify/react';
 import useMenu from '../../hooks/useMenu';
 
 const DesktopMenu = () => {
   const {
-    handleLogoutConfirm,
     isHomePage,
     isProfilePage,
     handleNavigateToOtherPage,
@@ -85,15 +83,6 @@ const DesktopMenu = () => {
         <Tooltip title="Switch color mode" arrow placement="right">
           <div className="p-1.5">
             <DarkModeSwitch />
-          </div>
-        </Tooltip>
-
-        <Tooltip title="Log out" arrow placement="right">
-          <div
-            className="absolute bottom-7 cursor-pointer p-1.5 text-[#4A9ECB] transition-all hover:text-[#0e6696]"
-            onClick={handleLogoutConfirm}
-          >
-            <Icon icon={logOutFill} fontSize={30} />
           </div>
         </Tooltip>
       </div>

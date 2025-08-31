@@ -1,16 +1,14 @@
 import { Icon } from '@iconify/react';
 import classNames from 'classnames';
 
-import homeFill from '@iconify/icons-eva/home-fill';
-import logOutFill from '@iconify/icons-eva/log-out-fill';
-import personFill from '@iconify/icons-eva/person-fill';
 import calendarFill from '@iconify/icons-eva/calendar-fill';
+import homeFill from '@iconify/icons-eva/home-fill';
+import personFill from '@iconify/icons-eva/person-fill';
 import useMenu from '../../hooks/useMenu';
 import DarkModeSwitch from '../DarkModeSwitch';
 
 const MobileMenu = () => {
   const {
-    handleLogoutConfirm,
     isHomePage,
     isProfilePage,
     isExercisePage,
@@ -19,24 +17,22 @@ const MobileMenu = () => {
     isCalendarPage,
   } = useMenu();
 
+  // Define your active and inactive icon colors
+  const activeColor = '#1490d3';
+  const inactiveColor = '#98bbcf';
+
   return (
     <div
       style={{
         transform: 'translateX(-50%)',
       }}
       className={`
-      fixed bottom-1 left-1/2 z-20 flex h-8 w-[95%] flex-row 
-      items-center justify-evenly gap-x-1 rounded-full bg-white shadow-top 
-      dark:bg-[#38383a] lg:hidden`}
+        fixed bottom-0 left-1/2 z-20 flex h-10 w-full flex-row shadow-top
+        items-center justify-evenly bg-white dark:bg-[#38383a] lg:hidden
+      `}
     >
       <div
-        className={classNames(
-          `cursor-pointer rounded-2xl p-1.25 transition-all`,
-          {
-            'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]': isHomePage,
-            'text-[#4A9ECB] hover:text-[#0e6696]': !isHomePage,
-          }
-        )}
+        className="flex flex-col items-center justify-center cursor-pointer transition-all"
         onClick={() => {
           if (isExercisePage) {
             handleConfirmPageNavigation('home');
@@ -45,18 +41,26 @@ const MobileMenu = () => {
           }
         }}
       >
-        <Icon icon={homeFill} fontSize={24} />
+        <Icon
+          icon={homeFill}
+          fontSize={24}
+          color={isHomePage ? activeColor : inactiveColor}
+        />
+        <span
+          className={classNames(
+            'text-xs font-medium mt-1 transition-colors',
+            {
+              'text-[#1490d3]': isHomePage,
+              'text-[#98bbcf]': !isHomePage,
+            }
+          )}
+        >
+          Home
+        </span>
       </div>
 
       <div
-        className={classNames(
-          `cursor-pointer rounded-2xl p-1.25 transition-all`,
-          {
-            'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]':
-              isProfilePage,
-            'text-[#4A9ECB] hover:text-[#0e6696]': !isProfilePage,
-          }
-        )}
+        className="flex flex-col items-center justify-center cursor-pointer transition-all"
         onClick={() => {
           if (isExercisePage) {
             handleConfirmPageNavigation('profile');
@@ -65,18 +69,26 @@ const MobileMenu = () => {
           }
         }}
       >
-        <Icon icon={personFill} fontSize={25} />
+        <Icon
+          icon={personFill}
+          fontSize={25}
+          color={isProfilePage ? activeColor : inactiveColor}
+        />
+        <span
+          className={classNames(
+            'text-xs font-medium mt-1 transition-colors',
+            {
+              'text-[#1490d3]': isProfilePage,
+              'text-[#98bbcf]': !isProfilePage,
+            }
+          )}
+        >
+          Profile
+        </span>
       </div>
 
       <div
-        className={classNames(
-          `cursor-pointer rounded-2xl p-1.25 transition-all`,
-          {
-            'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]':
-            isCalendarPage,
-            'text-[#4A9ECB] hover:text-[#0e6696]': !isCalendarPage,
-          }
-        )}
+        className="flex flex-col items-center justify-center cursor-pointer transition-all"
         onClick={() => {
           if (isExercisePage) {
             handleConfirmPageNavigation('calendar');
@@ -85,18 +97,27 @@ const MobileMenu = () => {
           }
         }}
       >
-        <Icon icon={calendarFill} fontSize={25} />
+        <Icon
+          icon={calendarFill}
+          fontSize={25}
+          color={isCalendarPage ? activeColor : inactiveColor}
+        />
+        <span
+          className={classNames(
+            'text-xs font-medium mt-1 transition-colors',
+            {
+              'text-[#1490d3]': isCalendarPage,
+              'text-[#98bbcf]': !isCalendarPage,
+            }
+          )}
+        >
+          Calendar
+        </span>
       </div>
 
-      <div className="pt-1.25">
+      <div className="flex flex-col items-center justify-center">
         <DarkModeSwitch />
-      </div>
-
-      <div
-        className="cursor-pointer p-1.25 text-[#4A9ECB] transition-all hover:text-[#0e6696]"
-        onClick={handleLogoutConfirm}
-      >
-        <Icon icon={logOutFill} fontSize={30} />
+        <span className="text-xs font-medium text-[#98bbcf] mt-1">Theme</span>
       </div>
     </div>
   );

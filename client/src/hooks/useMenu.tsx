@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
-import useLogout from './useLogout';
 import { confirmAlert } from 'react-confirm-alert';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const useMenu = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { handleLogoutConfirm } = useLogout();
 
   const isHomePage = useMemo(() => {
     return location.pathname === '/';
@@ -89,7 +87,6 @@ const useMenu = () => {
   };
 
   return {
-    handleLogoutConfirm,
     isHomePage,
     isProfilePage,
     isExercisePage,
