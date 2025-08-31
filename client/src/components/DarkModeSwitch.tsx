@@ -27,7 +27,7 @@ const DarkModeSwitch = () => {
 
   return (
     <button onClick={toggleDarkMode}>
-      <div className="text-[#4A9ECB] hover:text-[#0e6696]">
+      <div className="text-[#98bbcf] hover:text-[#0e6696]">
         {isDarkMode ? (
           <Icon icon={sunFill} fontSize={25} />
         ) : (
