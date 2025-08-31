@@ -10,7 +10,6 @@ import DarkModeSwitch from '../DarkModeSwitch';
 
 const MobileMenu = () => {
   const {
-    handleLogoutConfirm,
     isHomePage,
     isProfilePage,
     isExercisePage,
@@ -25,8 +24,8 @@ const MobileMenu = () => {
         transform: 'translateX(-50%)',
       }}
       className={`
-      fixed bottom-1 left-1/2 z-20 flex h-8 w-[95%] flex-row 
-      items-center justify-evenly gap-x-1 rounded-full bg-white shadow-top 
+      fixed bottom-0 left-1/2 z-20 flex h-9 w-full flex-row 
+      items-center justify-evenly gap-x-1 bg-white shadow-top 
       dark:bg-[#38383a] lg:hidden`}
     >
       <div
@@ -73,7 +72,7 @@ const MobileMenu = () => {
           `cursor-pointer rounded-2xl p-1.25 transition-all`,
           {
             'bg-[#4A9ECB] text-white shadow-xl hover:bg-[#0e6696]':
-            isCalendarPage,
+              isCalendarPage,
             'text-[#4A9ECB] hover:text-[#0e6696]': !isCalendarPage,
           }
         )}
@@ -90,13 +89,6 @@ const MobileMenu = () => {
 
       <div className="pt-1.25">
         <DarkModeSwitch />
-      </div>
-
-      <div
-        className="cursor-pointer p-1.25 text-[#4A9ECB] transition-all hover:text-[#0e6696]"
-        onClick={handleLogoutConfirm}
-      >
-        <Icon icon={logOutFill} fontSize={30} />
       </div>
     </div>
   );
