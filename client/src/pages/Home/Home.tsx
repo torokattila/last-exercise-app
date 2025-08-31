@@ -42,7 +42,7 @@ const Home = (): JSX.Element => {
       {user?.lastExercise && (
         <div className="mt-5 lg:mt-7">
           <h1 className="text-xl font-bold text-gray-800 dark:text-white">
-            Your last exercise was:
+            Your last workout was:
           </h1>
           <div className="mt-3">
             <ExerciseCard exercise={user?.lastExercise} isLastExercise />
@@ -51,13 +51,13 @@ const Home = (): JSX.Element => {
       )}
 
       {user?.exercises && user?.exercises.length > 0 ? (
-        <div className="mt-6 flex flex-col">
+        <div className="mt-4 flex flex-col">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-            Your exercises:
+            Your workouts:
           </h2>
-          <div className="mt-3 w-full">
+          <div className="mt-1 w-full">
             <Swiper
-              spaceBetween={20}
+              spaceBetween={-40}
               slidesPerView={1.2}
               style={{
                 marginLeft: '-40px',
