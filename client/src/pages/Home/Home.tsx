@@ -81,20 +81,13 @@ const Home = (): JSX.Element => {
             </Swiper>
           </div>
         </div>
-      ) : (
-        <div className="mt-10 flex flex-col">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-            Looks like you have no exercises yet. 🙁
-            <br /> Create some by pressing the blue Plus button! 💪
-          </h2>
-        </div>
-      )}
+      ) : null}
 
       <div className="absolute bottom-9 right-10 z-20 hidden lg:flex">
         <AddExerciseButton />
       </div>
 
-      <div className="absolute right-5 top-5 z-20 flex lg:hidden">
+      <div className=" relative mt-3 flex lg:hidden justify-center">
         <AddExerciseButton />
       </div>
     </div>
