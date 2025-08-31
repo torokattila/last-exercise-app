@@ -35,13 +35,7 @@ const ExerciseCard = ({ exercise, isLastExercise }: Props) => {
         <Icon icon={moreHorizontalFill} className="text-2xl" color="white" />
       </div>
       <div
-        className="flex h-14.5 flex-col justify-between"
-        onClick={() => navigate(`/exercises/${exercise.id}`)}
-      >
-        <h1 className="text-xl font-semibold">{exercise.name}</h1>
-
-        <div
-          className="absolute bottom-0 left-0 w-full self-start overflow-hidden rounded-bl-2xl rounded-br-2xl py-1.5 pl-2 font-semibold"
+          className="absolute top-1.5 left-1.5 self-start overflow-hidden rounded-full py-1 px-2 font-semibold"
           style={{ position: 'absolute' }}
         >
           <div
@@ -63,6 +57,11 @@ const ExerciseCard = ({ exercise, isLastExercise }: Props) => {
               )}
           </div>
         </div>
+      <div
+        className="flex h-14.5 flex-col justify-between"
+        onClick={() => navigate(`/exercises/${exercise.id}`)}
+      >
+        <h1 className="text-xl mt-[26%] font-semibold">{exercise.name}</h1>
       </div>
     </div>
   );

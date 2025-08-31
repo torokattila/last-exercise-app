@@ -31,20 +31,20 @@ const Home = (): JSX.Element => {
   return (
     <div className="flex h-screen w-full flex-col overflow-y-auto bg-white px-5 pb-16 dark:bg-[#28282B] lg:pb-7">
       <div className="mt-5 lg:mt-7">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-          Hello, {user?.firstname}! 👋
-        </h1>
         <p className="mt-1 text-gray-500 dark:text-gray-400">
-          Let's do some workout today!
+          Welcome back
         </p>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+          {user?.firstname}! 👋
+        </h1>
       </div>
 
       {user?.lastExercise && (
-        <div className="mt-5 lg:mt-7">
+        <div className="mt-4 lg:mt-7">
           <h1 className="text-xl font-bold text-gray-800 dark:text-white">
             Your last workout was:
           </h1>
-          <div className="mt-3">
+          <div className="mt-2">
             <ExerciseCard exercise={user?.lastExercise} isLastExercise />
           </div>
         </div>
@@ -55,7 +55,7 @@ const Home = (): JSX.Element => {
           <h2 className="text-xl font-bold text-gray-800 dark:text-white">
             Your workouts:
           </h2>
-          <div className="mt-1 w-full">
+          <div className="w-full">
             <Swiper
               spaceBetween={-40}
               slidesPerView={1.2}
