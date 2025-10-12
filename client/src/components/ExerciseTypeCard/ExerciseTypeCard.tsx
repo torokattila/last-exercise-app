@@ -8,7 +8,7 @@ import successTick from '@iconify/icons-eva/checkmark-circle-2-fill';
 import { Icon } from '@iconify/react';
 // @ts-ignore
 import 'react-sweet-progress/lib/style.css';
-import { getItem } from '../../lib/storage';
+import { getItem, setItem } from '../../lib/storage';
 import ExerciseType from '../../models/ExerciseType';
 
 type Props = {
@@ -24,7 +24,6 @@ const ExerciseTypeCard = ({ exerciseType }: Props) => {
   const isDarkMode = getItem('mode') === 'dark';
   const cards: Card[] = useMemo(() => {
     const generatedCards: Card[] = [];
-
     if (exerciseType.seriesCardNumber) {
       for (let i = 0; i < exerciseType.seriesCardNumber; i++) {
         generatedCards.push({
@@ -33,11 +32,24 @@ const ExerciseTypeCard = ({ exerciseType }: Props) => {
         });
       }
     }
-
     return generatedCards;
   }, [exerciseType]);
 
-  const [dynamicCards, setDynamicCards] = useState<Card[]>(() => [...cards]);
+  useEffect(() => {
+    const storedCards = getItem(`cards_${exerciseType.name}`);
+    if (!storedCards) {
+      setItem(`cards_${exerciseType.name}`, JSON.stringify(cards));
+    }
+  }, [cards, exerciseType.name]);
+
+  const [dynamicCards, setDynamicCards] = useState<Card[]>(() => {
+    const storedDeletedCards = getItem(`deletedCards_${exerciseType.name}`);
+    if (storedDeletedCards) {
+      const deletedCardIds = JSON.parse(storedDeletedCards);
+      return cards.filter((card) => !deletedCardIds.includes(card.id));
+    }
+    return [...cards];
+  });
   const [progress, setProgress] = useState<number>(0);
   const isProgressCompleted = useMemo(() => {
     return progress === 100;
@@ -50,9 +62,25 @@ const ExerciseTypeCard = ({ exerciseType }: Props) => {
     setProgress(newProgress);
   }, [dynamicCards, cards]);
 
+  const updateDeletedCardsInStorage = (deletedCardId: string) => {
+    const storedDeletedCards = getItem(`deletedCards_${exerciseType.name}`);
+    const currentDeletedCardIds = storedDeletedCards
+      ? JSON.parse(storedDeletedCards)
+      : [];
+    const updatedDeletedCardIds = Array.from(
+      new Set([...currentDeletedCardIds, deletedCardId])
+    );
+
+    setItem(
+      `deletedCards_${exerciseType.name}`,
+      JSON.stringify(updatedDeletedCardIds)
+    );
+  };
+
   const deleteCard = (card: Card) => {
     const filteredCards = dynamicCards.filter((dCard) => dCard.id !== card.id);
     setDynamicCards(filteredCards);
+    updateDeletedCardsInStorage(card.id);
   };
 
   const handleDeleteCard = (card: Card): void => {

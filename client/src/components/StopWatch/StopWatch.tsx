@@ -57,7 +57,7 @@ const StopWatch = ({ show, setShowStopWatch, setDuration }: Props) => {
           `}
         >
           <div
-            className="absolute -top-1.5 -right-1 cursor-pointer rounded-full bg-white shadow-2xl"
+            className="absolute -top-1.5 -right-1 cursor-pointer rounded-full bg-white shadow-card"
             onClick={() => {
               onPausePress();
               setShowStopWatch(false);
