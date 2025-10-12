@@ -4,12 +4,12 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 // @ts-ignore
 import { Progress } from 'react-sweet-progress';
+import successTick from '@iconify/icons-eva/checkmark-circle-2-fill';
+import { Icon } from '@iconify/react';
 // @ts-ignore
 import 'react-sweet-progress/lib/style.css';
 import { getItem } from '../../lib/storage';
 import ExerciseType from '../../models/ExerciseType';
-import successTick from '@iconify/icons-eva/checkmark-circle-2-fill';
-import { Icon } from '@iconify/react';
 
 type Props = {
   exerciseType: ExerciseType;

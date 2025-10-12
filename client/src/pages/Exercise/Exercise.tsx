@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Icon } from '@iconify/react';
+import checkmarkCircle from '@iconify/icons-eva/checkmark-fill';
 import ExerciseTypeCard from '../../components/ExerciseTypeCard';
 import PreventPullToRefresh from '../../components/shared/PreventPullToRefresh';
 import StopWatch from '../../components/StopWatch';
@@ -85,11 +87,11 @@ const Exercise = () => {
             ))}
             <div className="mt-5 flex flex-row items-center justify-center">
               <button
-                style={{
-                  backgroundColor: currentExercise?.cardColor,
-                  color: currentExercise?.textColor,
-                }}
-                className="rounded-2xl py-2 px-4 font-medium uppercase shadow-card transition-all hover:opacity-90"
+                className={`
+                  rounded-full bg-green-500 p-1.5
+                  font-medium uppercase shadow-card 
+                  transition-all hover:opacity-90
+                `}
                 onClick={() =>
                   handleFinishExercise(
                     Number(currentExercise?.id) ?? null,
@@ -97,7 +99,11 @@ const Exercise = () => {
                   )
                 }
               >
-                finish exercise
+                <Icon
+                  icon={checkmarkCircle}
+                  className="text-white transition-all"
+                  fontSize={44}
+                />
               </button>
             </div>
           </div>
