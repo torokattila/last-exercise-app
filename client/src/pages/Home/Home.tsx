@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
+// @ts-ignore
 import 'swiper/css';
+// @ts-ignore
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ExerciseCard from '../../components/ExerciseCard';

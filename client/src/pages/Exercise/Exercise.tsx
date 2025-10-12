@@ -71,18 +71,15 @@ const Exercise = () => {
               style={{
                 color: currentExercise?.textColor,
               }}
-              className="text-2xl"
+              className="text-2xl font-semibold"
             >
               {currentExercise?.name}
             </h1>
           </div>
 
-          <div className="relative flex h-full flex-col rounded-t-[40px] bg-white pb-17 dark:bg-[#28282B]">
+          <div className="relative flex h-full flex-col justify-center rounded-t-[40px] bg-white pb-17 dark:bg-[#28282B]">
             {sortedExerciseTypes.map((type) => (
               <div key={type.id}>
-                <h1 className="mt-5 text-center text-lg font-semibold text-gray-800 dark:text-white">
-                  {type.name}
-                </h1>
                 <ExerciseTypeCard key={type.id} exerciseType={type} />
               </div>
             ))}
@@ -92,7 +89,7 @@ const Exercise = () => {
                   backgroundColor: currentExercise?.cardColor,
                   color: currentExercise?.textColor,
                 }}
-                className="rounded-full py-2 px-4 font-medium uppercase shadow-card transition-all hover:opacity-90"
+                className="rounded-2xl py-2 px-4 font-medium uppercase shadow-card transition-all hover:opacity-90"
                 onClick={() =>
                   handleFinishExercise(
                     Number(currentExercise?.id) ?? null,
