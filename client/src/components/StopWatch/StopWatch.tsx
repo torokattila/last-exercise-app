@@ -1,14 +1,12 @@
+import { AnimatePresence, motion } from 'framer-motion';
+import { Dispatch, SetStateAction, useState } from 'react';
 import Timer from 'react-compound-timer';
-import { Dispatch, SetStateAction } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
-import playCircleFill from '@iconify/icons-eva/play-circle-fill';
-import pauseCircleFill from '@iconify/icons-eva/pause-circle-fill';
-import clockOutline from '@iconify/icons-eva/clock-outline';
+import clockFill from '@iconify/icons-eva/clock-fill';
 import closeCircleFill from '@iconify/icons-eva/close-circle-fill';
-import saveOutline from '@iconify/icons-eva/save-outline';
+import pauseCircleOutline from '@iconify/icons-eva/pause-circle-outline';
+import playCircleOutline from '@iconify/icons-eva/play-circle-outline';
 import { Icon } from '@iconify/react';
-import { useSnackbar } from 'notistack';
 import useExercise from '../../hooks/useExercise';
 
 type Props = {
@@ -19,28 +17,17 @@ type Props = {
 
 const StopWatch = ({ show, setShowStopWatch, setDuration }: Props) => {
   const { currentExercise } = useExercise();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [isStarted, setIsStarted] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(true);
 
-  function padTo2Digits(num: number) {
-    return num.toString().padStart(2, '0');
-  }
+  const onStartPress = () => {
+    setIsStarted(true);
+    setIsPaused(false);
+  };
 
-  const convertMilisecondsToTime = (milliseconds: number): void => {
-    const seconds = Math.floor(milliseconds / 1000) % 60;
-    const minutes = Math.floor(seconds / 60) % 60;
-    const hours = Math.floor(minutes / 60);
-
-    setDuration(
-      `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`
-    );
-
-    const key = enqueueSnackbar('Stopwatch value saved!', {
-      variant: 'success',
-      autoHideDuration: 3000,
-      onClick: () => {
-        closeSnackbar(key);
-      },
-    });
+  const onPausePress = () => {
+    setIsPaused(true);
+    setIsStarted(false);
   };
 
   return (
@@ -61,23 +48,32 @@ const StopWatch = ({ show, setShowStopWatch, setDuration }: Props) => {
             duration: 0.4,
             type: 'spring',
           }}
-          className="fixed bottom-14 right-2 z-30 flex w-24 flex-row items-center justify-center rounded-full bg-gray-600 py-1 text-xl text-white shadow-card lg:bottom-10 lg:right-5 lg:py-1 lg:px-12"
+          className={`
+            fixed bottom-14 right-2 z-30 flex w-28 
+            flex-row items-center justify-center
+            rounded-3xl border-2 border-white 
+            bg-gray-800 py-3.5 text-3xl text-white shadow-card 
+            lg:bottom-10 lg:right-5 lg:py-1 lg:px-12
+          `}
         >
           <div
-            className="absolute -top-1 right-1 cursor-pointer rounded-full bg-white"
-            onClick={() => setShowStopWatch(false)}
+            className="absolute -top-1.5 -right-1 cursor-pointer rounded-full bg-white shadow-2xl"
+            onClick={() => {
+              onPausePress();
+              setShowStopWatch(false);
+            }}
           >
             <Icon
               icon={closeCircleFill}
-              className="text-blues-1 transition-all hover:text-blues-2"
-              fontSize={32}
+              className="text-gray-800 transition-all hover:text-blues-2"
+              fontSize={52}
             />
           </div>
 
           <Timer initialTime={0} startImmediately={false}>
-            {({ start, resume, pause, stop, reset, getTime }: any) => (
-              <motion.div className="flex flex-col items-center justify-center gap-y-1">
-                <div className="text-left">
+            {({ start, pause }: any) => (
+              <motion.div className="relative mb-2 flex flex-col items-center justify-center gap-y-2.5">
+                <div className="w-full rounded-full border-4 py-7 px-2 text-left font-semibold">
                   <Timer.Hours
                     formatValue={(num: number) => {
                       if (num < 10) {
@@ -108,35 +104,35 @@ const StopWatch = ({ show, setShowStopWatch, setDuration }: Props) => {
                     }}
                   />
                 </div>
-                <div className="flex flex-row gap-x-2.5 pb-0.5">
-                  <button onClick={start}>
-                    <Icon
-                      icon={playCircleFill}
-                      fontSize={30}
-                      className="rounded-full bg-white text-cyan-500 transition-all hover:text-cyan-600"
-                    />
-                  </button>
-                  <button onClick={pause}>
-                    <Icon
-                      icon={pauseCircleFill}
-                      fontSize={30}
-                      className="rounded-full bg-white text-green-500 transition-all hover:text-green-600"
-                    />
-                  </button>
-                  <button
-                    onClick={() => {
-                      convertMilisecondsToTime(getTime());
-                      reset();
-                      stop();
-                      setShowStopWatch(false);
-                    }}
-                  >
-                    <Icon
-                      icon={saveOutline}
-                      fontSize={30}
-                      className="text-red-400 transition-all hover:text-red-600"
-                    />
-                  </button>
+                <div className="absolute -bottom-3.5 flex flex-row gap-x-2 bg-gray-800">
+                  {!isPaused && (
+                    <button
+                      onClick={() => {
+                        pause();
+                        onPausePress();
+                      }}
+                    >
+                      <Icon
+                        icon={pauseCircleOutline}
+                        fontSize={65}
+                        className="rounded-full text-green-500 transition-all hover:text-green-600"
+                      />
+                    </button>
+                  )}
+                  {!isStarted && (
+                    <button
+                      onClick={() => {
+                        start();
+                        onStartPress();
+                      }}
+                    >
+                      <Icon
+                        icon={playCircleOutline}
+                        fontSize={65}
+                        className="rounded-full text-cyan-500 transition-all hover:text-cyan-600"
+                      />
+                    </button>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -162,13 +158,18 @@ const StopWatch = ({ show, setShowStopWatch, setDuration }: Props) => {
           style={{
             backgroundColor: currentExercise?.cardColor,
           }}
-          className="fixed bottom-16 right-2 z-30 flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded-full shadow-card hover:opacity-90 lg:bottom-10 lg:right-5"
+          className={`
+            fixed bottom-16 right-2 z-30 flex h-9 w-9 
+            cursor-pointer flex-col items-center justify-center 
+            rounded-full shadow-card hover:opacity-90 lg:bottom-10 
+            lg:right-5
+          `}
         >
           <Icon
             className="z-40"
-            icon={clockOutline}
+            icon={clockFill}
             color={`${currentExercise?.textColor}`}
-            fontSize={35}
+            fontSize={47}
           />
         </motion.div>
       )}

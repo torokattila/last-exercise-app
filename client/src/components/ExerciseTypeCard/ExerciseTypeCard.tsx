@@ -92,7 +92,12 @@ const ExerciseTypeCard = ({ exerciseType }: Props) => {
     <div className="px-3 lg:mt-3 lg:px-0">
       {/*Mobile*/}
       <div className="flex flex-row items-center justify-center gap-1">
-        <h1 className="mt-3 text-center text-2xl font-semibold text-gray-800 dark:text-white">
+        <h1
+          className={`
+            mt-3 text-center text-2xl 
+            font-semibold text-gray-800 dark:text-white
+          `}
+        >
           {exerciseType.name}
         </h1>
         {isProgressCompleted && (
