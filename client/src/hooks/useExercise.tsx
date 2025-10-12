@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import ExercisePayload from '../api/payloads/ExercisePayload';
 import ConfirmAlertLayout from '../components/shared/ConfirmAlertLayout';
+import { removeItemsWithPrefix } from '../lib/storage';
 import Exercise from '../models/Exercise';
 import ExerciseType from '../models/ExerciseType';
 import useApi from './useApi';
@@ -23,8 +24,7 @@ const useExercise = () => {
     refetch,
   } = useQuery(
     ['getExercise', { exerciseId: params.exerciseId }],
-    async () =>
-      await apiClient.getExercise(Number(params.exerciseId)),
+    async () => await apiClient.getExercise(Number(params.exerciseId)),
     {
       refetchOnWindowFocus: false,
     }
@@ -111,6 +111,8 @@ const useExercise = () => {
                   onClick={() => {
                     finishExercise(exerciseId, duration);
                     onClose();
+                    removeItemsWithPrefix('cards_');
+                    removeItemsWithPrefix('deletedCards_');
                   }}
                 >
                   finish
@@ -352,7 +354,7 @@ const useExercise = () => {
 
   const handleDeleteExercise = (exerciseId: number | undefined): void => {
     if (!exerciseId) return;
-    
+
     confirmAlert({
       customUI: ({ onClose }: { onClose: () => void }) => {
         return (

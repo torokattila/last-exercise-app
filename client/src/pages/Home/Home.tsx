@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
+// @ts-ignore
 import 'swiper/css';
+// @ts-ignore
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ExerciseCard from '../../components/ExerciseCard';
@@ -31,9 +33,7 @@ const Home = (): JSX.Element => {
   return (
     <div className="flex h-screen w-full flex-col overflow-y-auto bg-white px-5 pb-16 dark:bg-[#28282B] lg:pb-7">
       <div className="mt-5 lg:mt-7">
-        <p className="mt-1 text-gray-500 dark:text-gray-400">
-          Welcome back
-        </p>
+        <p className="mt-1 text-gray-500 dark:text-gray-400">Welcome back</p>
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
           {user?.firstname}! 👋
         </h1>
@@ -87,7 +87,7 @@ const Home = (): JSX.Element => {
         <AddExerciseButton />
       </div>
 
-      <div className=" relative mt-3 flex lg:hidden justify-center">
+      <div className=" relative mt-3 flex justify-center lg:hidden">
         <AddExerciseButton />
       </div>
     </div>

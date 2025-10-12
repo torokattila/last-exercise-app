@@ -10,4 +10,12 @@ const removeItem = (name: string): void => {
   localStorage.removeItem(name);
 };
 
-export { getItem, setItem, removeItem };
+const removeItemsWithPrefix = (prefix: string): void => {
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith(prefix)) {
+      localStorage.removeItem(key);
+    }
+  });
+};
+
+export { getItem, setItem, removeItem, removeItemsWithPrefix };
