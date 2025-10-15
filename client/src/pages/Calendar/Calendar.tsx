@@ -2,9 +2,10 @@ import { format, getDay, parse, startOfWeek } from 'date-fns';
 import hu from 'date-fns/locale/hu';
 import { useMemo } from 'react';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-
+// @ts-ignore
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import useHome from '../../hooks/useHome';
+// @ts-ignore
 import './Calendar.css';
 import CustomToolbar from './components/CustomToolbar';
 
