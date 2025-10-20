@@ -1,3 +1,31 @@
+.rbc-calendar {
+  height: 100%;
+}
+
+.rbc-month-view {
+  border: none !important;
+  gap: 5px;
+  padding: 7px;
+}
+
+.rbc-month-row {
+  border-top: none !important;
+}
+
+.rbc-row-bg {
+  border: none;
+}
+
+.rbc-off-range-bg {
+  background-color: transparent !important;
+}
+
+.rbc-button-link {
+  margin-right: 30%;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
 .rbc-event {
   white-space: normal !important;
   word-wrap: break-word !important;
@@ -5,51 +33,46 @@
   hyphens: auto !important;
 
   font-size: 3.9vw !important;
-  font-weight: bold;
-  padding: 5px !important;
-  width: 100%;
-  height: 90px;
-  border-radius: 25px !important;
+  font-weight: 500;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  width: 95%;
+  height: 10px;
   border: none !important;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .rbc-header {
-  margin-left: 2.5px;
-  margin-right: 2.5px;
   pointer-events: none;
   height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 5vw;
-  font-weight: bold;
+  font-weight: 500;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-radius: 25px;
   border: none !important;
   border-bottom: none !important;
-  background-color: #4A9ECB;
+  background-color: transparent;
   color: #fff;
-  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.dark .rbc-day-bg + .rbc-day-bg {
-  border-left: 1px solid #525255;
+.dark .rbc-day-bg+.rbc-day-bg {
+  border: none;
 }
 
 .rbc-day-bg {
+  border-radius: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
+  display: flex !important;
+  flex-direction: row !important;
 }
 
 .rbc-time-header-content {
@@ -74,7 +97,6 @@
 
 .rbc-today {
   background-color: #74c7f3;
-  border-radius: 25px;
 }
 
 .rbc-allday-cell {
@@ -96,4 +118,29 @@
 .rbc-time-view {
   overflow-x: auto;
   border: none !important;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.card {
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card.dark {
+  background-color: #3c3c3c;
 }
