@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import checkmarkCircle from '@iconify/icons-eva/checkmark-fill';
 import ExerciseTypeCard from '../../components/ExerciseTypeCard';
@@ -13,6 +14,35 @@ const Exercise = () => {
     useExercise();
   const [duration, setDuration] = useState<string>('');
   const [showStopWatch, setShowStopWatch] = useState<boolean>(false);
+  const [progressBarTrigger, setProgressBarTrigger] = useState<number>(0);
+
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key?.startsWith('deletedCards_')) {
+        setProgressBarTrigger((prev) => prev + 1);
+      }
+    };
+
+    const handleCustomStorageChange = (e: CustomEvent) => {
+      if (e.detail?.key?.startsWith('deletedCards_')) {
+        setProgressBarTrigger((prev) => prev + 1);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener(
+      'localStorageUpdated',
+      handleCustomStorageChange as EventListener
+    );
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener(
+        'localStorageUpdated',
+        handleCustomStorageChange as EventListener
+      );
+    };
+  }, []);
 
   const overallProgress = useMemo(() => {
     if (!sortedExerciseTypes || sortedExerciseTypes.length === 0) return 0;
@@ -32,7 +62,7 @@ const Exercise = () => {
     });
 
     return totalCards > 0 ? Math.round((completedCards / totalCards) * 100) : 0;
-  }, [sortedExerciseTypes]);
+  }, [sortedExerciseTypes, progressBarTrigger]);
 
   return (
     <PreventPullToRefresh>

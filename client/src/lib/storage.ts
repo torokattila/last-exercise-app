@@ -4,10 +4,22 @@ const getItem = (name: string): string | null => {
 
 const setItem = (name: string, value: string): void => {
   localStorage.setItem(name, value);
+
+  window.dispatchEvent(
+    new CustomEvent('localStorageUpdated', {
+      detail: { key: name, value },
+    })
+  );
 };
 
-const removeItem = (name: string): void => {
-  localStorage.removeItem(name);
+const removeItem = (key: string): void => {
+  localStorage.removeItem(key);
+
+  window.dispatchEvent(
+    new CustomEvent('localStorageUpdated', {
+      detail: { key, value: null },
+    })
+  );
 };
 
 const removeItemsWithPrefix = (prefix: string): void => {
@@ -16,6 +28,12 @@ const removeItemsWithPrefix = (prefix: string): void => {
       localStorage.removeItem(key);
     }
   });
+
+  window.dispatchEvent(
+    new CustomEvent('localStorageUpdated', {
+      detail: { key: prefix, value: null },
+    })
+  );
 };
 
 export { getItem, setItem, removeItem, removeItemsWithPrefix };
