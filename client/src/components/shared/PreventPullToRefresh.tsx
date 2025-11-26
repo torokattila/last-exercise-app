@@ -11,7 +11,6 @@ const PreventPullToRefresh = ({ children }: { children: React.ReactNode }) => {
     const handleTouchMove = (e: TouchEvent) => {
       const currentY = e.touches[0].clientY;
 
-      // Prevent pull-to-refresh when scrolling up from the very top
       if (window.scrollY === 0 && currentY > touchStartY) {
         e.preventDefault();
       }

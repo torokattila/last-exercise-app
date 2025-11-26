@@ -1,20 +1,76 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import checkmarkCircle from '@iconify/icons-eva/checkmark-fill';
 import ExerciseTypeCard from '../../components/ExerciseTypeCard';
 import PreventPullToRefresh from '../../components/shared/PreventPullToRefresh';
 import StopWatch from '../../components/StopWatch';
 import useExercise from '../../hooks/useExercise';
+import { getItem } from '../../lib/storage';
+import VerticalProgressBar from '../../components/VerticalProgressBar';
 
 const Exercise = () => {
   const { currentExercise, handleFinishExercise, sortedExerciseTypes } =
     useExercise();
   const [duration, setDuration] = useState<string>('');
   const [showStopWatch, setShowStopWatch] = useState<boolean>(false);
+  const [progressBarTrigger, setProgressBarTrigger] = useState<number>(0);
+
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key?.startsWith('deletedCards_')) {
+        setProgressBarTrigger((prev) => prev + 1);
+      }
+    };
+
+    const handleCustomStorageChange = (e: CustomEvent) => {
+      if (e.detail?.key?.startsWith('deletedCards_')) {
+        setProgressBarTrigger((prev) => prev + 1);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener(
+      'localStorageUpdated',
+      handleCustomStorageChange as EventListener
+    );
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener(
+        'localStorageUpdated',
+        handleCustomStorageChange as EventListener
+      );
+    };
+  }, []);
+
+  const overallProgress = useMemo(() => {
+    if (!sortedExerciseTypes || sortedExerciseTypes.length === 0) return 0;
+
+    let totalCards = 0;
+    let completedCards = 0;
+
+    sortedExerciseTypes.forEach((type) => {
+      const cards = type.seriesCardNumber || 0;
+      totalCards += cards;
+
+      const storedDeletedCards = getItem(`deletedCards_${type.name}`);
+      if (storedDeletedCards) {
+        const deletedCardIds = JSON.parse(storedDeletedCards);
+        completedCards += deletedCardIds.length;
+      }
+    });
+
+    return totalCards > 0 ? Math.round((completedCards / totalCards) * 100) : 0;
+  }, [sortedExerciseTypes, progressBarTrigger]);
 
   return (
     <PreventPullToRefresh>
       <>
+        <VerticalProgressBar
+          progress={overallProgress}
+          color={currentExercise?.cardColor || '#7e00ad'}
+        />
         <div className="relative hidden h-screen w-full flex-col px-5 lg:flex">
           <StopWatch
             show={showStopWatch}
