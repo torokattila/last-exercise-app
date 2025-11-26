@@ -12,7 +12,7 @@ const CustomToolbar = ({
   onNavigate: (navigate: NavigateAction, date?: Date) => void;
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-1 bg-[#4A9ECB] pb-[5%] text-white shadow-md">
+    <div className="flex flex-col items-center justify-center gap-1 bg-[#4A9ECB] px-[2%] pb-[5%] text-white shadow-md">
       <div className="mt-3 flex flex-row gap-x-2">
         <div className="flex flex-row items-center gap-2">
           <button
@@ -22,12 +22,12 @@ const CustomToolbar = ({
             <Icon
               icon={calendar}
               className="text-[#4A9ECB] transition-all dark:text-gray-300"
-              fontSize={30}
+              fontSize={25}
             />
           </button>
-          <span className="text-2xl font-bold">{label}</span>
+          <span className="text-[5vw] font-bold">{label}</span>
         </div>
-        <div className="flex flex-row items-center justify-cente gap-1">
+        <div className="flex flex-row items-center justify-center gap-1">
           <button
             className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#4A9ECB] shadow-2xl dark:bg-[#38383a] dark:text-[#fff]"
             onClick={() => onNavigate('PREV')}
